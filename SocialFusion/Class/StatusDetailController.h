@@ -36,7 +36,7 @@
 
 @property (nonatomic, retain) NewFeedRootData* feedData;
 @property (nonatomic, assign) id<WeiboRenrenSelecter> delegate;
-
+@property (nonatomic,retain) UIScrollView * scrollView;
 
 - (void)setFixedInfo;
 - (void)loadMainView;
