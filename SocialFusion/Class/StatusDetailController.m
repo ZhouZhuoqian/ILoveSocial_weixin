@@ -23,6 +23,7 @@
 #import "WeiboUser.h"
 #import "DetailImageViewController.h"
 #import "NSNotificationCenter+Addition.h"
+
 @implementation StatusDetailController
 
 @synthesize feedData = _feedData;
@@ -38,7 +39,6 @@
     
     [_style release];
     [_feedData release];
-    [_commentButton release];
     
     [super dealloc];
 }
@@ -104,32 +104,10 @@
     
     self.tableView.allowsSelection = NO;    
     
-//    UIScrollView *scrollView = (UIScrollView *)self.view;
+       
+    [self addCommentButton];
+    [self addWeixinButton];
     
-    _commentButton = [[UIButton alloc] init];
-    [_commentButton addTarget:self action:@selector(comment:) forControlEvents:UIControlEventTouchUpInside];
-    _commentButton.frame = CGRectMake(306, 0, 320, 50);
-    [_commentButton setBackgroundImage:[UIImage imageNamed:@"btn_msg_new.png"] forState:UIControlStateNormal];
-    _commentButton.showsTouchWhenHighlighted = YES;
-    _commentButton.adjustsImageWhenHighlighted = NO;
-    [self.scrollView addSubview:_commentButton];
-    
-    UILabel *commentButtonLabel = [[UILabel alloc] initWithFrame:CGRectMake(306 + 10, 0, 100, 40)];
-    commentButtonLabel.text = @"写点评论吧...";
-    commentButtonLabel.backgroundColor = [UIColor clearColor];
-    commentButtonLabel.textColor = [UIColor grayColor];
-    commentButtonLabel.font = [UIFont boldSystemFontOfSize:14.0f];
-    [self.scrollView addSubview:commentButtonLabel];
-    [commentButtonLabel release];
-    
-    UIButton *smallCommentButton = [[UIButton alloc] init];
-    [smallCommentButton addTarget:self action:@selector(comment:) forControlEvents:UIControlEventTouchUpInside];
-    smallCommentButton.frame = CGRectMake(306 + 266, 0, 40, 40);
-    [smallCommentButton setImage:[UIImage imageNamed:@"btn_msg.png"] forState:UIControlStateNormal];
-    smallCommentButton.showsTouchWhenHighlighted = YES;
-    smallCommentButton.adjustsImageWhenHighlighted = NO;
-    [self.scrollView addSubview:smallCommentButton];
-    [smallCommentButton release];
   
     if ([_feedData.style intValue] == 0)
     {
@@ -140,6 +118,68 @@
         [_style setImage:[UIImage imageNamed:@"detail_weibo.png"]];
     }
     
+}
+-(void)addCommentButton{
+    UIButton* _commentButton;
+    _commentButton = [[UIButton alloc] init];
+    [_commentButton addTarget:self action:@selector(comment:) forControlEvents:UIControlEventTouchUpInside];
+    _commentButton.frame = CGRectMake(306 , 0, 320-165, 50);
+    [_commentButton setBackgroundImage:[UIImage imageNamed:@"btn_msg_new.png"] forState:UIControlStateNormal];
+    _commentButton.showsTouchWhenHighlighted = YES;
+    _commentButton.adjustsImageWhenHighlighted = NO;
+    [self.scrollView addSubview:_commentButton];
+    [_commentButton release];
+    
+    //*****************************
+    UILabel *commentButtonLabel = [[UILabel alloc] initWithFrame:CGRectMake(306 + 10 , 0, 100, 40)];
+    commentButtonLabel.text = @"写点评论吧...";
+    commentButtonLabel.backgroundColor = [UIColor clearColor];
+    commentButtonLabel.textColor = [UIColor grayColor];
+    commentButtonLabel.font = [UIFont boldSystemFontOfSize:14.0f];
+    [self.scrollView addSubview:commentButtonLabel];
+    [commentButtonLabel release];
+    //*****************************
+
+    UIButton *smallCommentButton = [[UIButton alloc] init];
+    [smallCommentButton addTarget:self action:@selector(comment:) forControlEvents:UIControlEventTouchUpInside];
+    smallCommentButton.frame = CGRectMake(306 + 266 -160, 0, 40, 40);
+    [smallCommentButton setImage:[UIImage imageNamed:@"btn_msg.png"] forState:UIControlStateNormal];
+    smallCommentButton.showsTouchWhenHighlighted = YES;
+    smallCommentButton.adjustsImageWhenHighlighted = NO;
+    [self.scrollView addSubview:smallCommentButton];
+    [smallCommentButton release]; 
+}
+
+-(void)addWeixinButton{
+    
+    UIButton* repostToWexinButton;
+    repostToWexinButton = [[UIButton alloc] init];
+    [repostToWexinButton addTarget:self action:@selector(repostToWeixin:) forControlEvents:UIControlEventTouchUpInside];
+    repostToWexinButton.frame = CGRectMake(306 + 150, 0, 320-160, 50);
+    [repostToWexinButton setBackgroundImage:[UIImage imageNamed:@"btn_msg_new.png"] forState:UIControlStateNormal];
+    repostToWexinButton.showsTouchWhenHighlighted = YES;
+    repostToWexinButton.adjustsImageWhenHighlighted = NO;
+    [self.scrollView addSubview:repostToWexinButton];
+    [repostToWexinButton release];
+    //*****************************
+
+    UILabel *repostToWexinButtonLabel = [[UILabel alloc] initWithFrame:CGRectMake(306 + 10 + 160, 0, 100, 40)];
+    repostToWexinButtonLabel.text = @"转发到微信...";
+    repostToWexinButtonLabel.backgroundColor = [UIColor clearColor];
+    repostToWexinButtonLabel.textColor = [UIColor grayColor];
+    repostToWexinButtonLabel.font = [UIFont boldSystemFontOfSize:14.0f];
+    [self.scrollView addSubview:repostToWexinButtonLabel];
+    [repostToWexinButtonLabel release];
+    //*****************************
+
+    UIButton *smallRepostButton = [[UIButton alloc] init];
+    [smallRepostButton addTarget:self action:@selector(repostToWeixin:) forControlEvents:UIControlEventTouchUpInside];
+    smallRepostButton.frame = CGRectMake(306 + 266 , 0, 40, 40);
+    [smallRepostButton setImage:[UIImage imageNamed:@"btn_repost.png"] forState:UIControlStateNormal];
+    smallRepostButton.showsTouchWhenHighlighted = YES;
+    smallRepostButton.adjustsImageWhenHighlighted = NO;
+    [self.scrollView addSubview:smallRepostButton];
+    [smallRepostButton release];
 }
 
 - (void)addOriStatus {
@@ -439,9 +479,12 @@
     }
 }
 -(IBAction)repost
-
 {
     
+}
+
+-(IBAction)repostToWeixin:(id)sender{
+    // super class
 }
 
 -(IBAction)comment:(id)sender

@@ -139,7 +139,6 @@
         [[UIApplication sharedApplication] presentToast:@"请输入评论内容。" withVerticalPos:TOAST_POS_Y];
         return;
     }
-    
     if (_style==kRenrenStatus)
     {
         if (_repostToRenren==YES)

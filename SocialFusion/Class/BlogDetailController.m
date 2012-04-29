@@ -87,10 +87,8 @@
     RepostViewController *vc = [[RepostViewController alloc] init];
     vc.managedObjectContext = self.managedObjectContext;
     
-
-   
     
-        [vc setStyle:kNewBlog];
+    [vc setStyle:kNewBlog];
     
     
     vc.feedData=self.feedData;
@@ -119,6 +117,13 @@
     [[UIApplication sharedApplication] presentModalViewController:vc];
     [vc release];
 }
+
+-(IBAction)repostToWeixin:(id)sender{
+    [super repostToWeixin:sender];
+    NSLog(@"repost to weixin blog");
+    
+}
+
 
 
 

@@ -14,6 +14,8 @@
 
 #import "EGOTableViewController.h"
 #import "NewFeedRootData.h"
+#define kToastBottomVerticalPosition 400.0f
+
 @protocol WeiboRenrenSelecter;
 
 @interface StatusDetailController : EGOTableViewController<UIScrollViewDelegate>
@@ -27,7 +29,6 @@
     
     int _pageNumber;
     BOOL _showMoreButton;
-    UIButton* _commentButton;
     UIActivityIndicatorView* _activity;
     NSData* _photoData; 
           id<WeiboRenrenSelecter> _delegate;
@@ -47,6 +48,8 @@
 
 - (IBAction)repost;
 - (IBAction)comment:(id)sender;
+- (IBAction)repostToWeixin:(id)sender;
+
 -(IBAction)selectUser;
 -(IBAction)selectCommentUser:(id)sender;
 

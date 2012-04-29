@@ -99,7 +99,11 @@
     _postStatusErrorCode = PostStatusErrorNone;
     
     if(!_postToWeibo && !_postToRenren) {
-        [[UIApplication sharedApplication] presentToast:@"请选择发送平台。" withVerticalPos:TOAST_POS_Y];
+        if (NO) {
+            [[UIApplication sharedApplication] presentToast: [NSString stringWithFormat:@"%f",TOAST_POS_Y] withVerticalPos:TOAST_POS_Y];            
+        } else {
+            [[UIApplication sharedApplication] presentToast:@"请选择发送平台。" withVerticalPos:TOAST_POS_Y];
+        }
         return;
     }
     if([self.blogTextView.text isEqualToString:@""]) {

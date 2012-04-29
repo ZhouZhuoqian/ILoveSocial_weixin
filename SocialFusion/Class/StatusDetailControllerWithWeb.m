@@ -149,7 +149,7 @@
     
     
     [_webView stringByEvaluatingJavaScriptFromString: @"document.body.scrollHeight"];
-
+    
     
     [_photoData release];
     
@@ -167,24 +167,24 @@
 - (void)setFixedInfo
 {
     [super setFixedInfo];
-for (UIView *aView in [_webView subviews])  
-{ 
-    if ([aView isKindOfClass:[UIScrollView class]])  
+    for (UIView *aView in [_webView subviews])  
     { 
-        for (UIView *shadowView in aView.subviews)  
+        if ([aView isKindOfClass:[UIScrollView class]])  
         { 
-            if ([shadowView isKindOfClass:[UIImageView class]]) 
+            for (UIView *shadowView in aView.subviews)  
             { 
-                shadowView.hidden = YES;  //上下滚动出边界时的黑色的图片 也就是拖拽后的上下阴影
+                if ([shadowView isKindOfClass:[UIImageView class]]) 
+                { 
+                    shadowView.hidden = YES;  //上下滚动出边界时的黑色的图片 也就是拖拽后的上下阴影
+                } 
             } 
         } 
-    } 
-}  
+    }  
     _webView.delegate=self;
     _webView.backgroundColor=[UIColor clearColor];
     _webView.opaque=NO;
     _webView.scrollView.delegate=self;
-
+    
 }
 
 -(IBAction)repost
@@ -192,23 +192,34 @@ for (UIView *aView in [_webView subviews])
     RepostViewController *vc = [[RepostViewController alloc] init];
     vc.managedObjectContext = self.managedObjectContext;
     
-    
+    // 转发状态
     if ([self.feedData getStyle]==0)
     {
-    [vc setStyle:kRenrenStatus];
+        [vc setStyle:kRenrenStatus];
     }
     else
     {
-         [vc setStyle:kWeiboStatus];
+        [vc setStyle:kWeiboStatus];
     }
- 
+    
     vc.feedData=self.feedData;
-   
+    
     [vc setcommentPage:NO];
     [[UIApplication sharedApplication] presentModalViewController:vc];
     [vc release];
 }
 
+-(IBAction)repostToWeixin:(id)sender{
+    
+    if (NO) {
+        [[UIApplication sharedApplication] presentToast:@"当前版本暂不支持转发相册到微信。" withVerticalPos:kToastBottomVerticalPosition];
+    }
+    
+    NSLog(@"repost to weixin __ web");
+    // todo
+    
+    
+}
 -(IBAction)comment:(id)sender
 {
     UITableViewCell* cell=(UITableViewCell*)((UIButton*)sender).superview.superview;
@@ -216,10 +227,9 @@ for (UIView *aView in [_webView subviews])
     
     StatusCommentData* data=[self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    
-    
     RepostViewController *vc = [[RepostViewController alloc] init];
     vc.managedObjectContext = self.managedObjectContext;
+    // 评论状态
     if ([self.feedData getStyle]==0)
     {
         [vc setStyle:kRenrenStatus];
@@ -230,9 +240,7 @@ for (UIView *aView in [_webView subviews])
     }
     [vc setcommentPage:YES];
     vc.feedData=self.feedData;
-
     vc.commetData=data;
-    
     
     [[UIApplication sharedApplication] presentModalViewController:vc];
     [vc release];
@@ -240,8 +248,8 @@ for (UIView *aView in [_webView subviews])
 
 -(void)showBigImage
 {
-  
-
+    
+    
     
     [DetailImageViewController showDetailImageWithURL:((NewFeedData*)self.feedData).pic_big_URL context:self.managedObjectContext];
     
@@ -254,7 +262,7 @@ for (UIView *aView in [_webView subviews])
     
     NSString* tempString = [NSString stringWithFormat:@"%@",[request URL]];
     tempString=[tempString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-     NSString* commandString = [tempString substringFromIndex:7];
+    NSString* commandString = [tempString substringFromIndex:7];
     NSString* startString = [tempString substringToIndex:5];
     
     
@@ -266,7 +274,7 @@ for (UIView *aView in [_webView subviews])
     
     
     
-
+    
     else if ([[[tempString stringByDeletingLastPathComponent] lastPathComponent] isEqualToString:@"renren"])
     {
         

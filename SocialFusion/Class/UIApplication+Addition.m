@@ -119,6 +119,8 @@ static BOOL _isShowingToast;
     [bgImageView addSubview:labelView];
     [labelView release];
     [self.keyWindow addSubview:bgImageView];
+
+
     [bgImageView release];
     
     labelView.alpha = 0;
