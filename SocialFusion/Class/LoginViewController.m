@@ -205,7 +205,11 @@
 }
 
 - (BOOL)isLoginValid {
-    return ([RenrenClient authorized] && [WeiboClient authorized]);
+    if (NO) {
+        return ([RenrenClient authorized]  );        
+    }else {
+        return ([RenrenClient authorized] && [WeiboClient authorized]);
+    }
 }
 
 - (void)refreshRenrenUserInfoUI {

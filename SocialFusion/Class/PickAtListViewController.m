@@ -167,6 +167,7 @@
         [self.delegate didPickAtUser:result];
     }
     else if(self.platformCode == kPlatformRenren) {
+        // todo
         [self.delegate cancelPickUser];
     }
 }

@@ -18,8 +18,17 @@ enum {
     ResetUnreadCountTypeDirectMessage = 3,
     ResetUnreadCountTypeFollowers = 4,
 };
+#if 1
+//mine
+static NSString* const AppKey = @"889186919";
+static NSString* const AppSecret = @"f2cdd5163ad90065331458c8c44a060a";
+#else
+//bluebitch
 static NSString* const AppKey = @"808405667";
 static NSString* const AppSecret = @"2e76c5fca5ac0934c4e4e4114455e261";
+#endif
+
+
 typedef void (^WCCompletionBlock)(WeiboClient *client);
 
 

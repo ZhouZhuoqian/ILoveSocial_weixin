@@ -87,13 +87,13 @@ NSString *TWITTERFON_FORM_BOUNDARY = @"0194784892923";
 
 
 
-#pragma mark Ëé∑ÂæóÊó∂Èó¥Êà≥
+#pragma mark
 - (NSString *)_generateTimestamp 
 {
     return [NSString stringWithFormat:@"%d", time(NULL)];
 }
 
-#pragma mark Ëé∑ÂæóÈöèÊó∂Â≠óÁ¨¶‰∏≤
+#pragma mark  
 - (NSString *)_generateNonce 
 {
     CFUUIDRef theUUID = CFUUIDCreate(NULL);
@@ -127,11 +127,11 @@ NSString *TWITTERFON_FORM_BOUNDARY = @"0194784892923";
     [ud synchronize];
     
     
-            [OAuthTokenKey release];
-            OAuthTokenKey = [responseString retain];
- 
-            UserID = [userID retain];
-        
+    [OAuthTokenKey release];
+    OAuthTokenKey = [responseString retain];
+    
+    UserID = [userID retain];
+    
     
 }
 
@@ -413,7 +413,7 @@ report_completion:
     }  
     NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    AppKey,@"client_id",
-                                   @"", @"redirect_uri",
+                                   @"http://weibo.com/zhouzhuoqian", @"redirect_uri",
                                    @"mobile", @"display",
                                    @"token",@"response_type",
                                    nil];

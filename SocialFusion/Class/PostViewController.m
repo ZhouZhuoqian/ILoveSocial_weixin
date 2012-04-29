@@ -100,6 +100,7 @@
     
 }
 
+// some subclass extends this class and invoke this method 
 - (void)postStatusCompletion {
     _postCount--;
     if(_postCount == 0) {
@@ -130,6 +131,7 @@
 }
 
 - (IBAction)didClickPostButton:(id)sender {
+    // rewrite this method when you extends this class
     [self dismissView];
 }
 
@@ -190,7 +192,7 @@
     range.location = location + stringToInsert.length;
     self.processTextView.selectedRange = range;
     [self updateTextCount];
-    [self dismissModalViewControllerAnimated:YES];
+    [self cancelPickUser];
 }
 
 - (UITextView *)processTextView {

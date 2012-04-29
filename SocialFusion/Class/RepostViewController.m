@@ -41,13 +41,13 @@
     [_photoURL release];
     [_photoComment release];
     
-      [_repostToRenrenBut release];
-      [_repostToWeiboBut release];
-          [_repostToRenrenLabelBut release];
-      [_repostToWeiboLabelBut release];
+    [_repostToRenrenBut release];
+    [_repostToWeiboBut release];
+    [_repostToRenrenLabelBut release];
+    [_repostToWeiboLabelBut release];
     
-      [_commentBut release];
-      [_commentLabelBut release];
+    [_commentBut release];
+    [_commentLabelBut release];
     [super dealloc];
     
 }
@@ -454,7 +454,7 @@
             _postCount++;  
             [client postStatus:[NSString stringWithFormat:@"%@ //%@[来自人人网]",self.textView.text,_photoComment] withImage:[UIImage imageWithData:imageData]];
         }
-   
+        
         
         if (_commentPage==YES)
         {
