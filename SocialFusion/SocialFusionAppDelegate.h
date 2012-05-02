@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WXApi.h"
 
 @class LNRootViewController;
-@interface SocialFusionAppDelegate : NSObject <UIApplicationDelegate>
+@interface SocialFusionAppDelegate : NSObject <UIApplicationDelegate,WXApiDelegate>
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) LNRootViewController *rootViewController;

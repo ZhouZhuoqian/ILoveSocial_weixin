@@ -211,5 +211,8 @@
 {  
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];  
 }  
+#pragma mark - weixin api delegate
+
+
 
 @end

@@ -110,6 +110,7 @@
 		9B3C6FCB14E7ABBA003B0E52 /* login_btn_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B3C6FC614E7ABBA003B0E52 /* login_btn_arrow@2x.png */; };
 		9B6FEAA314DD6DE800E1E677 /* label_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B6FEAA114DD6DE800E1E677 /* label_white.png */; };
 		9B6FEAA414DD6DE800E1E677 /* label_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B6FEAA214DD6DE800E1E677 /* label_white@2x.png */; };
+		D0D7E3B8154E601400CF1364 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D7E3B5154E601400CF1364 /* libWeChatSDK.a */; };
 		E10296EC14CB5F7B002589A1 /* LabelConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = E10296EB14CB5F7B002589A1 /* LabelConverter.m */; };
 		E10296F514CC8CAC002589A1 /* LabelProperty-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = E10296F414CC8CAC002589A1 /* LabelProperty-Config.plist */; };
 		E118405714D7BD78000FF01F /* FriendListRenrenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E118405614D7BD78000FF01F /* FriendListRenrenViewController.m */; };
@@ -500,6 +501,9 @@
 		9B3C6FC614E7ABBA003B0E52 /* login_btn_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_btn_arrow@2x.png"; sourceTree = "<group>"; };
 		9B6FEAA114DD6DE800E1E677 /* label_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = label_white.png; sourceTree = "<group>"; };
 		9B6FEAA214DD6DE800E1E677 /* label_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "label_white@2x.png"; sourceTree = "<group>"; };
+		D0D7E3B5154E601400CF1364 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		D0D7E3B6154E601400CF1364 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		D0D7E3B7154E601400CF1364 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		E10296EA14CB5F7A002589A1 /* LabelConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelConverter.h; sourceTree = "<group>"; };
 		E10296EB14CB5F7B002589A1 /* LabelConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelConverter.m; sourceTree = "<group>"; };
 		E10296F414CC8CAC002589A1 /* LabelProperty-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "LabelProperty-Config.plist"; path = "Resource/LabelProperty-Config.plist"; sourceTree = "<group>"; };
@@ -870,6 +874,7 @@
 				E1ABA403141FA6E1002CD0A6 /* Foundation.framework in Frameworks */,
 				E1ABA405141FA6E1002CD0A6 /* CoreGraphics.framework in Frameworks */,
 				E1ABA407141FA6E1002CD0A6 /* CoreData.framework in Frameworks */,
+				D0D7E3B8154E601400CF1364 /* libWeChatSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -988,6 +993,24 @@
 				73F4F9C4144AAD8D00A692F7 /* WBRequest.m */,
 			);
 			path = BaseClass;
+			sourceTree = "<group>";
+		};
+		D0D7E3B2154E5F8900CF1364 /* WeChatSDK */ = {
+			isa = PBXGroup;
+			children = (
+				D0D7E3B4154E601400CF1364 /* SDKExport */,
+			);
+			name = WeChatSDK;
+			sourceTree = "<group>";
+		};
+		D0D7E3B4154E601400CF1364 /* SDKExport */ = {
+			isa = PBXGroup;
+			children = (
+				D0D7E3B5154E601400CF1364 /* libWeChatSDK.a */,
+				D0D7E3B6154E601400CF1364 /* WXApi.h */,
+				D0D7E3B7154E601400CF1364 /* WXApiObject.h */,
+			);
+			path = SDKExport;
 			sourceTree = "<group>";
 		};
 		E118407E14D9AB13000FF01F /* RODialogViewController */ = {
@@ -1707,6 +1730,7 @@
 		E1ABA443141FA882002CD0A6 /* SDK */ = {
 			isa = PBXGroup;
 			children = (
+				D0D7E3B2154E5F8900CF1364 /* WeChatSDK */,
 				E118412E14D9B487000FF01F /* FMDB */,
 				E118413A14D9CDCD000FF01F /* JSON */,
 				E1ABA447141FA882002CD0A6 /* RenrenSDK */,
@@ -2327,6 +2351,10 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				INFOPLIST_FILE = "SocialFusion/SocialFusion-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/SocialFusion/SDK/SDKExport\"",
+				);
 				PRODUCT_NAME = "Pocket Social";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -2348,6 +2376,10 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				INFOPLIST_FILE = "SocialFusion/SocialFusion-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/SocialFusion/SDK/SDKExport\"",
+				);
 				PRODUCT_NAME = "Pocket Social";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
