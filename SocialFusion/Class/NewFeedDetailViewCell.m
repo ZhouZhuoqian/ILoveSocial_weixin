@@ -19,7 +19,7 @@
     _detailController.managedObjectContext=context;
     _detailController.currentRenrenUser=ren;
     _detailController.currentWeiboUser=wei;
-    _detailController.delegateWX = self.delegateWX;
+//    _detailController.delegateWX = self.delegateWX;
   //  [self.contentView addSubview:detailController.view];
 }
 

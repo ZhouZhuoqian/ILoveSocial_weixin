@@ -84,10 +84,23 @@
     }
     return self;
 }
+- (id)initWithLabelIdentifiers:(NSArray *)identifiers andUsers:(NSDictionary *)userDict andWXDelegate:(id<sendMsgToWeChatViewDelegate>) var_delegate{
+    self = [self init];
+    if(self) {
+        self.delegateWX = var_delegate;
+        for(NSString *identifier in identifiers) {
+            [self addUserContentViewWithIndentifier:identifier andUsers:userDict];
+        }
+    }
+    return self;
+    
+}
 
 - (id)initWithLabelIdentifiers:(NSArray *)identifiers andUsers:(NSDictionary *)userDict {
     self = [self init];
     if(self) {
+        NSLog(@"ln root view controller");
+
         for(NSString *identifier in identifiers) {
             [self addUserContentViewWithIndentifier:identifier andUsers:userDict];
         }
@@ -124,10 +137,13 @@
 }
 
 - (id)addContentViewWithIndentifier:(NSString *)identifier andUsers:(NSDictionary *)userDict {
+//    NSLog(@"add content view with identifier");
     id result = nil;
     if([identifier isEqualToString:kChildAllSelfNewFeed]) {
 //        result = [NewFeedListController getNewFeedListControllerwithStyle:kAllSelfFeed];
+        NSLog(@"all feed");
         result = [NewFeedListController getNewFeedListControllerwithStyle:kAllSelfFeed andWXDelegate:self.delegateWX];
+//          result = [NewFeedListController getNewFeedListControllerwithStyle:kAllSelfFeed andWXDelegate:self];
 
     }
     else if([identifier isEqualToString:kChildRenrenSelfNewFeed]) {
@@ -178,6 +194,12 @@
     return result;
 }
 
+#pragma mark - weixin delegate
+-(void)sendTextContent:(NSString *)nsText{
+    NSLog(@"ln content %@",nsText);
+}
+
+
 - (void)forceRefreshScrollsToTopProperty {
     [_contentViewControllerHeap enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         UIViewController *vc = obj;
@@ -224,7 +246,7 @@
      //   NSLog(@"replaceObjectAtIndex! identifier nil!");
         abort();
     }
-    vc2.delegateWX = self.delegateWX;
+//    vc2.delegateWX = self.delegateWX;
     vc2.view.frame = vc.view.frame;
     [vc.view removeFromSuperview];
     [self.scrollView addSubview:vc2.view];

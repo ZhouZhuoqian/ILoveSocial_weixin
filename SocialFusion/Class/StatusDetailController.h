@@ -67,6 +67,7 @@
 //////////////weixin
 @protocol sendMsgToWeChatViewDelegate <NSObject>
 - (void) sendTextContent:(NSString*)nsText;
+@optional
 - (void) sendAppContent;
 - (void) sendImageContent;
 - (void) sendNewsContent ; 

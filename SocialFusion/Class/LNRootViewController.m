@@ -38,6 +38,8 @@
 @synthesize labelBarViewController = _labelBarViewController;
 @synthesize contentViewController = _contentViewController;
 @synthesize loginViewController = _loginViewController;
+//@synthesize delegateWX;
+
 - (void)dealloc {
     [_labelBarViewController release];
     [_contentViewController release];
@@ -105,22 +107,32 @@
 - (void)loadFakeContentView {
     [self.contentViewController.view removeFromSuperview];
     self.contentViewController = [[[LNContentViewController alloc] init] autorelease];
+    NSLog(@"ln root view controller load fake");
+    self.contentViewController.delegateWX = self;
+
     self.contentViewController.view.frame = CGRectMake(CONTENT_VIEW_ORIGIN_X, CONTENT_VIEW_ORIGIN_Y, self.contentViewController.view.frame.size.width, self.contentViewController.view.frame.size.height);
     [self.view insertSubview:self.contentViewController.view belowSubview:self.labelBarViewController.view];
     self.contentViewController.view.userInteractionEnabled = NO;
+    
 }
 
 - (void)loadContentView {
     if(![self.contentViewController isFake])
         return;
     [self.contentViewController.view removeFromSuperview];
-    NSArray *labelIdentifier = [LabelConverter getSystemDefaultLabelsIdentifier];
-    self.contentViewController = [[[LNContentViewController alloc] initWithLabelIdentifiers:labelIdentifier andUsers:self.userDict] autorelease];
+    NSArray *labelIdentifier = [LabelConverter getSystemDefaultLabelsIdentifier];    
+    self.contentViewController = [[[LNContentViewController alloc] initWithLabelIdentifiers:labelIdentifier andUsers:self.userDict andWXDelegate:self.delegateWX] autorelease];
+
     self.contentViewController.delegate = self;
-    self.contentViewController.delegateWX = self.delegateWX;
+    
     self.contentViewController.view.frame = CGRectMake(CONTENT_VIEW_ORIGIN_X, CONTENT_VIEW_ORIGIN_Y, self.contentViewController.view.frame.size.width, self.contentViewController.view.frame.size.height);
     [self.view insertSubview:self.contentViewController.view belowSubview:self.labelBarViewController.view];
     self.contentViewController.view.userInteractionEnabled = YES;
+}
+
+#pragma mark - weixin delegate
+-(void)sendTextContent:(NSString *)nsText{
+    NSLog(@"ln root %@",nsText);
 }
 
 // make sure label bar view is load before all the other views.
@@ -362,6 +374,8 @@
         self.labelBarViewController.view.frame = frame;
         
         self.contentViewController.view.userInteractionEnabled = YES;
+//        self.contentViewController.delegateWX = self;
+        
         self.loginViewController.view.userInteractionEnabled = NO;
     }
 }
@@ -392,6 +406,8 @@
         self.contentViewController.view.userInteractionEnabled = NO;
         self.loginViewController.view.userInteractionEnabled = YES;
     }
+//    self.contentViewController.delegateWX = self;
+
 }
 
 @end

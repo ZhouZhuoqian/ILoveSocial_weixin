@@ -65,7 +65,7 @@ static NSInteger SoryArrayByTime(NewFeedRootData* data1, NewFeedRootData* data2,
     return self;
 }
 + (NewFeedListController*)getNewFeedListControllerwithStyle:(kUserFeed)style andWXDelegate: ( id<sendMsgToWeChatViewDelegate> )var_delegate{
-    
+    NSLog(@"getnewfeedlistcontrollderwithstyle");
     NewFeedListController * tmpcon = [self getNewFeedListControllerwithStyle:style];
     tmpcon.delegateWX = var_delegate;
     return tmpcon;
@@ -544,7 +544,6 @@ static NSInteger SoryArrayByTime(NewFeedRootData* data1, NewFeedRootData* data2,
             
             [cell initWithFeedData:a context:self.managedObjectContext renren:self.currentRenrenUser weibo:self.currentWeiboUser];
             cell.detailController.delegate=self;
-            cell.detailController.delegateWX = self.delegateWX;
             return cell; 
         }
         
@@ -561,6 +560,7 @@ static NSInteger SoryArrayByTime(NewFeedRootData* data1, NewFeedRootData* data2,
         }
         else
         {
+            NSLog(@"detail cell");
             NewFeedDetailViewCell* cell;
             [[NSBundle mainBundle] loadNibNamed:@"NewFeedDetailViewCell" owner:self options:nil];
             cell = _newFeedDetailViewCel;
@@ -568,11 +568,22 @@ static NSInteger SoryArrayByTime(NewFeedRootData* data1, NewFeedRootData* data2,
             [cell initWithFeedData:a context:self.managedObjectContext renren:self.currentRenrenUser weibo:self.currentWeiboUser];
             
             cell.detailController.delegate=self;
-            cell.detailController.delegateWX = self.delegateWX;
+            if (YES) {
+                cell.detailController.delegateWX = self.delegateWX;
+            }else
+                cell.detailController.delegateWX = self;
+
             return cell;
         }
     }
 }
+
+#pragma mark - weixin delegate
+-(void)sendTextContent:(NSString *)nsText{
+
+//    NSLog(@"%@",nsText);
+}
+
 
 - (void)loadExtraDataForOnScreenRowsHelp:(NSIndexPath *)indexPath {
     if(self.tableView.dragging || self.tableView.decelerating || _reloadingFlag)

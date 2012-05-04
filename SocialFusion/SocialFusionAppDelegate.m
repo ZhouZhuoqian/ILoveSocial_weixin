@@ -30,10 +30,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     _rootViewController = [[LNRootViewController alloc] init];
-    _rootViewController.delegateWX = self;
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:_rootViewController];
     _rootViewController.managedObjectContext = self.managedObjectContext;
+    _rootViewController.delegateWX = self;
+    NSLog(@"delegate");
+
     navigationController.navigationBarHidden = YES;
     self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
@@ -287,7 +289,8 @@
 // send msg to weixin
 - (void) sendTextContent:(NSString*)nsText
 {
-    NSLog(@"%@",nsText);
+    NSLog(@"__________%@",nsText);
+    
     if (NO) {
         // request
         SendMessageToWXReq* req = [[[SendMessageToWXReq alloc] init]autorelease];

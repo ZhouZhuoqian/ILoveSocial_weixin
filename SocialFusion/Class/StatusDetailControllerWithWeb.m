@@ -23,16 +23,11 @@
 
 @implementation StatusDetailControllerWithWeb
 
-
-
 -(void)dealloc
 {
     [_webView release];
     [super dealloc];
 }
-
-
-
 
 - (void)loadMainView
 {
@@ -268,7 +263,7 @@
     }
     NSLog(@"%@", str_towx);
     
-//    [self.delegateWX sendTextContent:str_towx];
+    [self.delegateWX sendTextContent:str_towx];
     
 }
 -(IBAction)comment:(id)sender

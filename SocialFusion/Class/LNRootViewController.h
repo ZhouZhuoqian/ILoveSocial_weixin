@@ -12,14 +12,17 @@
 #import "LNContentViewController.h"
 //#import "StatusDetailController.h"
 
-@interface LNRootViewController : CoreDataViewController<LNLabelBarViewControllerDelegate, LNContentViewControllerDelegate> {
+@interface LNRootViewController : CoreDataViewController<LNLabelBarViewControllerDelegate, LNContentViewControllerDelegate,sendMsgToWeChatViewDelegate> {
+    
     LNLabelBarViewController *_labelBarViewController;
     LNContentViewController *_contentViewController;
     NSMutableDictionary *_openedUserHeap;
+    
 }
 
 
 @property (nonatomic, retain) LNLabelBarViewController *labelBarViewController;
 @property (nonatomic, retain) LNContentViewController *contentViewController;
+//@property (nonatomic, assign) id<sendMsgToWeChatViewDelegate>  delegateWX;
 
 @end

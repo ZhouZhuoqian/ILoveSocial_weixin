@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "StatusDetailController.h"
+#import "StatusDetailController.h"
 
 @class User;
 @protocol LNContentViewControllerDelegate;
-@protocol sendMsgToWeChatViewDelegate;
+//@protocol sendMsgToWeChatViewDelegate;
 
-@interface LNContentViewController : UIViewController<UIScrollViewDelegate> {
+@interface LNContentViewController : UIViewController<UIScrollViewDelegate,sendMsgToWeChatViewDelegate> {
     NSMutableArray *_contentViewControllerHeap;
     NSUInteger _currentContentIndex;
     NSMutableArray *_contentViewIdentifierHeap;
@@ -27,16 +27,18 @@
 @property (nonatomic, readonly) NSUInteger contentViewCount;
 @property (nonatomic, assign) id<LNContentViewControllerDelegate> delegate;
 @property (nonatomic, assign) id<sendMsgToWeChatViewDelegate> delegateWX;
-
 @property (nonatomic, readonly) BOOL isFake; 
 
 - (id)initWithLabelIdentifiers:(NSArray *)identifiers andUsers:(NSDictionary *)userDict;
+- (id)initWithLabelIdentifiers:(NSArray *)identifiers andUsers:(NSDictionary *)userDict andWXDelegate:(id<sendMsgToWeChatViewDelegate>) var_delegate;
+
 - (void)setContentViewAtIndex:(NSUInteger)index forIdentifier:(NSString *)identifier;
 - (void)addUserContentViewWithIndentifier:(NSString *)identifier andUsers:(NSDictionary *)userDict;
 - (void)removeContentViewAtIndex:(NSUInteger)index;
 - (NSString *)currentContentIdentifierAtIndex:(NSUInteger)index;
 
 @end
+
 
 @protocol LNContentViewControllerDelegate<NSObject>
 

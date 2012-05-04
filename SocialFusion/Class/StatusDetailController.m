@@ -62,11 +62,6 @@
 }
 
 
-
-
-
-
-
 - (void)clearData
 {
     if(!_clearDataFlag)
