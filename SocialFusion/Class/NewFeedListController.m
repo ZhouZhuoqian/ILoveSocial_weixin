@@ -19,7 +19,7 @@
 #import "Image+Addition.h"
 #import "UIImageView+Addition.h"
 #import "NewFeedBlog.h"
-#import "StatusDetailController.h"
+//#import "StatusDetailController.h"
 #import "UIImage+Addition.h"
 #import "DetailImageViewController.h"
 #import "NewFeedUserListController.h"
@@ -27,6 +27,7 @@
 #import "NSNotificationCenter+Addition.h"
 #import "User+Addition.h"
 #import "NSString+HTMLSet.h"
+
 
 static NSInteger SoryArrayByTime(NewFeedRootData* data1, NewFeedRootData* data2, void *context)
 {
@@ -40,6 +41,7 @@ static NSInteger SoryArrayByTime(NewFeedRootData* data1, NewFeedRootData* data2,
 @implementation NewFeedListController
 
 @synthesize loadingCount = _loadingCount;
+
 
 - (void)dealloc {
    [_feedStatusCel release];
@@ -61,6 +63,13 @@ static NSInteger SoryArrayByTime(NewFeedRootData* data1, NewFeedRootData* data2,
         _firstLoad = YES;
     }
     return self;
+}
++ (NewFeedListController*)getNewFeedListControllerwithStyle:(kUserFeed)style andWXDelegate: ( id<sendMsgToWeChatViewDelegate> )var_delegate{
+    
+    NewFeedListController * tmpcon = [self getNewFeedListControllerwithStyle:style];
+    tmpcon.delegateWX = var_delegate;
+    return tmpcon;
+    
 }
 
 + (NewFeedListController*)getNewFeedListControllerwithStyle:(kUserFeed)style
@@ -382,12 +391,7 @@ static NSInteger SoryArrayByTime(NewFeedRootData* data1, NewFeedRootData* data2,
         
         //  if ([self.fetchedResultsController objectAtIndexPath:indexPath])
         NewFeedRootData *data = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        
-        
     
-        
-        
-        
         if ([data class]==[NewFeedBlog class])
         {
             cell = (NewFeedStatusCell *)[tableView dequeueReusableCellWithIdentifier:BlogCell];
@@ -540,6 +544,7 @@ static NSInteger SoryArrayByTime(NewFeedRootData* data1, NewFeedRootData* data2,
             
             [cell initWithFeedData:a context:self.managedObjectContext renren:self.currentRenrenUser weibo:self.currentWeiboUser];
             cell.detailController.delegate=self;
+            cell.detailController.delegateWX = self.delegateWX;
             return cell; 
         }
         
@@ -552,7 +557,6 @@ static NSInteger SoryArrayByTime(NewFeedRootData* data1, NewFeedRootData* data2,
             [cell initWithFeedData:a context:self.managedObjectContext renren:self.currentRenrenUser weibo:self.currentWeiboUser];
             
             cell.detailController.delegate=self;
-
             return cell;
         }
         else
@@ -564,7 +568,7 @@ static NSInteger SoryArrayByTime(NewFeedRootData* data1, NewFeedRootData* data2,
             [cell initWithFeedData:a context:self.managedObjectContext renren:self.currentRenrenUser weibo:self.currentWeiboUser];
             
             cell.detailController.delegate=self;
-
+            cell.detailController.delegateWX = self.delegateWX;
             return cell;
         }
     }

@@ -19,6 +19,8 @@
 #import "NewFeedDetailBlogViewCell.h"
 #import "NewFeedAlbumCell.h"
 
+@class sendMsgToWeChatViewDelegate;
+
 typedef   enum kUserFeed {
     kRenrenSelfFeed = 0,
     kWeiboSelfFeed  = 1,
@@ -46,12 +48,16 @@ typedef   enum kUserFeed {
 
 }
 
+//@property (nonatomic, assign) id<sendMsgToWeChatViewDelegate> delegateWX;
+
 @property (nonatomic, readonly) WeiboUser *processWeiboUser;
 @property (nonatomic, readonly) RenrenUser *processRenrenUser;
 
 @property (nonatomic) int loadingCount;
 
 + (NewFeedListController*)getNewFeedListControllerwithStyle:(kUserFeed)style;
++ (NewFeedListController*)getNewFeedListControllerwithStyle:(kUserFeed)style andWXDelegate: (id<sendMsgToWeChatViewDelegate>)var_delegate;
+
 - (void)exposeCell:(NSIndexPath*)indexPath;
 - (void)showImage:(NSIndexPath*)indexPath;
 - (void)showImage:(NSString*)smallURL bigURL:(NSString*)stringURL;

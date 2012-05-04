@@ -11,6 +11,7 @@
 @implementation NewFeedDetailViewCell
 
 @synthesize detailController=_detailController;
+@synthesize delegateWX;
 
 - (void)initWithFeedData:(NewFeedRootData*)_feedData  context:(NSManagedObjectContext*)context renren:(RenrenUser*)ren weibo:(WeiboUser*)wei
 {
@@ -18,7 +19,7 @@
     _detailController.managedObjectContext=context;
     _detailController.currentRenrenUser=ren;
     _detailController.currentWeiboUser=wei;
-    
+    _detailController.delegateWX = self.delegateWX;
   //  [self.contentView addSubview:detailController.view];
 }
 

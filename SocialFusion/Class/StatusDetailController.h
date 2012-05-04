@@ -16,6 +16,7 @@
 #import "NewFeedRootData.h"
 #define kToastBottomVerticalPosition 400.0f
 
+@protocol sendMsgToWeChatViewDelegate;
 @protocol WeiboRenrenSelecter;
 
 @interface StatusDetailController : EGOTableViewController<UIScrollViewDelegate>
@@ -37,6 +38,7 @@
 
 @property (nonatomic, retain) NewFeedRootData* feedData;
 @property (nonatomic, assign) id<WeiboRenrenSelecter> delegate;
+@property (nonatomic, assign) id<sendMsgToWeChatViewDelegate> delegateWX;
 @property (nonatomic,retain) UIScrollView * scrollView;
 
 - (void)setFixedInfo;
@@ -63,3 +65,14 @@
 - (void)selectWeibo:(NSString*)weibo;
 -(void)selectRenren:(NSString*)renren;
 @end
+//////////////weixin
+@protocol sendMsgToWeChatViewDelegate <NSObject>
+- (void) sendTextContent:(NSString*)nsText;
+- (void) sendAppContent;
+- (void) sendImageContent;
+- (void) sendNewsContent ; 
+- (void) sendMusicContent ; 
+- (void) sendVideoContent ; 
+- (void) doAuth;
+@end
+//////////////weixin

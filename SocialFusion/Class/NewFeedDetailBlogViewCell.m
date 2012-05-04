@@ -16,7 +16,7 @@
     _detailController.managedObjectContext=context;
     _detailController.currentRenrenUser=ren;
     _detailController.currentWeiboUser=wei;
-    
+
     //  [self.contentView addSubview:detailController.view];
 }
 

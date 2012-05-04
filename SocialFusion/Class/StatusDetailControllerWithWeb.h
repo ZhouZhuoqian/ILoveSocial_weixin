@@ -7,6 +7,7 @@
 //
 
 #import "StatusDetailController.h"
+
 @interface StatusDetailControllerWithWeb : StatusDetailController<UIWebViewDelegate>
 {
      IBOutlet UIWebView* _webView;

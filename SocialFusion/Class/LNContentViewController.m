@@ -29,6 +29,7 @@
 @synthesize contentViewIndentifierHeap = _contentViewIndentifierHeap;
 @synthesize delegate = _delegate;
 @synthesize bgView = _bgView;
+@synthesize delegateWX;
 
 - (void)dealloc {
     [_contentViewControllerHeap release];
@@ -125,13 +126,19 @@
 - (id)addContentViewWithIndentifier:(NSString *)identifier andUsers:(NSDictionary *)userDict {
     id result = nil;
     if([identifier isEqualToString:kChildAllSelfNewFeed]) {
-        result = [NewFeedListController getNewFeedListControllerwithStyle:kAllSelfFeed];
+//        result = [NewFeedListController getNewFeedListControllerwithStyle:kAllSelfFeed];
+        result = [NewFeedListController getNewFeedListControllerwithStyle:kAllSelfFeed andWXDelegate:self.delegateWX];
+
     }
     else if([identifier isEqualToString:kChildRenrenSelfNewFeed]) {
-        result = [NewFeedListController getNewFeedListControllerwithStyle:kRenrenSelfFeed];
+//        result = [NewFeedListController getNewFeedListControllerwithStyle:kRenrenSelfFeed];
+        result = [NewFeedListController getNewFeedListControllerwithStyle:kRenrenSelfFeed andWXDelegate:self.delegateWX];
+
     }
     else if([identifier isEqualToString:kChildWeiboSelfNewFeed]) {
-        result = [NewFeedListController getNewFeedListControllerwithStyle:kWeiboSelfFeed];
+//        result = [NewFeedListController getNewFeedListControllerwithStyle:kWeiboSelfFeed];
+        result = [NewFeedListController getNewFeedListControllerwithStyle:kWeiboSelfFeed andWXDelegate:self.delegateWX];
+
     }
     else if([identifier isEqualToString:kChildRenrenFriend]) {
         result = [FriendListViewController getNewFeedListControllerWithType:RelationshipViewTypeRenrenFriends];
@@ -143,10 +150,14 @@
         result = [FriendListViewController getNewFeedListControllerWithType:RelationshipViewTypeWeiboFollowers];
     }
     else if([identifier isEqualToString:kChildRenrenNewFeed]) {
-        result = [NewFeedListController getNewFeedListControllerwithStyle:kRenrenUserFeed];
+//        result = [NewFeedListController getNewFeedListControllerwithStyle:kRenrenUserFeed];
+        result = [NewFeedListController getNewFeedListControllerwithStyle:kRenrenUserFeed andWXDelegate:self.delegateWX];
+
     }
     else if([identifier isEqualToString:kChildWeiboNewFeed]) {
-        result = [NewFeedListController getNewFeedListControllerwithStyle:kWeiboUserFeed];
+//        result = [NewFeedListController getNewFeedListControllerwithStyle:kWeiboUserFeed];
+        result = [NewFeedListController getNewFeedListControllerwithStyle:kWeiboUserFeed andWXDelegate:self.delegateWX];
+
     }
     else if([identifier isEqualToString:kParentPublication]) {
         result = [[[PublicationViewController alloc] init] autorelease];
@@ -206,12 +217,14 @@
         return;
     CoreDataViewController *vc = [self.contentViewControllerHeap objectAtIndex:index];
     CoreDataViewController *vc2 = [self addContentViewWithIndentifier:identifier andUsers:vc.userDict];
+    
     if(vc2 == nil)
         return;
     if(identifier == nil) {
      //   NSLog(@"replaceObjectAtIndex! identifier nil!");
         abort();
     }
+    vc2.delegateWX = self.delegateWX;
     vc2.view.frame = vc.view.frame;
     [vc.view removeFromSuperview];
     [self.scrollView addSubview:vc2.view];

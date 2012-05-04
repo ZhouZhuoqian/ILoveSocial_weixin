@@ -19,7 +19,11 @@
 #import "DetailImageViewController.h"
 #import "CardBrowserViewController.h"
 
+
+
 @implementation StatusDetailControllerWithWeb
+
+
 
 -(void)dealloc
 {
@@ -189,6 +193,8 @@
 
 -(IBAction)repost
 {
+    NSLog(@"statusdetail controller with web REPOST");
+    
     RepostViewController *vc = [[RepostViewController alloc] init];
     vc.managedObjectContext = self.managedObjectContext;
     
@@ -217,6 +223,56 @@
     
     NSLog(@"repost to weixin __ web");
     // todo
+    NewFeedData * newFeedData = (NewFeedData*)self.feedData;
+    NSString * str_towx;
+    
+    if ([newFeedData getStyle]==0)
+    {
+        NSLog(@"renren");
+        if (newFeedData.repost_ID!=nil){
+            NSLog(@"repo id");
+            
+            str_towx = [NSString stringWithFormat:@"%@:%@ [来自人人网]", 
+                        newFeedData.repost_Name  , newFeedData.repost_Status];
+            
+        }else{
+            
+            str_towx=[NSString stringWithFormat:@"%@:%@ [来自人人网]",[newFeedData.author name],newFeedData.message];
+            
+        }
+        
+        NSLog(@"%@", str_towx);
+        
+    }else{       
+        NSLog(@"weibo");
+        if (newFeedData.repost_ID!=nil){
+            NSLog(@"repo id");
+            str_towx = [NSString stringWithFormat:@"//@%@:%@转自%@：%@ [来自新浪微博]", [self.feedData.author name]  , newFeedData.message,newFeedData.repost_Name,newFeedData.repost_Status];
+        }else{
+            str_towx = [NSString stringWithFormat:@"//@%@:%@ [来自新浪微博]",[self.feedData.author name] , newFeedData.message];
+        }
+        
+        NSLog(@"%@", str_towx);
+    }
+    
+    
+    if (newFeedData.pic_URL!=nil){
+        
+        NSData *imageData = nil;
+        Image *image = [Image imageWithURL:newFeedData.pic_big_URL inManagedObjectContext:self.managedObjectContext];
+        if (image==nil)
+        {
+            imageData = [Image imageWithURL:newFeedData.pic_big_URL  inManagedObjectContext:self.managedObjectContext].imageData.data;
+        }
+        else
+        {
+            imageData=image.imageData.data;
+        }
+    }
+    
+    
+    
+    [self.delegateWX sendTextContent:str_towx];
     
     
 }

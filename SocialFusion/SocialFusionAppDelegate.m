@@ -18,15 +18,29 @@
 @synthesize managedObjectModel = __managedObjectModel;  
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 
+
+
+-(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
+    
+    return     [WXApi handleOpenURL:url delegate:self];
+}
+
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     _rootViewController = [[LNRootViewController alloc] init];
+    _rootViewController.delegateWX = self;
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:_rootViewController];
     _rootViewController.managedObjectContext = self.managedObjectContext;
     navigationController.navigationBarHidden = YES;
     self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
+    
+    // Override point for customization after application launch.   
+    //向微信注册
+    [WXApi registerApp:@"wxd930ea5d5a258f4f"]; 
     
     return YES;
 }
@@ -58,7 +72,7 @@
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
-     // NSLog(@"%@",self.viewController.managedObjectContext);
+    // NSLog(@"%@",self.viewController.managedObjectContext);
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -96,7 +110,7 @@
              
              abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button. 
              */  
-           // NSLog(@"Unresolved error %@, %@", error, [error userInfo]);  
+            // NSLog(@"Unresolved error %@, %@", error, [error userInfo]);  
             abort();  
         }   
     }  
@@ -195,7 +209,7 @@
          Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
          
          */
-     //   NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        //   NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }    
     
@@ -212,7 +226,86 @@
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];  
 }  
 #pragma mark - weixin api delegate
+-(void) onReq:(BaseReq*)req{
+    //    onReq是微信终端向第三方程序发起请求，要求第三方程序响应。第三方程序响应完后必须调用sendRsp返回。在调用sendRsp返回时，会切回到微信终端程序界面。
+    
+    if([req isKindOfClass:[GetMessageFromWXReq class]])
+    {
+        [self onRequestAppMessage];
+    }
+    else if([req isKindOfClass:[ShowMessageFromWXReq class]])
+    {
+        ShowMessageFromWXReq* temp = (ShowMessageFromWXReq*)req;
+        [self onShowMediaMessage:temp.message]; 
+    }
+    
+}
 
 
+-(void) onResp:(BaseResp*)resp{
+    
+    //    如果第三方程序向微信发送了sendReq的请求，那么onResp会被回调。sendReq请求调用后，会切到微信终端程序界面。
+    
+}
+
+
+-(void) onRequestAppMessage
+{
+    // 微信请求App提供内容， 需要app提供内容后使用sendRsp返回
+    
+    //    RespForWeChatViewController* controller = [[RespForWeChatViewController alloc]autorelease];
+    //    controller.delegate = self;
+    //    [self.viewController presentModalViewController:controller animated:YES];
+    
+}
+
+-(void) onShowMediaMessage:(WXMediaMessage *) message
+{
+    // 微信启动， 有消息内容。
+    //    [self viewContent:message];
+}
+
+- (void) viewContent:(WXMediaMessage *) msg
+{
+    //显示微信传过来的内容    
+    WXAppExtendObject *obj = msg.mediaObject;
+    
+    NSString *strTitle = [NSString stringWithFormat:@"消息来自微信"];
+    NSString *strMsg = [NSString stringWithFormat:@"标题：%@ \n内容：%@ \n附带信息：%@ \n缩略图:%u bytes\n\n", msg.title, msg.description, obj.extInfo, msg.thumbData.length];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];    
+    [alert show];
+    [alert release];
+}
+
+
+
+#pragma mark - sendmsg to wechat delegate
+
+// send msg to weixin
+- (void) sendTextContent:(NSString*)nsText
+{
+    // request
+    SendMessageToWXReq* req = [[[SendMessageToWXReq alloc] init]autorelease];
+    req.bText = YES;
+    req.text = nsText;
+    // send request
+    [WXApi sendReq:req];
+}
+
+- (void) sendAppContent{
+    NSLog(@"send app content");
+}
+- (void) sendImageContent{
+}
+
+- (void) sendNewsContent{
+}
+-(void)sendVideoContent{
+    
+}
+-(void)doAuth{
+    
+}
 
 @end

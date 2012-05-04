@@ -17,6 +17,7 @@
 @synthesize currentWeiboUser = _currentWeiboUser;
 @synthesize renrenUser = _renrenUser;
 @synthesize weiboUser = _weiboUser;
+@synthesize delegateWX;
 
 - (void)dealloc
 {

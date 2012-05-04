@@ -15,7 +15,7 @@
 #import "NewFeedBlog+NewFeedBlog_Addition.h"
 #import "Image+Addition.h"
 #import "UIImageView+Addition.h"
-#import "StatusDetailController.h"
+//#import "StatusDetailController.h"
 #import "StatusCommentData+StatusCommentData_Addition.h"
 #import "CommonFunction.h"
 #import "NSString+HTMLSet.h"
@@ -29,6 +29,7 @@
 @synthesize feedData = _feedData;
 @synthesize delegate=_delegate;
 @synthesize scrollView;
+@synthesize delegateWX;
 
 - (void)dealloc {
     [_commentCel release];
@@ -485,6 +486,7 @@
 
 -(IBAction)repostToWeixin:(id)sender{
     // super class
+    NSLog(@"reposttoweixin super class");
 }
 
 -(IBAction)comment:(id)sender

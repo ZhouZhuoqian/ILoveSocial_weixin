@@ -18,6 +18,7 @@
 
 @class RenrenUser;
 @class WeiboUser;
+@protocol sendMsgToWeChatViewDelegate;
 
 @interface CoreDataViewController : UIViewController {
     NSManagedObjectContext *_managedObjectContext;
@@ -34,5 +35,6 @@
 @property (nonatomic, retain) WeiboUser *weiboUser;
 @property (nonatomic, assign) NSDictionary *currentUserDict;
 @property (nonatomic, assign) NSDictionary *userDict;
+@property (nonatomic, assign) id<sendMsgToWeChatViewDelegate> delegateWX;
 
 @end

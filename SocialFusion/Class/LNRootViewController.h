@@ -10,12 +10,14 @@
 #import "CoreDataViewController.h"
 #import "LNLabelBarViewController.h"
 #import "LNContentViewController.h"
+//#import "StatusDetailController.h"
 
 @interface LNRootViewController : CoreDataViewController<LNLabelBarViewControllerDelegate, LNContentViewControllerDelegate> {
     LNLabelBarViewController *_labelBarViewController;
     LNContentViewController *_contentViewController;
     NSMutableDictionary *_openedUserHeap;
 }
+
 
 @property (nonatomic, retain) LNLabelBarViewController *labelBarViewController;
 @property (nonatomic, retain) LNContentViewController *contentViewController;

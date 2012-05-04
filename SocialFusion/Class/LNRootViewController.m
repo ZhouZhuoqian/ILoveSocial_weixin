@@ -38,7 +38,6 @@
 @synthesize labelBarViewController = _labelBarViewController;
 @synthesize contentViewController = _contentViewController;
 @synthesize loginViewController = _loginViewController;
-
 - (void)dealloc {
     [_labelBarViewController release];
     [_contentViewController release];
@@ -118,6 +117,7 @@
     NSArray *labelIdentifier = [LabelConverter getSystemDefaultLabelsIdentifier];
     self.contentViewController = [[[LNContentViewController alloc] initWithLabelIdentifiers:labelIdentifier andUsers:self.userDict] autorelease];
     self.contentViewController.delegate = self;
+    self.contentViewController.delegateWX = self.delegateWX;
     self.contentViewController.view.frame = CGRectMake(CONTENT_VIEW_ORIGIN_X, CONTENT_VIEW_ORIGIN_Y, self.contentViewController.view.frame.size.width, self.contentViewController.view.frame.size.height);
     [self.view insertSubview:self.contentViewController.view belowSubview:self.labelBarViewController.view];
     self.contentViewController.view.userInteractionEnabled = YES;

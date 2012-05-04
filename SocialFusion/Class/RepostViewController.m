@@ -60,11 +60,13 @@
 {
     [super viewDidLoad];
     
+    
     _repostToRenren=NO;
     _repostToWeibo=NO;
     _comment=NO;
     if (_commentPage==NO)
     {
+
         if (_style==kRenrenStatus)
         {
             [self didClickPostToRenrenButton];
@@ -88,6 +90,8 @@
         }
         if (_style==kNewBlog)
         {
+            NSLog(@"repost view controller ");
+
             if (((NewFeedBlog*)_feedData).shareID!=nil)
             {
                 _commentBut.hidden=YES;
@@ -171,7 +175,9 @@
                 else
                 {
                     NSDictionary* dict=client.responseJSONObject;
+                    
                     NSString* statusID=[[dict objectForKey:@"id"] stringValue];
+                    NSLog(@"%@", statusID);
                     [self performSelector:@selector(forwardWeibo:) withObject:statusID afterDelay:1];
                     
                 }
@@ -285,10 +291,7 @@
                 }
                 if (((NewFeedData*)_feedData).repost_ID!=nil)
                 {
-                    
-                    
-                    
-                    
+
                     [client postStatus:[NSString stringWithFormat:@"%@ 转自%@：%@[来自新浪微博]",self.textView.text,((NewFeedData*)_feedData).repost_Name,((NewFeedData*)_feedData).repost_Status] withImage:[UIImage imageWithData:imageData]];
                     
                 }

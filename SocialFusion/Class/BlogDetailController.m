@@ -119,7 +119,6 @@
 }
 
 -(IBAction)repostToWeixin:(id)sender{
-    [super repostToWeixin:sender];
     NSLog(@"repost to weixin blog");
     
 }

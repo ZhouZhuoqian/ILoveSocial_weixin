@@ -7,13 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "StatusDetailController.h"
+//#import "StatusDetailController.h"
 #import "StatusDetailControllerWithWeb.h"
+
+
+@protocol sendMsgToWeChatViewDelegate;
+
+
 @interface NewFeedDetailViewCell : UITableViewCell
 {
     IBOutlet StatusDetailControllerWithWeb* _detailController;
 }
 @property (nonatomic, retain) StatusDetailControllerWithWeb* detailController;
+@property (nonatomic,assign) id<sendMsgToWeChatViewDelegate> delegateWX;
 
 - (void)initWithFeedData:(NewFeedRootData*)_feedData  context:(NSManagedObjectContext*)context renren:(RenrenUser*)ren weibo:(WeiboUser*)wei;
 @end

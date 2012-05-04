@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "WXApi.h"
+#import "StatusDetailController.h"
+//@protocol sendMsgToWeChatViewDelegate;
 
 @class LNRootViewController;
-@interface SocialFusionAppDelegate : NSObject <UIApplicationDelegate,WXApiDelegate>
+@interface SocialFusionAppDelegate : NSObject <UIApplicationDelegate,WXApiDelegate,sendMsgToWeChatViewDelegate>
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) LNRootViewController *rootViewController;
