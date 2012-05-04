@@ -32,13 +32,12 @@
     BOOL _showMoreButton;
     UIActivityIndicatorView* _activity;
     NSData* _photoData; 
-          id<WeiboRenrenSelecter> _delegate;
+    id<WeiboRenrenSelecter> _delegate;
 
 }
 
 @property (nonatomic, retain) NewFeedRootData* feedData;
 @property (nonatomic, assign) id<WeiboRenrenSelecter> delegate;
-@property (nonatomic, assign) id<sendMsgToWeChatViewDelegate> delegateWX;
 @property (nonatomic,retain) UIScrollView * scrollView;
 
 - (void)setFixedInfo;
@@ -54,11 +53,9 @@
 
 -(IBAction)selectUser;
 -(IBAction)selectCommentUser:(id)sender;
-
-
-
-
 @end
+
+
 
 @protocol WeiboRenrenSelecter<NSObject>
 

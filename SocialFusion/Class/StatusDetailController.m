@@ -29,7 +29,6 @@
 @synthesize feedData = _feedData;
 @synthesize delegate=_delegate;
 @synthesize scrollView;
-@synthesize delegateWX;
 
 - (void)dealloc {
     [_commentCel release];

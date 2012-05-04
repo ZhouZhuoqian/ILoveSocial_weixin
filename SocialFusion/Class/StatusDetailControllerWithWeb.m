@@ -241,7 +241,6 @@
             
         }
         
-        NSLog(@"%@", str_towx);
         
     }else{       
         NSLog(@"weibo");
@@ -252,9 +251,8 @@
             str_towx = [NSString stringWithFormat:@"//@%@:%@ [来自新浪微博]",[self.feedData.author name] , newFeedData.message];
         }
         
-        NSLog(@"%@", str_towx);
     }
-    
+
     
     if (newFeedData.pic_URL!=nil){
         
@@ -263,17 +261,14 @@
         if (image==nil)
         {
             imageData = [Image imageWithURL:newFeedData.pic_big_URL  inManagedObjectContext:self.managedObjectContext].imageData.data;
-        }
-        else
+        }else
         {
             imageData=image.imageData.data;
         }
     }
+    NSLog(@"%@", str_towx);
     
-    
-    
-    [self.delegateWX sendTextContent:str_towx];
-    
+//    [self.delegateWX sendTextContent:str_towx];
     
 }
 -(IBAction)comment:(id)sender
@@ -304,9 +299,6 @@
 
 -(void)showBigImage
 {
-    
-    
-    
     [DetailImageViewController showDetailImageWithURL:((NewFeedData*)self.feedData).pic_big_URL context:self.managedObjectContext];
     
     

@@ -265,6 +265,8 @@
     //    [self viewContent:message];
 }
 
+
+
 - (void) viewContent:(WXMediaMessage *) msg
 {
     //显示微信传过来的内容    
@@ -285,12 +287,17 @@
 // send msg to weixin
 - (void) sendTextContent:(NSString*)nsText
 {
-    // request
-    SendMessageToWXReq* req = [[[SendMessageToWXReq alloc] init]autorelease];
-    req.bText = YES;
-    req.text = nsText;
-    // send request
-    [WXApi sendReq:req];
+    NSLog(@"%@",nsText);
+    if (NO) {
+        // request
+        SendMessageToWXReq* req = [[[SendMessageToWXReq alloc] init]autorelease];
+        req.bText = YES;
+        req.text = nsText;
+        // send request
+        [WXApi sendReq:req];
+        
+    }
+    
 }
 
 - (void) sendAppContent{
@@ -305,6 +312,11 @@
     
 }
 -(void)doAuth{
+    SendAuthReq* req = [[[SendAuthReq alloc] init] autorelease];
+    req.scope = @"username,post_timeline";
+    req.state = @"xxx";
+    
+    [WXApi sendReq:req];
     
 }
 
