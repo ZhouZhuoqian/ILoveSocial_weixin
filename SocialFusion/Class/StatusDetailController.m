@@ -52,13 +52,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.scrollView = (UIScrollView *)self.view;
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * 2, self.scrollView.frame.size.height);
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * 2, self.scrollView.frame.size.height); 
+
 }
 
 - (void)showBigImage
 {
 
-    
 }
 
 

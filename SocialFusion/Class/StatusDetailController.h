@@ -14,6 +14,8 @@
 
 #import "EGOTableViewController.h"
 #import "NewFeedRootData.h"
+
+
 #define kToastBottomVerticalPosition 400.0f
 
 @protocol sendMsgToWeChatViewDelegate;
