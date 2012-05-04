@@ -267,8 +267,6 @@
         }
     }
     NSLog(@"%@", str_towx);
-    NSLog(@"%@", str_towx);
-
     
 //    [self.delegateWX sendTextContent:str_towx];
     
