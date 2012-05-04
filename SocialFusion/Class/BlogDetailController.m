@@ -22,6 +22,7 @@
     [_blogDetail release];
     [super dealloc];
 }
+
 - (void)loadWebView
 {
     
@@ -90,7 +91,6 @@
     
     [vc setStyle:kNewBlog];
     
-    
     vc.feedData=self.feedData;
     
     vc.blogData=_blogDetail;
@@ -98,6 +98,45 @@
     [vc setcommentPage:NO];
     [[UIApplication sharedApplication] presentModalViewController:vc];
     [vc release];
+}
+
+
+
+-(IBAction)repostToWeixin:(id)sender{
+    NSLog(@"repost to weixin blog");
+    
+    // todo
+    NewFeedBlog * newFeedBlog = (NewFeedBlog * )self.feedData;    
+    if (NO) {
+        WebStringToImageConverter* webStringConverter=[WebStringToImageConverter webStringToImage];
+
+        webStringConverter.delegate=self;
+        [webStringConverter startConvertBlogWithTitle:[newFeedBlog title] detail:_blogDetail];
+
+    }
+    
+    if ([_blogDetail length] <= 0 ) {
+        
+        [[UIApplication sharedApplication] presentToast:@"正在载入日志,请稍后" withVerticalPos:kToastBottomVerticalPosition];
+
+    }else {
+        [[UIApplication sharedApplication] presentToast:@"已发送" withVerticalPos:kToastBottomVerticalPosition];
+        [self.delegateWX sendTextContent:   [CommonFunction flattenHTML: _blogDetail] ];
+    }
+    
+
+}
+
+- (void)webStringToImageConverter:(WebStringToImageConverter *)converter  didFinishLoadWebViewWithImage:(UIImage*)image{
+
+    NSLog(@"blog");
+
+//    [self.delegateWX sendTextContent:@"blog"];
+//    imageData.imageData.data
+    
+    NSData *imageData = UIImagePNGRepresentation(image);
+    [self.delegateWX sendImageContent: imageData];
+    
 }
 -(IBAction)comment:(id)sender
 {
@@ -117,14 +156,6 @@
     [[UIApplication sharedApplication] presentModalViewController:vc];
     [vc release];
 }
-
--(IBAction)repostToWeixin:(id)sender{
-    NSLog(@"repost to weixin blog");
-    
-}
-
-
-
 
 
 

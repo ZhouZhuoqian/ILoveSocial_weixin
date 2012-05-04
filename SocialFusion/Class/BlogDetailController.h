@@ -7,8 +7,9 @@
 //
 
 #import "StatusDetailControllerWithWeb.h"
+#import "WebStringToImageConverter.h"
 
-@interface BlogDetailController : StatusDetailControllerWithWeb
+@interface BlogDetailController : StatusDetailControllerWithWeb<WebStringToImageConverterDelegate>
 {
     
     NSString* _blogDetail;

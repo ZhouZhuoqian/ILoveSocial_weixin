@@ -481,6 +481,10 @@
 -(IBAction)repostToWeixin:(id)sender{
     // super class
     NSLog(@"reposttoweixin super class");
+    
+    [[UIApplication sharedApplication] presentToast:@"暂不支持" withVerticalPos:kToastBottomVerticalPosition];
+
+    
 }
 
 -(IBAction)comment:(id)sender

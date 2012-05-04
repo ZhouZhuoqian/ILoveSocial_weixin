@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "WXApi.h"
 #import "StatusDetailController.h"
+#import "CommonFunction.h"
+
 //@protocol sendMsgToWeChatViewDelegate;
 
 @class LNRootViewController;

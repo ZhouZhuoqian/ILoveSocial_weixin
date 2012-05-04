@@ -11,7 +11,7 @@
  
 @interface AlbumDetailController : StatusDetailController
 {
-        IBOutlet UILabel* _albumTitle;
+    IBOutlet UILabel* _albumTitle;
     IBOutlet UIScrollView* _contentScrollView;
 
     int _albumPageNumber;

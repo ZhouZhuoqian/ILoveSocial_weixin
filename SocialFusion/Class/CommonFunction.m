@@ -9,6 +9,39 @@
 #import "CommonFunction.h"
 
 @implementation CommonFunction
++ (NSString *)flattenHTML:(NSString *)html {
+    
+    NSScanner *theScanner;
+    NSString *text = nil;
+    theScanner = [NSScanner scannerWithString:html];
+    
+    while ([theScanner isAtEnd] == NO) {
+        
+        [theScanner scanUpToString:@"<" intoString:NULL] ; 
+        
+        [theScanner scanUpToString:@">" intoString:&text] ;
+        
+        html = [html stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@>", text] withString:@""];
+    }
+    //
+    html = [html stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    return html;
+}
+
++ (NSString *)subStringToOneK:(NSString *)incomestring withMaxLength:(NSInteger)maxlength{
+    NSString * outString = @"";
+
+    if ([incomestring length] >=maxlength) {
+        outString = [incomestring substringToIndex:maxlength];
+    }else{
+        outString = incomestring;
+    }
+    return  outString;
+    
+}
+
+
 +(NSString*)getTimeBefore:(NSDate*)date
 {
     

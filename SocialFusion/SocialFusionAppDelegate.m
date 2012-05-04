@@ -35,7 +35,7 @@
     _rootViewController.managedObjectContext = self.managedObjectContext;
     _rootViewController.delegateWX = self;
     NSLog(@"delegate");
-
+    
     navigationController.navigationBarHidden = YES;
     self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
@@ -231,15 +231,20 @@
 -(void) onReq:(BaseReq*)req{
     //    onReq是微信终端向第三方程序发起请求，要求第三方程序响应。第三方程序响应完后必须调用sendRsp返回。在调用sendRsp返回时，会切回到微信终端程序界面。
     
-    if([req isKindOfClass:[GetMessageFromWXReq class]])
-    {
-        [self onRequestAppMessage];
+    
+    if (NO) {
+        if([req isKindOfClass:[GetMessageFromWXReq class]])
+        {
+            [self onRequestAppMessage];
+        }
+        else if([req isKindOfClass:[ShowMessageFromWXReq class]])
+        {
+            ShowMessageFromWXReq* temp = (ShowMessageFromWXReq*)req;
+            [self onShowMediaMessage:temp.message]; 
+        }
+        
     }
-    else if([req isKindOfClass:[ShowMessageFromWXReq class]])
-    {
-        ShowMessageFromWXReq* temp = (ShowMessageFromWXReq*)req;
-        [self onShowMediaMessage:temp.message]; 
-    }
+    
     
 }
 
@@ -271,15 +276,18 @@
 
 - (void) viewContent:(WXMediaMessage *) msg
 {
-    //显示微信传过来的内容    
-    WXAppExtendObject *obj = msg.mediaObject;
+    if (NO) {
+        
+        //显示微信传过来的内容    
+        WXAppExtendObject *obj = msg.mediaObject;
+        NSString *strTitle = [NSString stringWithFormat:@"消息来自微信"];
+        NSString *strMsg = [NSString stringWithFormat:@"标题：%@ \n内容：%@ \n附带信息：%@ \n缩略图:%u bytes\n\n", msg.title, msg.description, obj.extInfo, msg.thumbData.length];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];    
+        [alert show];
+        [alert release];
+    } 
     
-    NSString *strTitle = [NSString stringWithFormat:@"消息来自微信"];
-    NSString *strMsg = [NSString stringWithFormat:@"标题：%@ \n内容：%@ \n附带信息：%@ \n缩略图:%u bytes\n\n", msg.title, msg.description, obj.extInfo, msg.thumbData.length];
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];    
-    [alert show];
-    [alert release];
 }
 
 
@@ -289,14 +297,82 @@
 // send msg to weixin
 - (void) sendTextContent:(NSString*)nsText
 {
+    nsText = [CommonFunction subStringToOneK:nsText withMaxLength:1000*10];
     NSLog(@"__________%@",nsText);
     
-    if (NO) {
-        // request
-        SendMessageToWXReq* req = [[[SendMessageToWXReq alloc] init]autorelease];
-        req.bText = YES;
-        req.text = nsText;
-        // send request
+    // request
+    SendMessageToWXReq* req = [[[SendMessageToWXReq alloc] init]autorelease];
+    req.bText = YES;
+    req.text = nsText;
+    // send request
+    if (YES) {
+        [WXApi sendReq:req];
+    }
+    
+}
+
+
+-(void)sendImageContentWith:(UIImage *)image{
+    //发送内容给微信
+    WXMediaMessage *message = [WXMediaMessage message];
+    [message setThumbImage:image];
+    WXImageObject *ext = [WXImageObject object];
+    ext.imageData = UIImagePNGRepresentation(image);
+    message.mediaObject = ext;
+    SendMessageToWXReq* req = [[[SendMessageToWXReq alloc] init]autorelease];
+    req.bText = NO;
+    req.message = message;
+    [WXApi sendReq:req];
+}
+
+
+-(void)sendImageContent:(NSData *)imagedata{
+    
+    //发送内容给微信
+    WXMediaMessage *message = [WXMediaMessage message];
+    [message setThumbImage:[UIImage imageWithData:imagedata]];
+    WXImageObject *ext = [WXImageObject object];
+    ext.imageData = imagedata ;
+    message.mediaObject = ext;
+    SendMessageToWXReq* req = [[[SendMessageToWXReq alloc] init]autorelease];
+    req.bText = NO;
+    req.message = message;
+    [WXApi sendReq:req];
+    
+    
+}
+-(void)sendImageContent:(NSData *)imagedata withTextMsg:(NSString *)msg andBigImageUrl:(NSString *)bigImageUrl{
+    
+    NSLog(@"SEND IMAGE CONTENT");
+    
+    msg = [CommonFunction subStringToOneK:msg withMaxLength:1000];
+
+    NSLog(@"__________%@",msg);
+    
+    
+    WXMediaMessage *message = [WXMediaMessage message];
+    SendMessageToWXReq* req = [[[SendMessageToWXReq alloc] init]autorelease];
+    
+    //    message.title = @"麦当劳“销售过期食品”其实不是卫生问题";
+    message.title = @"转发";
+    
+    message.description = msg;
+    //    if (NO) {
+    //        [message setThumbImage:[UIImage imageNamed:@"res2.jpg"]];
+    //    }else {
+    [message setThumbImage:[UIImage imageWithData: imagedata  ]];
+    //    }
+    
+    WXWebpageObject *ext = [WXWebpageObject object];
+    ext.webpageUrl = bigImageUrl;
+    message.mediaObject = ext;
+    
+    req.bText = NO;
+    req.message = message;
+    
+    [WXApi sendReq:req];
+    
+    if (YES) {
         [WXApi sendReq:req];
         
     }
@@ -306,11 +382,35 @@
 - (void) sendAppContent{
     NSLog(@"send app content");
 }
-- (void) sendImageContent{
+
+
+-(void)sendNewsContent:(NSString *)title withDetail:(NSString *)blogDetail withUrl:(NSString *)url{
+    
+    NSLog(@"%@",blogDetail);
+    blogDetail = [CommonFunction subStringToOneK:blogDetail withMaxLength:1000];
+    
+    WXMediaMessage *message = [WXMediaMessage message];
+    message.title = title;
+
+    NSLog(@"____%@",title);
+
+    NSLog(@"%@",blogDetail);
+    message.description = blogDetail;
+    [message setThumbImage:[UIImage imageNamed:@"res2.jpg"]];
+    
+    WXWebpageObject *ext = [WXWebpageObject object];
+    ext.webpageUrl = url;
+    message.mediaObject = ext;
+    
+    SendMessageToWXReq* req = [[[SendMessageToWXReq alloc] init]autorelease];
+    req.bText = NO;
+    req.message = message;
+    
+    [WXApi sendReq:req];
 }
 
-- (void) sendNewsContent{
-}
+
+
 -(void)sendVideoContent{
     
 }

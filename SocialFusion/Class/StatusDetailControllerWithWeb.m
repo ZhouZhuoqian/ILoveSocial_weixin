@@ -212,14 +212,12 @@
 
 -(IBAction)repostToWeixin:(id)sender{
     
-    if (NO) {
-        [[UIApplication sharedApplication] presentToast:@"当前版本暂不支持转发相册到微信。" withVerticalPos:kToastBottomVerticalPosition];
-    }
+    
     
     NSLog(@"repost to weixin __ web");
     // todo
     NewFeedData * newFeedData = (NewFeedData*)self.feedData;
-    NSString * str_towx;
+    NSString * outString;
     
     if ([newFeedData getStyle]==0)
     {
@@ -227,12 +225,12 @@
         if (newFeedData.repost_ID!=nil){
             NSLog(@"repo id");
             
-            str_towx = [NSString stringWithFormat:@"%@:%@ [来自人人网]", 
+            outString = [NSString stringWithFormat:@"%@:%@ [来自人人网]", 
                         newFeedData.repost_Name  , newFeedData.repost_Status];
             
         }else{
             
-            str_towx=[NSString stringWithFormat:@"%@:%@ [来自人人网]",[newFeedData.author name],newFeedData.message];
+            outString=[NSString stringWithFormat:@"%@:%@ [来自人人网]",[newFeedData.author name],newFeedData.message];
             
         }
         
@@ -241,29 +239,62 @@
         NSLog(@"weibo");
         if (newFeedData.repost_ID!=nil){
             NSLog(@"repo id");
-            str_towx = [NSString stringWithFormat:@"//@%@:%@转自%@：%@ [来自新浪微博]", [self.feedData.author name]  , newFeedData.message,newFeedData.repost_Name,newFeedData.repost_Status];
+            outString = [NSString stringWithFormat:@"//@%@:%@转自%@：%@ [来自新浪微博]", [self.feedData.author name]  , newFeedData.message,newFeedData.repost_Name,newFeedData.repost_Status];
         }else{
-            str_towx = [NSString stringWithFormat:@"//@%@:%@ [来自新浪微博]",[self.feedData.author name] , newFeedData.message];
+            outString = [NSString stringWithFormat:@"//@%@:%@ [来自新浪微博]",[self.feedData.author name] , newFeedData.message];
         }
         
     }
-
+    
     
     if (newFeedData.pic_URL!=nil){
-        
         NSData *imageData = nil;
-        Image *image = [Image imageWithURL:newFeedData.pic_big_URL inManagedObjectContext:self.managedObjectContext];
-        if (image==nil)
-        {
-            imageData = [Image imageWithURL:newFeedData.pic_big_URL  inManagedObjectContext:self.managedObjectContext].imageData.data;
-        }else
-        {
-            imageData=image.imageData.data;
+        
+        if (NO) {
+            Image *image = [Image imageWithURL:newFeedData.pic_big_URL inManagedObjectContext:self.managedObjectContext];
+            if (image==nil)
+            {
+                imageData = [Image imageWithURL:newFeedData.pic_big_URL  inManagedObjectContext:self.managedObjectContext].imageData.data;
+            }else
+            {
+                imageData=image.imageData.data;
+            }
+            
+        }else {
+            Image *image = [Image imageWithURL:newFeedData.pic_URL inManagedObjectContext:self.managedObjectContext];
+            if (image==nil)
+            {
+                imageData = [Image imageWithURL:newFeedData.pic_URL  inManagedObjectContext:self.managedObjectContext].imageData.data;
+            }else
+            {
+                imageData=image.imageData.data;
+            }
+            
         }
+        if ([outString length] <=0 || [imageData length]<=0 ) {
+            
+            [[UIApplication sharedApplication] presentToast:@"正在载入数据,请稍后" withVerticalPos:kToastBottomVerticalPosition];
+
+        }else {
+            [[UIApplication sharedApplication] presentToast:@"已发送" withVerticalPos:kToastBottomVerticalPosition];
+            [self.delegateWX sendImageContent:imageData withTextMsg:outString andBigImageUrl:newFeedData.pic_big_URL];
+
+        }
+        
+    }else {
+        
+        if ([outString length] <=0   ) {
+            [[UIApplication sharedApplication] presentToast:@"正在载入数据,请稍后" withVerticalPos:kToastBottomVerticalPosition];
+
+            
+        }else {
+            [[UIApplication sharedApplication] presentToast:@"已发送" withVerticalPos:kToastBottomVerticalPosition];
+            [self.delegateWX sendTextContent:outString];
+            
+        }
+        
     }
-    NSLog(@"%@", str_towx);
     
-    [self.delegateWX sendTextContent:str_towx];
     
 }
 -(IBAction)comment:(id)sender

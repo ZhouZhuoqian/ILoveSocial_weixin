@@ -35,7 +35,7 @@
     UIActivityIndicatorView* _activity;
     NSData* _photoData; 
     id<WeiboRenrenSelecter> _delegate;
-
+    
 }
 
 @property (nonatomic, retain) NewFeedRootData* feedData;
@@ -67,10 +67,13 @@
 //////////////weixin
 @protocol sendMsgToWeChatViewDelegate <NSObject>
 - (void) sendTextContent:(NSString*)nsText;
+- (void) sendImageContent: (NSData *) imagedata withTextMsg:(NSString* ) msg andBigImageUrl:(NSString *)bigImageUrl;
+- (void) sendImageContent: (NSData *) imagedata;
+-(void)sendImageContentWith:(UIImage *)image;
+- (void) sendNewsContent: (NSString *)title withDetail:(NSString *) blogDetail withUrl:(NSString*)url;
+
 @optional
 - (void) sendAppContent;
-- (void) sendImageContent;
-- (void) sendNewsContent ; 
 - (void) sendMusicContent ; 
 - (void) sendVideoContent ; 
 - (void) doAuth;

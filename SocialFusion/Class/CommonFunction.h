@@ -10,6 +10,8 @@
 
 @interface CommonFunction : NSObject
 
-+(NSString*)getTimeBefore:(NSDate*)date;
++ (NSString*)getTimeBefore:(NSDate*)date;
++ (NSString *)flattenHTML:(NSString *)html ;
++ (NSString *)subStringToOneK:(NSString *)incomestring withMaxLength:(NSInteger)maxlength;
 
 @end
