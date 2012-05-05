@@ -71,6 +71,8 @@
 - (void) sendImageContent: (NSData *) imagedata;
 -(void)sendImageContentWith:(UIImage *)image;
 - (void) sendNewsContent: (NSString *)title withDetail:(NSString *) blogDetail withUrl:(NSString*)url;
+-(void)sendImageContentWithString:(NSString *)urlString;
+
 
 @optional
 - (void) sendAppContent;

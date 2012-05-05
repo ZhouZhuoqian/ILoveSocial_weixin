@@ -841,28 +841,58 @@
 -(IBAction)repostToWeixin:(id)sender{
     NSLog(@"repost to weixin album detail ");
 
-    Image *image = [Image imageWithURL:_bigURL[_selectedPhoto%9] inManagedObjectContext:self.managedObjectContext];
+    if (NO) {
+        Image *image = [Image imageWithURL:_bigURL[_selectedPhoto%9] inManagedObjectContext:self.managedObjectContext];
+        
+        if (image == nil)
+        {
+            //        [_photoInAlbum[_selectedPhoto].imageView loadImageFromURL:_bigURL[_selectedPhoto%9] completion:^{
+            //        } cacheInContext:self.managedObjectContext];
+            //        NSLog(@"image == nil");
+            [[UIApplication sharedApplication] presentToast:@"暂时不支持转发相册" withVerticalPos:kToastBottomVerticalPosition];
+            
+        }
+        else
+        {
+   
+            NSData *imagedata = image.imageData.data;
+            if ( [imagedata length]  <=0) {
+                [[UIApplication sharedApplication] presentToast:@"图像尚未载入,请稍后" withVerticalPos:kToastBottomVerticalPosition];
+                
+            }else {
+                [[UIApplication sharedApplication] presentToast:@"已发送" withVerticalPos:kToastBottomVerticalPosition];
+                [self.delegateWX sendImageContent:  imagedata];
+                
+            }
+            
+        }
+        
+    }else{
+        if (_selectedPhoto!=-1)
+        {
+            
+            NSString * outstring = _photoInAlbum[_selectedPhoto].captian.text;
 
-    if (image == nil)
-    {
-//        [_photoInAlbum[_selectedPhoto].imageView loadImageFromURL:_bigURL[_selectedPhoto%9] completion:^{
-//        } cacheInContext:self.managedObjectContext];
-//        NSLog(@"image == nil");
-        [[UIApplication sharedApplication] presentToast:@"暂时不支持转发相册" withVerticalPos:kToastBottomVerticalPosition];
+            UIImage * imageview = _photoInAlbum[_selectedPhoto].imageView.image;
+            
+            NSData *imagedata = UIImageJPEGRepresentation(imageview, 0.1);
 
-    }
-    else
-    {
-//        [_photoInAlbum[_selectedPhoto].imageView setImage:
-//         [UIImage imageWithData:image.imageData.data]];
+            
+            if ([imagedata length] > 10*1000) {
+                
+                [[UIApplication sharedApplication] presentToast:@"发送图片url" withVerticalPos:kToastBottomVerticalPosition];
+                NSString * outurl = _bigURL[_selectedPhoto];
+                
+                
+                [self.delegateWX sendImageContentWithString:outurl];
+            }else{
+                [[UIApplication sharedApplication] presentToast:@"发送图片" withVerticalPos:kToastBottomVerticalPosition];
 
-        NSData *imagedata = image.imageData.data;
-        if (        [imagedata length]  <=0) {
-            [[UIApplication sharedApplication] presentToast:@"图像尚未载入,请稍后" withVerticalPos:kToastBottomVerticalPosition];
-
-        }else {
-            [[UIApplication sharedApplication] presentToast:@"已发送" withVerticalPos:kToastBottomVerticalPosition];
-            [self.delegateWX sendImageContent:  imagedata];
+                [self.delegateWX sendImageContent:imagedata];
+            }
+           
+        }else{
+            [[UIApplication sharedApplication] presentToast:@"暂时不支持转发相册" withVerticalPos:kToastBottomVerticalPosition];
 
         }
         
@@ -870,8 +900,5 @@
     
     
 }
-
-
-
 
 @end

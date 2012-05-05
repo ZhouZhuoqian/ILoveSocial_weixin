@@ -85,6 +85,8 @@
     return self;
 }
 - (id)initWithLabelIdentifiers:(NSArray *)identifiers andUsers:(NSDictionary *)userDict andWXDelegate:(id<sendMsgToWeChatViewDelegate>) var_delegate{
+    NSLog(@"ln content view did load");
+
     self = [self init];
     if(self) {
         self.delegateWX = var_delegate;

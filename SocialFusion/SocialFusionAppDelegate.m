@@ -311,14 +311,19 @@
     
 }
 
+-(WXImageObject * )getWXImageExt : (NSData *) imagedata{
+    
+    NSLog(@"send image content");
+    WXImageObject *ext = [WXImageObject object];
+    ext.imageData = imagedata ;
+    return ext;
+}
 
 -(void)sendImageContentWith:(UIImage *)image{
     //发送内容给微信
     WXMediaMessage *message = [WXMediaMessage message];
     [message setThumbImage:image];
-    WXImageObject *ext = [WXImageObject object];
-    ext.imageData = UIImagePNGRepresentation(image);
-    message.mediaObject = ext;
+    message.mediaObject = [self getWXImageExt: UIImagePNGRepresentation(image) ];
     SendMessageToWXReq* req = [[[SendMessageToWXReq alloc] init]autorelease];
     req.bText = NO;
     req.message = message;
@@ -327,13 +332,10 @@
 
 
 -(void)sendImageContent:(NSData *)imagedata{
-    
     //发送内容给微信
     WXMediaMessage *message = [WXMediaMessage message];
     [message setThumbImage:[UIImage imageWithData:imagedata]];
-    WXImageObject *ext = [WXImageObject object];
-    ext.imageData = imagedata ;
-    message.mediaObject = ext;
+    message.mediaObject = [self getWXImageExt:imagedata];
     SendMessageToWXReq* req = [[[SendMessageToWXReq alloc] init]autorelease];
     req.bText = NO;
     req.message = message;
@@ -341,6 +343,29 @@
     
     
 }
+
+-(void)sendImageContentWithString:(NSString *)urlString{
+    //发送内容给微信
+    NSLog(@"image url : %@",urlString);
+    if (YES) {
+
+        WXMediaMessage *message = [WXMediaMessage message];
+        WXImageObject *ext = [WXImageObject object];
+        ext.imageUrl = urlString;
+        message.mediaObject = ext;
+        SendMessageToWXReq* req = [[[SendMessageToWXReq alloc] init]autorelease];
+        req.bText = NO;
+        req.message = message;
+        [WXApi sendReq:req];
+        
+    }else {
+        
+        [self sendImageContent:[NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]]];
+        
+    }
+
+}
+
 -(void)sendImageContent:(NSData *)imagedata withTextMsg:(NSString *)msg andBigImageUrl:(NSString *)bigImageUrl{
     
     NSLog(@"SEND IMAGE CONTENT");
