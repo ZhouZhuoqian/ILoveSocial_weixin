@@ -70,8 +70,9 @@
 - (void) sendImageContent: (NSData *) imagedata withTextMsg:(NSString* ) msg andBigImageUrl:(NSString *)bigImageUrl;
 - (void) sendImageContent: (NSData *) imagedata;
 -(void)sendImageContentWith:(UIImage *)image;
-- (void) sendNewsContent: (NSString *)title withDetail:(NSString *) blogDetail withUrl:(NSString*)url;
 -(void)sendImageContentWithString:(NSString *)urlString;
+- (void) sendNewsContent: (NSString *)title withDetail:(NSString *) blogDetail withUrl:(NSString*)url;
+-(void)sendNewsContent:(NSString *)title withDetail:(NSString *)blogDetail withImageUrl:(NSString *)url withBigImageUrl : (NSString *) big_image_url;
 
 
 @optional

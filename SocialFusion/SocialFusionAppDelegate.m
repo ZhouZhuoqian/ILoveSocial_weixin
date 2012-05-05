@@ -316,14 +316,20 @@
     NSLog(@"send image content");
     WXImageObject *ext = [WXImageObject object];
     ext.imageData = imagedata ;
+    NSLog(@"imagedata length = %i", [imagedata length]);
     return ext;
+    
 }
 
 -(void)sendImageContentWith:(UIImage *)image{
+    
     //发送内容给微信
     WXMediaMessage *message = [WXMediaMessage message];
-    [message setThumbImage:image];
-    message.mediaObject = [self getWXImageExt: UIImagePNGRepresentation(image) ];
+//    [message setThumbImage:image];
+    
+    message.mediaObject = [self getWXImageExt: UIImageJPEGRepresentation(image, 1.0)];
+
+    
     SendMessageToWXReq* req = [[[SendMessageToWXReq alloc] init]autorelease];
     req.bText = NO;
     req.message = message;
@@ -408,6 +414,32 @@
     NSLog(@"send app content");
 }
 
+-(void)sendNewsContent:(NSString *)title withDetail:(NSString *)blogDetail withImageUrl:(NSString *)url withBigImageUrl : (NSString *) big_image_url{
+    
+    NSLog(@"%@",blogDetail);
+    blogDetail = [CommonFunction subStringToOneK:blogDetail withMaxLength:1000];
+    
+    WXMediaMessage *message = [WXMediaMessage message];
+    message.title = title;
+    [message setThumbImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:url]]]];
+    
+    NSLog(@"____%@",title);
+    
+    NSLog(@"%@",blogDetail);
+    message.description = blogDetail;
+    [message setThumbImage:[UIImage imageNamed:@"res2.jpg"]];
+    
+    WXWebpageObject *ext = [WXWebpageObject object];
+    ext.webpageUrl = big_image_url;
+    message.mediaObject = ext;
+    
+    SendMessageToWXReq* req = [[[SendMessageToWXReq alloc] init]autorelease];
+    req.bText = NO;
+    req.message = message;
+    
+    [WXApi sendReq:req];
+    
+}
 
 -(void)sendNewsContent:(NSString *)title withDetail:(NSString *)blogDetail withUrl:(NSString *)url{
     

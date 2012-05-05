@@ -129,23 +129,13 @@
     
     UIImage* image1=[UIImage imageWithData:_photoData];
     
-    
-    
-    NSData* imagedata=UIImageJPEGRepresentation(image1, 10);
-    
-    
+    NSData* imagedata=UIImageJPEGRepresentation(image1, 1.0);
     
     NSString *imgB64 = [[imagedata base64Encoding] jpgDataURIWithContent];
-    
-    
-    
-    
     
     NSString* javascript = [NSString stringWithFormat:@"document.getElementById('upload').src='%@'", imgB64];
     
     [_webView stringByEvaluatingJavaScriptFromString:javascript];
-    
-    
     
     [_webView stringByEvaluatingJavaScriptFromString: @"document.body.scrollHeight"];
     

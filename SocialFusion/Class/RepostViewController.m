@@ -211,6 +211,7 @@
                 size.height=size.height+20;
                 
                 // textView.contentSize.height
+                NSLog(@"%f%f",size.width, size.height);
                 UIGraphicsBeginImageContext(size); 
                 
                 [textView.layer renderInContext:UIGraphicsGetCurrentContext()]; 

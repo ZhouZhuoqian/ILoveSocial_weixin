@@ -95,7 +95,7 @@
     //  return newImage;
     
     
-    NSData* imagedata=UIImageJPEGRepresentation(newImage, 10);
+    NSData* imagedata=UIImageJPEGRepresentation(newImage, 1.0);
     
     
     
@@ -357,9 +357,7 @@
     [self.contentView addSubview:_upCutline];
     
     [self.contentView addSubview:_defaultphotoView];
-    
     [self.contentView addSubview:_photoView];
-    
     [self.contentView addSubview:_photoOut];
     
     [self.contentView addSubview:_name];
@@ -373,7 +371,7 @@
 
 - (void)configureCell:(NewFeedRootData*)feedData  first:(BOOL)bol
 {    
-    NSLog(@"___________configure cell");
+//    NSLog(@"___________configure cell");
 
     _photoData=nil;
     

@@ -319,7 +319,7 @@
     {
         for (int i=_numberOfPhoto;i<9;i++)
         {
-           // _photoInAlbum[i].frame=CGRectMake(0, 0, 0, 0);
+            // _photoInAlbum[i].frame=CGRectMake(0, 0, 0, 0);
             _photoInAlbum[i].hidden=YES;
         }
     }
@@ -452,8 +452,8 @@
             [_photoInAlbum[_selectedPhoto].imageView setImage:[UIImage imageWithData:image.imageData.data]];
             
         }
-       _albumTitle.frame=CGRectMake(51 , 52, 192, 21);
-  
+        _albumTitle.frame=CGRectMake(51 , 52, 192, 21);
+        
     }
     else
     {
@@ -462,7 +462,7 @@
             [_photoInAlbum[i] showCaptian];
         }
         scrollView.scrollEnabled=YES;
-  _albumTitle.frame=CGRectMake(51 , 52, 245, 21);
+        _albumTitle.frame=CGRectMake(51 , 52, 245, 21);
     }
 }
 
@@ -801,7 +801,7 @@
     vc.managedObjectContext = self.managedObjectContext;
     [vc setStyle:kPhoto];
     vc.feedData=self.feedData;
-   // NSLog(@"%d",_selectedPhoto);
+    // NSLog(@"%d",_selectedPhoto);
     if (_selectedPhoto!=-1)
     {
         vc.photoURL=_bigURL[_selectedPhoto%9];
@@ -840,63 +840,49 @@
 
 -(IBAction)repostToWeixin:(id)sender{
     NSLog(@"repost to weixin album detail ");
-
-    if (NO) {
-        Image *image = [Image imageWithURL:_bigURL[_selectedPhoto%9] inManagedObjectContext:self.managedObjectContext];
+    
+    if (_selectedPhoto!=-1)
+    {          
         
-        if (image == nil)
+        NSString * outstring = _photoInAlbum[_selectedPhoto].captian.text;
+        
+        NSString * big_photo_url = _bigURL[_selectedPhoto];
+        NSString * photourl ;
+        NSString * newstitle ;
+        
+        if ([self.feedData class]==[NewFeedShareAlbum class])
         {
-            //        [_photoInAlbum[_selectedPhoto].imageView loadImageFromURL:_bigURL[_selectedPhoto%9] completion:^{
-            //        } cacheInContext:self.managedObjectContext];
-            //        NSLog(@"image == nil");
-            [[UIApplication sharedApplication] presentToast:@"暂时不支持转发相册" withVerticalPos:kToastBottomVerticalPosition];
+            NSLog(@"share album");
+            NewFeedShareAlbum * newFeedShareAlbum= ((NewFeedShareAlbum*)self.feedData);
+            photourl = newFeedShareAlbum.photo_url;
+            newstitle = newFeedShareAlbum.album_title ;
+            
+        }
+        else if ([self.feedData class]==[NewFeedSharePhoto class])
+        {
+            NSLog(@"share photo");
+            NewFeedSharePhoto* newFeedSharePhoto =  ((NewFeedSharePhoto*)self.feedData);
+            photourl = newFeedSharePhoto.photo_url;
+            newstitle = newFeedSharePhoto.title ;
             
         }
         else
         {
-   
-            NSData *imagedata = image.imageData.data;
-            if ( [imagedata length]  <=0) {
-                [[UIApplication sharedApplication] presentToast:@"图像尚未载入,请稍后" withVerticalPos:kToastBottomVerticalPosition];
-                
-            }else {
-                [[UIApplication sharedApplication] presentToast:@"已发送" withVerticalPos:kToastBottomVerticalPosition];
-                [self.delegateWX sendImageContent:  imagedata];
-                
-            }
+            NSLog(@"upload photo");
+            NewFeedUploadPhoto* newFeedUploadPhoto = ((NewFeedUploadPhoto*)self.feedData);
+            photourl = newFeedUploadPhoto.photo_url;
+            newstitle = newFeedUploadPhoto.title ;
             
         }
+        
+        [self.delegateWX sendNewsContent:newstitle withDetail:outstring withImageUrl:photourl withBigImageUrl:  big_photo_url];
+        
         
     }else{
-        if (_selectedPhoto!=-1)
-        {
-            
-            NSString * outstring = _photoInAlbum[_selectedPhoto].captian.text;
-
-            UIImage * imageview = _photoInAlbum[_selectedPhoto].imageView.image;
-            
-            NSData *imagedata = UIImageJPEGRepresentation(imageview, 0.1);
-
-            
-            if ([imagedata length] > 10*1000) {
-                
-                [[UIApplication sharedApplication] presentToast:@"发送图片url" withVerticalPos:kToastBottomVerticalPosition];
-                NSString * outurl = _bigURL[_selectedPhoto];
-                
-                
-                [self.delegateWX sendImageContentWithString:outurl];
-            }else{
-                [[UIApplication sharedApplication] presentToast:@"发送图片" withVerticalPos:kToastBottomVerticalPosition];
-
-                [self.delegateWX sendImageContent:imagedata];
-            }
-           
-        }else{
-            [[UIApplication sharedApplication] presentToast:@"暂时不支持转发相册" withVerticalPos:kToastBottomVerticalPosition];
-
-        }
+        [[UIApplication sharedApplication] presentToast:@"暂时不支持转发相册" withVerticalPos:kToastBottomVerticalPosition];
         
     }
+    
     
     
 }
