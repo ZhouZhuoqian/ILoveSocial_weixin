@@ -16,5 +16,6 @@
 @property (nonatomic, retain) IBOutlet UILabel *highSchoolLabel;
 @property (nonatomic, retain) IBOutlet UILabel *universityLabel;
 @property (nonatomic, retain) IBOutlet UILabel *companyLabel;
+- (IBAction)didClickHomePageButton:(id)sender ;
 
 @end

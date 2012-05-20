@@ -249,6 +249,8 @@
 
 - (IBAction)didClickWeiboLoginButton:(id)sender
 {
+    // add web conn check
+
 	if (![WeiboClient authorized]) {        
         WeiboClient *weibo = [WeiboClient client];
         [weibo authorize:nil delegate:self];
@@ -261,6 +263,8 @@
 
 - (IBAction)didClickRenrenLoginButton:(id)sender
 {    
+    // add web conn check
+    
 	if (![RenrenClient authorized]) {
         RenrenClient *renren = [RenrenClient client];
         [renren setCompletionBlock:^(RenrenClient *client) {

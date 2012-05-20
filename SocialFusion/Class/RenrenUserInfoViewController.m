@@ -9,6 +9,9 @@
 #import "RenrenUserInfoViewController.h"
 #import "RenrenUser+Addition.h"
 #import "RenrenClient.h"
+#import "LabelConverter.h"
+#import "NSNotificationCenter+Addition.h"
+
 
 @interface RenrenUserInfoViewController()
 - (void)configureRelationshipUI;
@@ -107,5 +110,19 @@
 - (NSString *)processUserGender {
     return self.renrenUser.detailInfo.gender;
 }
+
+- (IBAction)didClickHomePageButton:(id)sender {
+    NSLog(@"home page pressed");
+    
+    NSString *identifier = nil;
+//    BOOL isCurrentUser = [self.currentRenrenUser isEqualToUser:self.renrenUser];
+    
+    identifier = kChildRenrenNewFeed ;
+
+    [NSNotificationCenter postSelectChildLabelNotificationWithIdentifier:identifier];
+}
+
+
+
 
 @end

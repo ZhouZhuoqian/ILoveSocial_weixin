@@ -176,6 +176,14 @@
         [client follow:self.weiboUser.userID];
     }
 }    
+- (IBAction)didClickHomePageButton:(id)sender {
+    NSString *identifier = nil;
+
+    identifier = kChildWeiboNewFeed;
+
+    [NSNotificationCenter postSelectChildLabelNotificationWithIdentifier:identifier];
+
+}
 
 - (IBAction)didClickBasicInfoButton:(id)sender {
     NSString *identifier = nil;

@@ -25,5 +25,6 @@
 
 - (IBAction)didClickFollowButton;
 - (IBAction)didClickBasicInfoButton:(id)sender;
+- (IBAction)didClickHomePageButton:(id)sender ;
 
 @end
