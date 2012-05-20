@@ -48,177 +48,12 @@
     
 }
 
-+ (float)heightForCell:(NewFeedData*)feedData
-{
-    if ([feedData class] == [NewFeedUploadPhoto class] )
-    {
-        return 162;
-    }
-    else
-    {
-        return [feedData.cellheight intValue];
-    }
-    
-    
-    return 0;
-    
-}
-
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
     }
     return self;
-}
-
-- (void)loadPicture:(NSData*)image
-{
-    
-    UIImage* image1 = [UIImage imageWithData:image];
-    CGSize size;
-    //改变图片大小
-    float a=image1.size.width/98;
-    float b=image1.size.height/73;
-    if (a>b)
-    {
-        size=CGSizeMake(image1.size.width/image1.size.height*73, 73);
-    }
-    else
-    {
-        size=CGSizeMake(98, image1.size.height/image1.size.width*98);
-    }
-    UIGraphicsBeginImageContext(size);
-    [image1 drawInRect:CGRectMake(0, 0, size.width, size.height)];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    //  return newImage;
-    
-    
-    NSData* imagedata=UIImageJPEGRepresentation(newImage, 1.0);
-    
-    
-    
-    NSString *imgB64 = [[imagedata base64Encoding] jpgDataURIWithContent];
-    
-    
-    NSString *javascript = [NSString stringWithFormat:@"setPhotoPos(%f,%f)", size.width,size.height];
-    
-    [_webView stringByEvaluatingJavaScriptFromString:javascript];
-    
-    
-    javascript = [NSString stringWithFormat:@"document.getElementById('upload').src='%@'", imgB64];
-    
-    [_webView stringByEvaluatingJavaScriptFromString:javascript];
-}
-
-
-- (void)setData:(NSData*)image
-{
-    _photoData = [[NSData alloc] initWithData:image];
-}
-
-- (void)loadImage:(NSData*)image
-{
-    NSString *imgB64 = [[image base64Encoding] jpgDataURIWithContent];
-    NSString *javascript = [NSString stringWithFormat:@"document.getElementById('head').src='%@'", imgB64];
-    [_webView stringByEvaluatingJavaScriptFromString:javascript];
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView{
-    
-    if (_photoData!=nil)
-    {
-        [self loadImage:_photoData];
-        [_photoData release];
-    }
-    
-    NSIndexPath* indexpath = [_listController.tableView indexPathForCell:self];
-    [_delegate statusCellWebViewDidLoad:webView indexPath:indexpath Cell:self];
-    _loaded = YES;
-}
-
-- (void)showBigImage
-{
-    
-    NSIndexPath* indexpath = [_listController.tableView indexPathForCell:self];
-    //    [_listController.tableView selectRowAtIndexPath:indexpath animated:YES scrollPosition:UITableViewScrollPositionNone];
-    
-    
-    [_listController showImage:indexpath];
-    
-    
-    
-}
-
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
-{
-    
-    
-    NSString* tempString = [NSString stringWithFormat:@"%@",[request URL]];
-    tempString=[tempString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    NSString* commandString = [tempString substringFromIndex:7];
-    NSString* startString = [tempString substringToIndex:5];
-    
-   // NSLog(@"url:%@",[[tempString stringByDeletingLastPathComponent] lastPathComponent]);
-    if ([commandString isEqualToString:@"showimage"])//点击图片
-    {
-        [self showBigImage];
-        return NO;
-    }
-    else if ([commandString isEqualToString:@"gotoDetail"])//进入detail页面
-    {
-        [self exposeCell];
-        return NO;
-    }
-    
-    else if ([[[tempString stringByDeletingLastPathComponent] lastPathComponent] isEqualToString:@"renren"])
-    {
-        
-        
-        [_listController loadNewRenrenAt:[tempString lastPathComponent]];
-        return NO;
-    }
-    else if ([[[tempString stringByDeletingLastPathComponent] lastPathComponent] isEqualToString:@"weibo"])
-    {
-        
-        
-        [_listController loadNewWeiboAt:[tempString lastPathComponent]];   
-        
-        
-        return NO;
-    }
-    else if ([startString isEqualToString:@"file:"])//本地request读取
-    {
-        return YES;
-    }
-    else//其他url，调用safari
-    {
-        
-        //[[UIApplication sharedApplication] openURL:[request URL]];
-        [CardBrowserViewController showCardBrowserWithLink:request.URL];
-        return NO;
-    }
-}
-- (void)exposeCell
-{
-    
-    NSIndexPath* indexpath = [_listController.tableView indexPathForCell:self];
-    //    [_listController.tableView selectRowAtIndexPath:indexpath animated:YES scrollPosition:UITableViewScrollPositionNone];
-    
-    
-    [_listController exposeCell:indexpath];
-}
-
--(BOOL)loaded
-{
-    return _loaded;
-}
-
-- (void)setList:(NewFeedListController*)list
-{
-    _listController=list;
 }
 
 - (id)initWithType:(kFeedType)type
@@ -249,6 +84,7 @@
             
             break;
         }
+
         case kShareAlbum:
         {
             infoSouceFile = [[NSBundle mainBundle] pathForResource:@"sharealbum" ofType:@"html"];
@@ -366,6 +202,94 @@
     
     return  self;
 }
+
+#pragma mark -
+
+- (void)loadPicture:(NSData*)image
+{
+    
+    UIImage* image1 = [UIImage imageWithData:image];
+    CGSize size;
+    //改变图片大小
+    float a=image1.size.width/98;
+    float b=image1.size.height/73;
+    if (a>b)
+    {
+        size=CGSizeMake(image1.size.width/image1.size.height*73, 73);
+    }
+    else
+    {
+        size=CGSizeMake(98, image1.size.height/image1.size.width*98);
+    }
+    UIGraphicsBeginImageContext(size);
+    [image1 drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    //  return newImage;
+    
+    
+    NSData* imagedata=UIImageJPEGRepresentation(newImage, 1.0);
+    
+    NSString *imgB64 = [[imagedata base64Encoding] jpgDataURIWithContent];
+    
+    
+    NSString *javascript = [NSString stringWithFormat:@"setPhotoPos(%f,%f)", size.width,size.height];
+    
+    [_webView stringByEvaluatingJavaScriptFromString:javascript];
+    
+    
+    javascript = [NSString stringWithFormat:@"document.getElementById('upload').src='%@'", imgB64];
+    
+    [_webView stringByEvaluatingJavaScriptFromString:javascript];
+}
+
+
+- (void)setData:(NSData*)image
+{
+    _photoData = [[NSData alloc] initWithData:image];
+}
+
+- (void)loadImage:(NSData*)image
+{
+    NSString *imgB64 = [[image base64Encoding] jpgDataURIWithContent];
+    NSString *javascript = [NSString stringWithFormat:@"document.getElementById('head').src='%@'", imgB64];
+    [_webView stringByEvaluatingJavaScriptFromString:javascript];
+}
+
+
+- (void)showBigImage
+{
+    
+    NSIndexPath* indexpath = [_listController.tableView indexPathForCell:self];
+    //    [_listController.tableView selectRowAtIndexPath:indexpath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    
+    
+    [_listController showImage:indexpath];
+    
+    
+    
+}
+
+- (void)exposeCell
+{
+    
+    NSIndexPath* indexpath = [_listController.tableView indexPathForCell:self];
+    //    [_listController.tableView selectRowAtIndexPath:indexpath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    
+    
+    [_listController exposeCell:indexpath];
+}
+
+-(BOOL)loaded
+{
+    return _loaded;
+}
+
+- (void)setList:(NewFeedListController*)list
+{
+    _listController=list;
+}
+
 
 
 
@@ -537,6 +461,91 @@
     self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, _webView.scrollView.contentSize.width, scrollHeight);
     _webView.frame = CGRectMake(0, 0,_webView.scrollView.contentSize.width, scrollHeight);
     
+}
+
++ (float)heightForCell:(NewFeedData*)feedData
+{
+    if ([feedData class] == [NewFeedUploadPhoto class] )
+    {
+        return 162;
+    }
+    else
+    {
+        return [feedData.cellheight intValue];
+    }
+    
+    
+    return 0;
+    
+}
+
+
+#pragma mark -
+#pragma mark webview delegate
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    
+    
+    NSString* tempString = [NSString stringWithFormat:@"%@",[request URL]];
+    tempString=[tempString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSString* commandString = [tempString substringFromIndex:7];
+    NSString* startString = [tempString substringToIndex:5];
+    
+    // NSLog(@"url:%@",[[tempString stringByDeletingLastPathComponent] lastPathComponent]);
+    if ([commandString isEqualToString:@"showimage"])//点击图片
+    {
+        [self showBigImage];
+        return NO;
+    }
+    else if ([commandString isEqualToString:@"gotoDetail"])//进入detail页面
+    {
+        [self exposeCell];
+        return NO;
+    }
+    
+    else if ([[[tempString stringByDeletingLastPathComponent] lastPathComponent] isEqualToString:@"renren"])
+    {
+        
+        
+        [_listController loadNewRenrenAt:[tempString lastPathComponent]];
+        return NO;
+    }
+    else if ([[[tempString stringByDeletingLastPathComponent] lastPathComponent] isEqualToString:@"weibo"])
+    {
+        
+        
+        [_listController loadNewWeiboAt:[tempString lastPathComponent]];   
+        
+        
+        return NO;
+    }
+    else if ([startString isEqualToString:@"file:"])//本地request读取
+    {
+        return YES;
+    }
+    else//其他url，调用safari
+    {
+        
+        //[[UIApplication sharedApplication] openURL:[request URL]];
+        [CardBrowserViewController showCardBrowserWithLink:request.URL];
+        return NO;
+    }
+}
+
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView{
+    
+    if (_photoData!=nil)
+    {
+        [self loadImage:_photoData];
+        [_photoData release];
+    }
+    
+    NSIndexPath* indexpath = [_listController.tableView indexPathForCell:self];
+    [_delegate statusCellWebViewDidLoad:webView indexPath:indexpath Cell:self];
+    _loaded = YES;
 }
 
 #pragma mark -

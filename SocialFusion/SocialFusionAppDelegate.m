@@ -42,8 +42,9 @@
     
     // Override point for customization after application launch.   
     //向微信注册
-    [WXApi registerApp:@"wxd930ea5d5a258f4f"]; 
-    
+//    [WXApi registerApp:@"wxd930ea5d5a258f4f"]; 
+    [WXApi registerApp:@"wx78f05407662e57d6"]; 
+
     return YES;
 }
 
@@ -252,6 +253,28 @@
 -(void) onResp:(BaseResp*)resp{
     
     //    如果第三方程序向微信发送了sendReq的请求，那么onResp会被回调。sendReq请求调用后，会切到微信终端程序界面。
+    
+    
+    
+    if([resp isKindOfClass:[SendMessageToWXResp class]])
+    {
+        NSString *strTitle = [NSString stringWithFormat:@"发送结果"];
+        NSString *strMsg = [NSString stringWithFormat:@"发送媒体消息结果:%d", resp.errCode];
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        [alert release];
+    }
+    else if([resp isKindOfClass:[SendAuthResp class]])
+    {
+        NSString *strTitle = [NSString stringWithFormat:@"Auth结果"];
+        NSString *strMsg = [NSString stringWithFormat:@"Auth结果:%d", resp.errCode];
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        [alert release];
+    }
+    
     
 }
 
