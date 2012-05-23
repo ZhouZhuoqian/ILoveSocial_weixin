@@ -35,7 +35,18 @@
 @synthesize relationshipLabel = _relationshipLabel;
 @synthesize nameLabel = _nameLabel;
 
+@synthesize photoImageView_1;
+@synthesize photoImageView_2;
+@synthesize photoImageView_3;
+@synthesize photoImageView_4;
+
+
 - (void)dealloc {
+    self.photoImageView_1 = nil;
+    self.photoImageView_2 = nil;
+    self.photoImageView_3 = nil;
+    self.photoImageView_4 = nil;
+
     [_scrollView release];
     [_photoImageView release];
     [_genderLabel release];

@@ -110,6 +110,22 @@
 		9B3C6FCB14E7ABBA003B0E52 /* login_btn_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B3C6FC614E7ABBA003B0E52 /* login_btn_arrow@2x.png */; };
 		9B6FEAA314DD6DE800E1E677 /* label_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B6FEAA114DD6DE800E1E677 /* label_white.png */; };
 		9B6FEAA414DD6DE800E1E677 /* label_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B6FEAA214DD6DE800E1E677 /* label_white@2x.png */; };
+		D023EB43156922A20043C8D2 /* AwesomeMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = D023EB40156922A20043C8D2 /* AwesomeMenu.m */; };
+		D023EB44156922A20043C8D2 /* AwesomeMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D023EB42156922A20043C8D2 /* AwesomeMenuItem.m */; };
+		D023EB55156923CB0043C8D2 /* bg-addbutton-highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = D023EB47156923CB0043C8D2 /* bg-addbutton-highlighted.png */; };
+		D023EB56156923CB0043C8D2 /* bg-addbutton-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D023EB48156923CB0043C8D2 /* bg-addbutton-highlighted@2x.png */; };
+		D023EB57156923CB0043C8D2 /* bg-addbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = D023EB49156923CB0043C8D2 /* bg-addbutton.png */; };
+		D023EB58156923CB0043C8D2 /* bg-addbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D023EB4A156923CB0043C8D2 /* bg-addbutton@2x.png */; };
+		D023EB59156923CB0043C8D2 /* bg-menuitem-highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = D023EB4B156923CB0043C8D2 /* bg-menuitem-highlighted.png */; };
+		D023EB5A156923CB0043C8D2 /* bg-menuitem-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D023EB4C156923CB0043C8D2 /* bg-menuitem-highlighted@2x.png */; };
+		D023EB5B156923CB0043C8D2 /* bg-menuitem.png in Resources */ = {isa = PBXBuildFile; fileRef = D023EB4D156923CB0043C8D2 /* bg-menuitem.png */; };
+		D023EB5C156923CB0043C8D2 /* bg-menuitem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D023EB4E156923CB0043C8D2 /* bg-menuitem@2x.png */; };
+		D023EB5D156923CB0043C8D2 /* icon-plus-highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = D023EB4F156923CB0043C8D2 /* icon-plus-highlighted.png */; };
+		D023EB5E156923CB0043C8D2 /* icon-plus-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D023EB50156923CB0043C8D2 /* icon-plus-highlighted@2x.png */; };
+		D023EB5F156923CB0043C8D2 /* icon-plus.png in Resources */ = {isa = PBXBuildFile; fileRef = D023EB51156923CB0043C8D2 /* icon-plus.png */; };
+		D023EB60156923CB0043C8D2 /* icon-plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D023EB52156923CB0043C8D2 /* icon-plus@2x.png */; };
+		D023EB61156923CB0043C8D2 /* icon-star.png in Resources */ = {isa = PBXBuildFile; fileRef = D023EB53156923CB0043C8D2 /* icon-star.png */; };
+		D023EB62156923CB0043C8D2 /* icon-star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D023EB54156923CB0043C8D2 /* icon-star@2x.png */; };
 		D0D7E3B8154E601400CF1364 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D7E3B5154E601400CF1364 /* libWeChatSDK.a */; };
 		E10296EC14CB5F7B002589A1 /* LabelConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = E10296EB14CB5F7B002589A1 /* LabelConverter.m */; };
 		E10296F514CC8CAC002589A1 /* LabelProperty-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = E10296F414CC8CAC002589A1 /* LabelProperty-Config.plist */; };
@@ -501,6 +517,24 @@
 		9B3C6FC614E7ABBA003B0E52 /* login_btn_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_btn_arrow@2x.png"; sourceTree = "<group>"; };
 		9B6FEAA114DD6DE800E1E677 /* label_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = label_white.png; sourceTree = "<group>"; };
 		9B6FEAA214DD6DE800E1E677 /* label_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "label_white@2x.png"; sourceTree = "<group>"; };
+		D023EB3F156922A20043C8D2 /* AwesomeMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AwesomeMenu.h; sourceTree = "<group>"; };
+		D023EB40156922A20043C8D2 /* AwesomeMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AwesomeMenu.m; sourceTree = "<group>"; };
+		D023EB41156922A20043C8D2 /* AwesomeMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AwesomeMenuItem.h; sourceTree = "<group>"; };
+		D023EB42156922A20043C8D2 /* AwesomeMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AwesomeMenuItem.m; sourceTree = "<group>"; };
+		D023EB47156923CB0043C8D2 /* bg-addbutton-highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-addbutton-highlighted.png"; sourceTree = "<group>"; };
+		D023EB48156923CB0043C8D2 /* bg-addbutton-highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-addbutton-highlighted@2x.png"; sourceTree = "<group>"; };
+		D023EB49156923CB0043C8D2 /* bg-addbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-addbutton.png"; sourceTree = "<group>"; };
+		D023EB4A156923CB0043C8D2 /* bg-addbutton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-addbutton@2x.png"; sourceTree = "<group>"; };
+		D023EB4B156923CB0043C8D2 /* bg-menuitem-highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-menuitem-highlighted.png"; sourceTree = "<group>"; };
+		D023EB4C156923CB0043C8D2 /* bg-menuitem-highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-menuitem-highlighted@2x.png"; sourceTree = "<group>"; };
+		D023EB4D156923CB0043C8D2 /* bg-menuitem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-menuitem.png"; sourceTree = "<group>"; };
+		D023EB4E156923CB0043C8D2 /* bg-menuitem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-menuitem@2x.png"; sourceTree = "<group>"; };
+		D023EB4F156923CB0043C8D2 /* icon-plus-highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-plus-highlighted.png"; sourceTree = "<group>"; };
+		D023EB50156923CB0043C8D2 /* icon-plus-highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-plus-highlighted@2x.png"; sourceTree = "<group>"; };
+		D023EB51156923CB0043C8D2 /* icon-plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-plus.png"; sourceTree = "<group>"; };
+		D023EB52156923CB0043C8D2 /* icon-plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-plus@2x.png"; sourceTree = "<group>"; };
+		D023EB53156923CB0043C8D2 /* icon-star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-star.png"; sourceTree = "<group>"; };
+		D023EB54156923CB0043C8D2 /* icon-star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-star@2x.png"; sourceTree = "<group>"; };
 		D0D7E3B5154E601400CF1364 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		D0D7E3B6154E601400CF1364 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		D0D7E3B7154E601400CF1364 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
@@ -995,6 +1029,38 @@
 			path = BaseClass;
 			sourceTree = "<group>";
 		};
+		D023EB3E156922A20043C8D2 /* AwesomeMenu */ = {
+			isa = PBXGroup;
+			children = (
+				D023EB3F156922A20043C8D2 /* AwesomeMenu.h */,
+				D023EB40156922A20043C8D2 /* AwesomeMenu.m */,
+				D023EB41156922A20043C8D2 /* AwesomeMenuItem.h */,
+				D023EB42156922A20043C8D2 /* AwesomeMenuItem.m */,
+			);
+			path = AwesomeMenu;
+			sourceTree = "<group>";
+		};
+		D023EB46156923CB0043C8D2 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				D023EB47156923CB0043C8D2 /* bg-addbutton-highlighted.png */,
+				D023EB48156923CB0043C8D2 /* bg-addbutton-highlighted@2x.png */,
+				D023EB49156923CB0043C8D2 /* bg-addbutton.png */,
+				D023EB4A156923CB0043C8D2 /* bg-addbutton@2x.png */,
+				D023EB4B156923CB0043C8D2 /* bg-menuitem-highlighted.png */,
+				D023EB4C156923CB0043C8D2 /* bg-menuitem-highlighted@2x.png */,
+				D023EB4D156923CB0043C8D2 /* bg-menuitem.png */,
+				D023EB4E156923CB0043C8D2 /* bg-menuitem@2x.png */,
+				D023EB4F156923CB0043C8D2 /* icon-plus-highlighted.png */,
+				D023EB50156923CB0043C8D2 /* icon-plus-highlighted@2x.png */,
+				D023EB51156923CB0043C8D2 /* icon-plus.png */,
+				D023EB52156923CB0043C8D2 /* icon-plus@2x.png */,
+				D023EB53156923CB0043C8D2 /* icon-star.png */,
+				D023EB54156923CB0043C8D2 /* icon-star@2x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		D0D7E3B2154E5F8900CF1364 /* WeChatSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -1374,6 +1440,7 @@
 		E1532E7E14FD551E00A7B94E /* image */ = {
 			isa = PBXGroup;
 			children = (
+				D023EB46156923CB0043C8D2 /* Images */,
 				E1C1F88A14FFA6FF008A29ED /* new_feed */,
 				E1C1F87E14FF5604008A29ED /* app_info */,
 				E1532E7714FD4F2300A7B94E /* content */,
@@ -1513,6 +1580,7 @@
 		E19A2D0C1420927400BE491A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				D023EB3E156922A20043C8D2 /* AwesomeMenu */,
 				E19A2D0D1420928D00BE491A /* Categories */,
 				E19A2D0F142092CF00BE491A /* CoreData Models */,
 				E19A2D0E142092BC00BE491A /* Tools */,
@@ -1864,7 +1932,6 @@
 		E1E6E8E41451E63600FCB08B /* Friend */ = {
 			isa = PBXGroup;
 			children = (
-				E1532E6C14FD4A5800A7B94E /* FriendListViewController.xib */,
 				E1532E6A14FD4A4400A7B94E /* FriendListTableViewCell.xib */,
 				E118405514D7BD78000FF01F /* FriendListRenrenViewController.h */,
 				E118405614D7BD78000FF01F /* FriendListRenrenViewController.m */,
@@ -1872,6 +1939,7 @@
 				E1ABA41E141FA882002CD0A6 /* FriendListTableViewCell.m */,
 				E1E5DF50143B365F0098BBD3 /* FriendListViewController.h */,
 				E1E5DF51143B36600098BBD3 /* FriendListViewController.m */,
+				E1532E6C14FD4A5800A7B94E /* FriendListViewController.xib */,
 				E118405914D7BD89000FF01F /* FriendListWeiboViewController.h */,
 				E118405A14D7BD89000FF01F /* FriendListWeiboViewController.m */,
 				E1ABA41F141FA882002CD0A6 /* FriendProfileViewController.h */,
@@ -2087,6 +2155,20 @@
 				73ED631714FF0EAE001A77F3 /* login_btn_info.png in Resources */,
 				E1C1F88114FF5615008A29ED /* app_info_btn_bg@2x.png in Resources */,
 				E1C1F88F14FFAFB3008A29ED /* CardBrowserViewController.xib in Resources */,
+				D023EB55156923CB0043C8D2 /* bg-addbutton-highlighted.png in Resources */,
+				D023EB56156923CB0043C8D2 /* bg-addbutton-highlighted@2x.png in Resources */,
+				D023EB57156923CB0043C8D2 /* bg-addbutton.png in Resources */,
+				D023EB58156923CB0043C8D2 /* bg-addbutton@2x.png in Resources */,
+				D023EB59156923CB0043C8D2 /* bg-menuitem-highlighted.png in Resources */,
+				D023EB5A156923CB0043C8D2 /* bg-menuitem-highlighted@2x.png in Resources */,
+				D023EB5B156923CB0043C8D2 /* bg-menuitem.png in Resources */,
+				D023EB5C156923CB0043C8D2 /* bg-menuitem@2x.png in Resources */,
+				D023EB5D156923CB0043C8D2 /* icon-plus-highlighted.png in Resources */,
+				D023EB5E156923CB0043C8D2 /* icon-plus-highlighted@2x.png in Resources */,
+				D023EB5F156923CB0043C8D2 /* icon-plus.png in Resources */,
+				D023EB60156923CB0043C8D2 /* icon-plus@2x.png in Resources */,
+				D023EB61156923CB0043C8D2 /* icon-star.png in Resources */,
+				D023EB62156923CB0043C8D2 /* icon-star@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2261,6 +2343,8 @@
 				E1532E6414FD49BC00A7B94E /* WeiboUser.m in Sources */,
 				E1532E6714FD49BE00A7B94E /* NewFeedRootData.m in Sources */,
 				E1C1F88E14FFAFB3008A29ED /* CardBrowserViewController.m in Sources */,
+				D023EB43156922A20043C8D2 /* AwesomeMenu.m in Sources */,
+				D023EB44156922A20043C8D2 /* AwesomeMenuItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

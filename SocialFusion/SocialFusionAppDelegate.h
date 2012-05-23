@@ -10,11 +10,13 @@
 #import "WXApi.h"
 #import "StatusDetailController.h"
 #import "CommonFunction.h"
+#import "AwesomeMenu.h"
+
 
 //@protocol sendMsgToWeChatViewDelegate;
 
 @class LNRootViewController;
-@interface SocialFusionAppDelegate : NSObject <UIApplicationDelegate,WXApiDelegate,sendMsgToWeChatViewDelegate>
+@interface SocialFusionAppDelegate : NSObject <UIApplicationDelegate,WXApiDelegate,sendMsgToWeChatViewDelegate >
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) LNRootViewController *rootViewController;
@@ -26,5 +28,6 @@
 
 - (void)saveContext;  
 - (NSURL *)applicationDocumentsDirectory;  
+-(void)createPopupMenu;
 
 @end

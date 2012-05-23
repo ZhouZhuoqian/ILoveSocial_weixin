@@ -184,7 +184,7 @@ static NSInteger SoryArrayByTime(NewFeedRootData* data1, NewFeedRootData* data2,
 
 #pragma mark - EGORefresh Method
 - (void)refresh {
-    
+
     if(_firstLoad) {
         _firstLoad = NO;
         if(![self isUserNewFeedArrayEmpte] && [self isMemberOfClass:[NewFeedListController class]])

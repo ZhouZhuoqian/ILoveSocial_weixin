@@ -115,6 +115,59 @@
     self.contentViewController.view.userInteractionEnabled = NO;
     
 }
+-(void)createPopupMenu:(UIView * )withinThisView{
+    
+    UIImage *storyMenuItemImage = [UIImage imageNamed:@"bg-menuitem.png"];
+    UIImage *storyMenuItemImagePressed = [UIImage imageNamed:@"bg-menuitem-highlighted.png"];
+    
+    UIImage *starImage = [UIImage imageNamed:@"icon-star.png"];
+    
+    AwesomeMenuItem *starMenuItem1 = [[AwesomeMenuItem alloc] initWithImage:storyMenuItemImage
+                                                           highlightedImage:storyMenuItemImagePressed 
+                                                               ContentImage:starImage 
+                                                    highlightedContentImage:nil];
+    AwesomeMenuItem *starMenuItem2 = [[AwesomeMenuItem alloc] initWithImage:storyMenuItemImage
+                                                           highlightedImage:storyMenuItemImagePressed 
+                                                               ContentImage:starImage 
+                                                    highlightedContentImage:nil];
+    AwesomeMenuItem *starMenuItem3 = [[AwesomeMenuItem alloc] initWithImage:storyMenuItemImage
+                                                           highlightedImage:storyMenuItemImagePressed 
+                                                               ContentImage:starImage 
+                                                    highlightedContentImage:nil];
+    AwesomeMenuItem *starMenuItem4 = [[AwesomeMenuItem alloc] initWithImage:storyMenuItemImage
+                                                           highlightedImage:storyMenuItemImagePressed 
+                                                               ContentImage:starImage 
+                                                    highlightedContentImage:nil];
+    
+    NSArray *menus = [NSArray arrayWithObjects:starMenuItem1, starMenuItem2, starMenuItem3, starMenuItem4, nil];
+    
+    [starMenuItem1 release];
+    [starMenuItem2 release];
+    [starMenuItem3 release];
+    [starMenuItem4 release];
+    
+    AwesomeMenu *menu = [[AwesomeMenu alloc] initWithFrame:withinThisView.bounds menus:menus];
+    
+    menu.startPoint = CGPointMake(160.0, 420.0);
+    
+    menu.rotateAngle = -M_PI/3 - 0.14;
+    menu.menuWholeAngle = M_PI;
+    
+    menu.delegate = self;
+    [withinThisView addSubview:menu];
+    
+    [menu release];
+    
+}
+
+/* ⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇ */
+/* ⬇⬇⬇⬇⬇⬇ GET RESPONSE OF MENU ⬇⬇⬇⬇⬇⬇ */
+/* ⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇ */
+
+- (void)AwesomeMenu:(AwesomeMenu *)menu didSelectIndex:(NSInteger)idx
+{
+    NSLog(@"Select the index : %d",idx);
+}
 
 - (void)loadContentView {
     if(![self.contentViewController isFake])
@@ -128,6 +181,11 @@
     self.contentViewController.view.frame = CGRectMake(CONTENT_VIEW_ORIGIN_X, CONTENT_VIEW_ORIGIN_Y, self.contentViewController.view.frame.size.width, self.contentViewController.view.frame.size.height);
     [self.view insertSubview:self.contentViewController.view belowSubview:self.labelBarViewController.view];
     self.contentViewController.view.userInteractionEnabled = YES;
+    
+    [self createPopupMenu:self.view];
+    
+    NSLog(@"load content");
+    
 }
 
 #pragma mark - weixin delegate

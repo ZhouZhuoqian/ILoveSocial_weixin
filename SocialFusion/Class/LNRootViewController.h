@@ -10,9 +10,11 @@
 #import "CoreDataViewController.h"
 #import "LNLabelBarViewController.h"
 #import "LNContentViewController.h"
+#import "AwesomeMenu.h"
+
 //#import "StatusDetailController.h"
 
-@interface LNRootViewController : CoreDataViewController<LNLabelBarViewControllerDelegate, LNContentViewControllerDelegate,sendMsgToWeChatViewDelegate> {
+@interface LNRootViewController : CoreDataViewController<LNLabelBarViewControllerDelegate, LNContentViewControllerDelegate,sendMsgToWeChatViewDelegate,AwesomeMenuDelegate> {
     
     LNLabelBarViewController *_labelBarViewController;
     LNContentViewController *_contentViewController;

@@ -26,6 +26,19 @@
 }
 
 
+-(void)registerPushNotification:(UIApplication *)application{
+    
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0]; 
+    NSLog(@"Initiating remoteNoticationssAreActive"); 
+    if(!application.enabledRemoteNotificationTypes){ 
+        NSLog(@"Initiating remoteNoticationssAreActive1"); 
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeBadge)]; 
+    } 
+    UIApplication* myapp = [UIApplication sharedApplication]; 
+    myapp.idleTimerDisabled = YES; 
+     
+}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -36,17 +49,23 @@
     _rootViewController.delegateWX = self;
     NSLog(@"delegate");
     
+    [self    registerPushNotification:application];
+        
     navigationController.navigationBarHidden = YES;
     self.window.rootViewController = navigationController;
+        
     [self.window makeKeyAndVisible];
     
     // Override point for customization after application launch.   
     //向微信注册
-//    [WXApi registerApp:@"wxd930ea5d5a258f4f"]; 
+    //    [WXApi registerApp:@"wxd930ea5d5a258f4f"]; 
     [WXApi registerApp:@"wx78f05407662e57d6"]; 
-
+    
     return YES;
 }
+
+ 
+ 
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -348,10 +367,10 @@
     
     //发送内容给微信
     WXMediaMessage *message = [WXMediaMessage message];
-//    [message setThumbImage:image];
+    //    [message setThumbImage:image];
     
     message.mediaObject = [self getWXImageExt: UIImageJPEGRepresentation(image, 1.0)];
-
+    
     
     SendMessageToWXReq* req = [[[SendMessageToWXReq alloc] init]autorelease];
     req.bText = NO;
@@ -377,7 +396,7 @@
     //发送内容给微信
     NSLog(@"image url : %@",urlString);
     if (YES) {
-
+        
         WXMediaMessage *message = [WXMediaMessage message];
         WXImageObject *ext = [WXImageObject object];
         ext.imageUrl = urlString;
@@ -392,7 +411,7 @@
         [self sendImageContent:[NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]]];
         
     }
-
+    
 }
 
 -(void)sendImageContent:(NSData *)imagedata withTextMsg:(NSString *)msg andBigImageUrl:(NSString *)bigImageUrl{
@@ -400,7 +419,7 @@
     NSLog(@"SEND IMAGE CONTENT");
     
     msg = [CommonFunction subStringToOneK:msg withMaxLength:1000];
-
+    
     NSLog(@"__________%@",msg);
     
     
@@ -471,9 +490,9 @@
     
     WXMediaMessage *message = [WXMediaMessage message];
     message.title = title;
-
+    
     NSLog(@"____%@",title);
-
+    
     NSLog(@"%@",blogDetail);
     message.description = blogDetail;
     [message setThumbImage:[UIImage imageNamed:@"res2.jpg"]];

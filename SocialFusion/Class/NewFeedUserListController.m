@@ -80,7 +80,6 @@
                 self.loadingCount = self.loadingCount - 1;
     }];
     
-    [renren getNewFeed:_pageNumber uid:self.processRenrenUser.userID];
 }
 
 
@@ -105,6 +104,8 @@
     [self startLoading];
 
     _currentTime = [[NSDate alloc] initWithTimeIntervalSinceNow:0];
+    
+    NSLog(@"load more data");
     
     if (_style == kRenrenUserFeed) {
         [self loadMoreRenrenData];

@@ -17,5 +17,9 @@
 @property (nonatomic, retain) IBOutlet UILabel *universityLabel;
 @property (nonatomic, retain) IBOutlet UILabel *companyLabel;
 - (IBAction)didClickHomePageButton:(id)sender ;
+- (IBAction)didClickPhotoFrameButton_1 ;
+- (IBAction)didClickPhotoFrameButton_2 ;
+- (IBAction)didClickPhotoFrameButton_3 ;
+- (IBAction)didClickPhotoFrameButton_4 ;
 
 @end

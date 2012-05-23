@@ -11,10 +11,16 @@
 #import "RenrenClient.h"
 #import "LabelConverter.h"
 #import "NSNotificationCenter+Addition.h"
+#import "Image+Addition.h"
+#import "UIImageView+Addition.h"
+#import "DetailImageViewController.h"
 
-
-@interface RenrenUserInfoViewController()
+@interface RenrenUserInfoViewController(){
+    NSString * _bigURL[4] ;
+}
 - (void)configureRelationshipUI;
+-(void)getLastestAlbum;
+-(void )getLastestPhotos: (long)aid;
 @end
 
 @implementation RenrenUserInfoViewController
@@ -26,6 +32,11 @@
 @synthesize companyLabel = _companyLabel;
 
 - (void)dealloc {
+    for (int i=0;i<    sizeof(_bigURL)   ;i++)
+    {
+        [_bigURL[i]  release];
+    }
+    
     [_birthDayLabel release];
     [_hometownLabel release];
     [_companyLabel release];
@@ -59,7 +70,135 @@
         };
     }];
 	[renren getUserInfoWithUserID:self.renrenUser.userID];
+    
+    [self getLastestAlbum];   
+    
 }
+
+-(void)getLastestAlbum{
+    
+    RenrenClient *renren = [RenrenClient client];
+    [renren setCompletionBlock:^(RenrenClient *client) {
+        if(!client.hasError) {
+            NSArray *array = client.responseJSONObject;
+            for(NSDictionary *dict in array) {
+                int size=[[dict objectForKey:@"size"] intValue];
+                NSLog(@"size  =  %d", size);
+                long aid=[[dict objectForKey:@"aid"] longValue];
+                NSLog(@"aid  =  %ld", aid);
+                [self getLastestPhotos: aid];
+                break;
+            } 
+        }
+    }];
+    [renren getAlbumInfo:self.renrenUser.userID a_ID: @""];
+    
+}
+
+-(void )getLastestPhotos: (long)aid{
+    
+    RenrenClient *renren = [RenrenClient client];
+    [renren setCompletionBlock:^(RenrenClient *client) {
+        if(!client.hasError) {
+            NSArray *array = client.responseJSONObject;
+            int i = 0;
+            for(NSDictionary *dict in array) {
+                if (i  >  3 ) {
+                    break;
+                }
+                Image *image = [Image imageWithURL:[dict objectForKey:@"url_head"] inManagedObjectContext:self.managedObjectContext];
+                if (image == nil)
+                {
+                    if (i  ==  0 ) {
+                        [self.photoImageView_1 loadImageFromURL:[dict objectForKey:@"url_head"] completion:^{
+                            [self.photoImageView_1  fadeIn];
+                        } cacheInContext:self.managedObjectContext];
+                    }
+                    if (i  ==  1 ) {
+                        [self.photoImageView_2 loadImageFromURL:[dict objectForKey:@"url_head"] completion:^{
+                            [self.photoImageView_2  fadeIn];
+                        } cacheInContext:self.managedObjectContext];
+                    }
+                    if (i  ==  2 ) {
+                        [self.photoImageView_3 loadImageFromURL:[dict objectForKey:@"url_head"] completion:^{
+                            [self.photoImageView_3  fadeIn];
+                        } cacheInContext:self.managedObjectContext];
+                    }
+                    if (i  ==  3 ) {
+                        [self.photoImageView_4 loadImageFromURL:[dict objectForKey:@"url_head"] completion:^{
+                            [self.photoImageView_4  fadeIn];
+                        } cacheInContext:self.managedObjectContext];
+                    }
+                }
+                else
+                {
+                   
+                    if (i  ==  0 ) {
+                        [self.photoImageView_1 setImage: [UIImage imageWithData:image.imageData.data]];
+                    }
+                    if (i  ==  1 ) {
+                        [self.photoImageView_2 setImage: [UIImage imageWithData:image.imageData.data]];
+                    }
+                    if (i  ==  2 ) {
+                        [self.photoImageView_3 setImage: [UIImage imageWithData:image.imageData.data]];
+                    }
+                    if (i  ==  3 ) {
+                        [self.photoImageView_4 setImage: [UIImage imageWithData:image.imageData.data]];
+                    }
+                   
+                }
+//                [_photoInAlbum[i].captian setText:[dict objectForKey:@"caption"]];
+//                _photoID[i]=[[NSString alloc ] initWithString:[[dict objectForKey:@"pid"] stringValue]];
+                _bigURL[i]=[[NSString alloc] initWithString:[dict objectForKey:@"url_large"]];
+
+                i++;
+            } 
+        }
+    }];
+
+    NSString * tmpString = [NSString stringWithFormat:@"%ld",aid];
+        [renren getAlbum:self.renrenUser.userID a_ID:tmpString pageNumber:1];
+    
+}
+
+- (IBAction)didClickPhotoFrameButton_1 {
+   
+                                                  
+    if(_bigURL[0] && _bigURL[0].length > 0) {
+        UIImage * bigImage =  [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_bigURL[0]]]];
+        [DetailImageViewController showDetailImageWithImage:    bigImage ];
+    }
+}
+
+- (IBAction)didClickPhotoFrameButton_2 {
+    
+    if(_bigURL[1] && _bigURL[1].length > 0) {
+        UIImage * bigImage =  [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_bigURL[1]]]];
+        [DetailImageViewController showDetailImageWithImage:    bigImage ];
+    }
+    
+}
+
+- (IBAction)didClickPhotoFrameButton_3 {
+   
+    if(_bigURL[2] && _bigURL[2].length > 0) {
+        UIImage * bigImage =  [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_bigURL[2]]]];
+        [DetailImageViewController showDetailImageWithImage:    bigImage ];
+    }
+    
+}
+
+- (IBAction)didClickPhotoFrameButton_4 {
+   
+    if(_bigURL[3] && _bigURL[3].length > 0) {
+        UIImage * bigImage =  [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_bigURL[3]]]];
+        [DetailImageViewController showDetailImageWithImage:    bigImage ];
+    }
+    
+}
+
+
+
 
 - (void)configureUI {
     [super configureUI];
@@ -114,9 +253,7 @@
 - (IBAction)didClickHomePageButton:(id)sender {
     NSLog(@"home page pressed");
     
-    NSString *identifier = nil;
-//    BOOL isCurrentUser = [self.currentRenrenUser isEqualToUser:self.renrenUser];
-    
+    NSString *identifier = nil;    
     identifier = kChildRenrenNewFeed ;
 
     [NSNotificationCenter postSelectChildLabelNotificationWithIdentifier:identifier];
