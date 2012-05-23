@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "UserInfoViewController.h"
+#import "MWPhotoBrowser.h"
 
-@interface RenrenUserInfoViewController : UserInfoViewController
+
+@interface RenrenUserInfoViewController : UserInfoViewController <MWPhotoBrowserDelegate>
 
 @property (nonatomic, retain) IBOutlet UILabel *birthDayLabel;
 @property (nonatomic, retain) IBOutlet UILabel *hometownLabel;

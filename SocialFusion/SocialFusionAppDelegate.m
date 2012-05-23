@@ -28,6 +28,8 @@
 
 -(void)registerPushNotification:(UIApplication *)application{
     
+//    http://marshal.easymorse.com/archives/3312
+    
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0]; 
     NSLog(@"Initiating remoteNoticationssAreActive"); 
     if(!application.enabledRemoteNotificationTypes){ 

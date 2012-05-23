@@ -14,6 +14,7 @@
 #import "Image+Addition.h"
 #import "UIImageView+Addition.h"
 #import "DetailImageViewController.h"
+#define isFlip 1
 
 @interface RenrenUserInfoViewController(){
     NSString * _bigURL[4] ;
@@ -132,7 +133,7 @@
                 }
                 else
                 {
-                   
+                    
                     if (i  ==  0 ) {
                         [self.photoImageView_1 setImage: [UIImage imageWithData:image.imageData.data]];
                     }
@@ -145,58 +146,163 @@
                     if (i  ==  3 ) {
                         [self.photoImageView_4 setImage: [UIImage imageWithData:image.imageData.data]];
                     }
-                   
+                    
                 }
-//                [_photoInAlbum[i].captian setText:[dict objectForKey:@"caption"]];
-//                _photoID[i]=[[NSString alloc ] initWithString:[[dict objectForKey:@"pid"] stringValue]];
+                //                [_photoInAlbum[i].captian setText:[dict objectForKey:@"caption"]];
+                //                _photoID[i]=[[NSString alloc ] initWithString:[[dict objectForKey:@"pid"] stringValue]];
                 _bigURL[i]=[[NSString alloc] initWithString:[dict objectForKey:@"url_large"]];
-
+                
                 i++;
             } 
         }
     }];
-
+    
     NSString * tmpString = [NSString stringWithFormat:@"%ld",aid];
-        [renren getAlbum:self.renrenUser.userID a_ID:tmpString pageNumber:1];
+    [renren getAlbum:self.renrenUser.userID a_ID:tmpString pageNumber:1];
     
 }
 
-- (IBAction)didClickPhotoFrameButton_1 {
-   
-                                                  
-    if(_bigURL[0] && _bigURL[0].length > 0) {
-        UIImage * bigImage =  [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_bigURL[0]]]];
-        [DetailImageViewController showDetailImageWithImage:    bigImage ];
+-(void)didClickPhotoFrameButton___{
+    
+    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+    browser.displayActionButton = YES;
+    
+    // Modal
+    //*********
+//    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:browser];
+//    nc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+//    [self presentModalViewController:nc animated:YES];
+//    [nc release];
+    
+    //********
+    self.view.alpha = 0;
+    [[UIApplication sharedApplication].keyWindow addSubview:browser.view];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+    [UIView animateWithDuration:0.5f animations:^{
+        self.view.alpha = 1;
+    }];
+    
+    // Release
+	[browser release];
+      
+}
+
+-(void)cacheImage:(NSString *)urlString{
+    
+    Image *image = [Image imageWithURL: urlString inManagedObjectContext:self.managedObjectContext];
+
+     if (image == nil)
+    {
+        if(urlString && urlString.length > 0) {
+            NSURL *url = [NSURL URLWithString:urlString];    
+            dispatch_queue_t downloadQueue = dispatch_queue_create("downloadImageQueue", NULL);
+            
+            dispatch_async(downloadQueue, ^{ 
+                //NSLog(@"download image:%@", urlString);
+                NSData *imageData = [NSData dataWithContentsOfURL:url];
+                if(!imageData) {
+                    // NSLog(@"download image failed:%@", urlString);
+                    return;
+                }
+                UIImage *img = [UIImage imageWithData:imageData];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if([Image imageWithURL:urlString inManagedObjectContext:self.managedObjectContext] == nil) {
+                        [Image insertImage:imageData withURL:urlString inManagedObjectContext:self.managedObjectContext];
+//                         self.image = img;
+                        [DetailImageViewController showDetailImageWithImage:    img ];
+                     }
+                });
+            });
+            dispatch_release(downloadQueue);
+        }
     }
+    else
+    {
+        [DetailImageViewController showDetailImageWithImage: [UIImage imageWithData:image.imageData.data] ];
+        
+    }
+
+}
+- (IBAction)didClickPhotoFrameButton_1 {
+    
+    
+    if (isFlip) {
+        
+        [self cacheImage:_bigURL[0]];
+        return;
+        
+        if(_bigURL[0] && _bigURL[0].length > 0) {
+            UIImage * bigImage =  [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_bigURL[0]]]];
+            [DetailImageViewController showDetailImageWithImage:    bigImage ];
+        }
+    }else{
+        [self didClickPhotoFrameButton___];
+    }
+    
 }
 
 - (IBAction)didClickPhotoFrameButton_2 {
-    
-    if(_bigURL[1] && _bigURL[1].length > 0) {
-        UIImage * bigImage =  [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_bigURL[1]]]];
-        [DetailImageViewController showDetailImageWithImage:    bigImage ];
+    if (isFlip) {
+        
+        [self cacheImage:_bigURL[1]];
+        return;
+        
+        if(_bigURL[1] && _bigURL[1].length > 0) {
+            UIImage * bigImage =  [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_bigURL[1]]]];
+            [DetailImageViewController showDetailImageWithImage:    bigImage ];
+        }
+    }else{
+        [self didClickPhotoFrameButton___];
     }
     
 }
 
 - (IBAction)didClickPhotoFrameButton_3 {
-   
-    if(_bigURL[2] && _bigURL[2].length > 0) {
-        UIImage * bigImage =  [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_bigURL[2]]]];
-        [DetailImageViewController showDetailImageWithImage:    bigImage ];
+    
+    if (isFlip) {
+        
+        [self cacheImage:_bigURL[2]];
+        return;
+        
+        if(_bigURL[2] && _bigURL[2].length > 0) {
+            UIImage * bigImage =  [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_bigURL[2]]]];
+            [DetailImageViewController showDetailImageWithImage:    bigImage ];
+        }
+    }else{
+        [self didClickPhotoFrameButton___];
     }
     
 }
 
 - (IBAction)didClickPhotoFrameButton_4 {
-   
-    if(_bigURL[3] && _bigURL[3].length > 0) {
-        UIImage * bigImage =  [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_bigURL[3]]]];
-        [DetailImageViewController showDetailImageWithImage:    bigImage ];
+    if (isFlip) {
+        
+        [self cacheImage:_bigURL[3]];
+        return;
+        
+        if(_bigURL[3] && _bigURL[3].length > 0) {
+            UIImage * bigImage =  [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:_bigURL[3]]]];
+            [DetailImageViewController showDetailImageWithImage:    bigImage ];
+        }
+    }else{
+        [self didClickPhotoFrameButton___];
     }
     
 }
 
+
+#pragma mark - MWPhotoBrowserDelegate
+
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
+    return sizeof(_bigURL);
+}
+
+- (MWPhoto *)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
+    if (index < sizeof(_bigURL) && _bigURL[index] && _bigURL[index].length >0 ){
+        return  [MWPhoto photoWithURL:[NSURL URLWithString:  _bigURL[index] ]];
+    }
+    return nil;
+}
 
 
 
@@ -255,7 +361,7 @@
     
     NSString *identifier = nil;    
     identifier = kChildRenrenNewFeed ;
-
+    
     [NSNotificationCenter postSelectChildLabelNotificationWithIdentifier:identifier];
 }
 

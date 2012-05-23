@@ -102,19 +102,7 @@
 }
 
 #pragma mark -
-#pragma mark UI methods
-
-- (void)loadFakeContentView {
-    [self.contentViewController.view removeFromSuperview];
-    self.contentViewController = [[[LNContentViewController alloc] init] autorelease];
-    NSLog(@"ln root view controller load fake");
-    self.contentViewController.delegateWX = self;
-
-    self.contentViewController.view.frame = CGRectMake(CONTENT_VIEW_ORIGIN_X, CONTENT_VIEW_ORIGIN_Y, self.contentViewController.view.frame.size.width, self.contentViewController.view.frame.size.height);
-    [self.view insertSubview:self.contentViewController.view belowSubview:self.labelBarViewController.view];
-    self.contentViewController.view.userInteractionEnabled = NO;
-    
-}
+#pragma mark awesome delegate  
 -(void)createPopupMenu:(UIView * )withinThisView{
     
     UIImage *storyMenuItemImage = [UIImage imageNamed:@"bg-menuitem.png"];
@@ -168,6 +156,22 @@
 {
     NSLog(@"Select the index : %d",idx);
 }
+
+#pragma mark -
+#pragma mark UI methods
+
+- (void)loadFakeContentView {
+    [self.contentViewController.view removeFromSuperview];
+    self.contentViewController = [[[LNContentViewController alloc] init] autorelease];
+    NSLog(@"ln root view controller load fake");
+//    self.contentViewController.delegateWX = self;
+
+    self.contentViewController.view.frame = CGRectMake(CONTENT_VIEW_ORIGIN_X, CONTENT_VIEW_ORIGIN_Y, self.contentViewController.view.frame.size.width, self.contentViewController.view.frame.size.height);
+    [self.view insertSubview:self.contentViewController.view belowSubview:self.labelBarViewController.view];
+    self.contentViewController.view.userInteractionEnabled = NO;
+    
+}
+
 
 - (void)loadContentView {
     if(![self.contentViewController isFake])

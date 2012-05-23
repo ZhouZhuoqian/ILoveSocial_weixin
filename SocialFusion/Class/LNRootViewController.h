@@ -14,7 +14,7 @@
 
 //#import "StatusDetailController.h"
 
-@interface LNRootViewController : CoreDataViewController<LNLabelBarViewControllerDelegate, LNContentViewControllerDelegate,sendMsgToWeChatViewDelegate,AwesomeMenuDelegate> {
+@interface LNRootViewController : CoreDataViewController<LNLabelBarViewControllerDelegate, LNContentViewControllerDelegate,AwesomeMenuDelegate> {
     
     LNLabelBarViewController *_labelBarViewController;
     LNContentViewController *_contentViewController;
