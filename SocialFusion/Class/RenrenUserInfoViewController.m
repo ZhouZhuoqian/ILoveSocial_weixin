@@ -15,6 +15,8 @@
 #import "UIImageView+Addition.h"
 #import "DetailImageViewController.h"
 #define isFlip 1
+#define PHOTO_FRAME_SIDE_LENGTH 65.0f
+
 
 @interface RenrenUserInfoViewController(){
     NSString * _bigURL[4] ;
@@ -112,21 +114,25 @@
                 {
                     if (i  ==  0 ) {
                         [self.photoImageView_1 loadImageFromURL:[dict objectForKey:@"url_head"] completion:^{
+                            [self.photoImageView_1 centerizeWithSideLength:PHOTO_FRAME_SIDE_LENGTH];
                             [self.photoImageView_1  fadeIn];
                         } cacheInContext:self.managedObjectContext];
                     }
                     if (i  ==  1 ) {
                         [self.photoImageView_2 loadImageFromURL:[dict objectForKey:@"url_head"] completion:^{
+                            [self.photoImageView_2 centerizeWithSideLength:PHOTO_FRAME_SIDE_LENGTH];
                             [self.photoImageView_2  fadeIn];
                         } cacheInContext:self.managedObjectContext];
                     }
                     if (i  ==  2 ) {
                         [self.photoImageView_3 loadImageFromURL:[dict objectForKey:@"url_head"] completion:^{
+                            [self.photoImageView_3 centerizeWithSideLength:PHOTO_FRAME_SIDE_LENGTH];
                             [self.photoImageView_3  fadeIn];
                         } cacheInContext:self.managedObjectContext];
                     }
                     if (i  ==  3 ) {
                         [self.photoImageView_4 loadImageFromURL:[dict objectForKey:@"url_head"] completion:^{
+                            [self.photoImageView_4 centerizeWithSideLength:PHOTO_FRAME_SIDE_LENGTH];
                             [self.photoImageView_4  fadeIn];
                         } cacheInContext:self.managedObjectContext];
                     }
@@ -136,15 +142,23 @@
                     
                     if (i  ==  0 ) {
                         [self.photoImageView_1 setImage: [UIImage imageWithData:image.imageData.data]];
+                        [self.photoImageView_1 centerizeWithSideLength:PHOTO_FRAME_SIDE_LENGTH];
+
                     }
                     if (i  ==  1 ) {
                         [self.photoImageView_2 setImage: [UIImage imageWithData:image.imageData.data]];
+                        [self.photoImageView_2 centerizeWithSideLength:PHOTO_FRAME_SIDE_LENGTH];
+
                     }
                     if (i  ==  2 ) {
                         [self.photoImageView_3 setImage: [UIImage imageWithData:image.imageData.data]];
+                        [self.photoImageView_3 centerizeWithSideLength:PHOTO_FRAME_SIDE_LENGTH];
+
                     }
                     if (i  ==  3 ) {
                         [self.photoImageView_4 setImage: [UIImage imageWithData:image.imageData.data]];
+                        [self.photoImageView_4 centerizeWithSideLength:PHOTO_FRAME_SIDE_LENGTH];
+
                     }
                     
                 }
@@ -324,6 +338,7 @@
         self.followButton.hidden = YES;
         self.relationshipLabel.text = @"当前人人网用户。";
         self.atButton.hidden = YES;
+        self.leaveMessageButton.hidden = YES;
     }
     else {
         RenrenClient *client = [RenrenClient client];

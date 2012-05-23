@@ -28,6 +28,7 @@
 @synthesize scrollView = _scrollView;
 @synthesize photoImageView = _photoImageView;
 @synthesize photoView = _photoView;
+@synthesize leaveMessageButton = _leaveMessageButton;
 
 @synthesize genderLabel = _genderLabel;
 @synthesize followButton = _followButton;
@@ -55,11 +56,13 @@
     [_atButton release];
     [_relationshipLabel release];
     [_nameLabel release];
+    [_leaveMessageButton release];
     [super dealloc];
 }
 
 - (void)viewDidUnload
 {
+    [self setLeaveMessageButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

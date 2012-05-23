@@ -26,10 +26,11 @@ typedef enum {
 @property (nonatomic, retain) IBOutlet UIImageView *photoImageView_3;
 @property (nonatomic, retain) IBOutlet UIImageView *photoImageView_4;
 @property (nonatomic, retain) IBOutlet UIView *photoView;
-
+@property (retain, nonatomic) IBOutlet UIButton *leaveMessageButton;
 @property (nonatomic, retain) IBOutlet UILabel *genderLabel;
 @property (nonatomic, retain) IBOutlet UIButton *followButton;
 @property (nonatomic, retain) IBOutlet UIButton *atButton;
+
 @property (nonatomic, retain) IBOutlet UILabel *relationshipLabel;
 @property (nonatomic, retain) IBOutlet UILabel *nameLabel;
 

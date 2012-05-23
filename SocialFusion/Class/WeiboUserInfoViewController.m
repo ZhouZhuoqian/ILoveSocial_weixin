@@ -107,6 +107,7 @@
         self.followButton.hidden = YES;
         self.relationshipLabel.text = @"当前新浪微博用户。";
         self.atButton.hidden = YES;
+        self.leaveMessageButton.hidden = YES;
     }
     else {
         [self.followButton setUserInteractionEnabled:NO];
