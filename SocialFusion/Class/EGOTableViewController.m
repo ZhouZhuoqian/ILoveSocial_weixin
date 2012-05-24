@@ -58,7 +58,7 @@
         devideLineView.center = CGPointMake(self.tableView.frame.size.width / 2, 0);
         [button addSubview:devideLineView];
         [devideLineView release];
-
+        
         [button setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
         button.showsTouchWhenHighlighted=YES;
         [button addTarget:self action:@selector(loadMoreData) forControlEvents:UIControlEventTouchUpInside];
@@ -77,7 +77,7 @@
 
 -(void)stopLoading
 {
-  
+    
     if (_activityView!=nil)
     {
         [_activityView stopAnimating];
@@ -131,20 +131,20 @@
 }
 
 - (void)reloadTableViewDataSource {
-
+    
 	_reloadingFlag = YES;
 	[self refresh];
 }
 
 - (void)doneLoadingTableViewData {
     
-
-        [UIView animateWithDuration:0.2f animations:^(void) {
+    
+    [UIView animateWithDuration:0.2f animations:^(void) {
         [self.tableView setContentInset:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f)];
         
     } completion:^(BOOL finished) {
         _reloadingFlag = NO;
-   
+        
     }];
 	[self.egoHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading];
 }

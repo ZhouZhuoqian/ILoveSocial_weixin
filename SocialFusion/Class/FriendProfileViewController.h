@@ -19,6 +19,8 @@ typedef enum {
 @interface FriendProfileViewController : EGOTableViewController {
     int _nextCursor;
     RelationshipViewType _type;
+    NSMutableArray *_atScreenNames;
+
 }
 
 - (id)initWithType:(RelationshipViewType)type;

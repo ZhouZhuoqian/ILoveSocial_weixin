@@ -97,6 +97,9 @@
     [sortDescriptor release];
     NSError *error;
     NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
+    if (error) {
+        NSLog(@"error");
+    }
     
     for (int i = 0; i < [array count]; i++) {
         [_atScreenNames addObject:[NSString stringWithFormat:@"@%@", [[array objectAtIndex:i] name]]];

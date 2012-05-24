@@ -12,9 +12,13 @@
 
 #define kCustomRowCount 7
 
-@interface FriendListViewController : FriendProfileViewController<FriendListTableViewCellDelegate>
+@interface FriendListViewController : FriendProfileViewController<FriendListTableViewCellDelegate,UITextFieldDelegate>{
+}
+
+@property (retain, nonatomic) IBOutlet UITextField *textField;
 
 + (FriendListViewController *)getNewFeedListControllerWithType:(RelationshipViewType)type;
+- (IBAction)atTextFieldEditingChanged:(UITextField*)textField ;
 
 @end
 

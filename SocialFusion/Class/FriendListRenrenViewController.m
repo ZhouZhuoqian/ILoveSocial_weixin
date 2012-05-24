@@ -41,8 +41,12 @@
     [super configureCell:cell atIndexPath:indexPath];
     FriendListTableViewCell *relationshipCell = (FriendListTableViewCell *)cell;
     relationshipCell.headFrameIamgeView.image = [UIImage imageNamed:@"head_renren.png"];
-    
-    User *usr = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    User *usr;
+    if (self.textField.text.length == 0  ) {
+        usr = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    }else
+        usr =  [_atScreenNames objectAtIndex:[indexPath row]];
+
     if(!usr.latestStatus) {
         if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
             if(indexPath.row < kCustomRowCount && [usr isMemberOfClass:[RenrenUser class]]) {
@@ -67,7 +71,13 @@
 {
     UIView *headerView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 20)] autorelease];
     [headerView setBackgroundColor:[UIColor colorWithRed:225.0f / 255.0f green:217.0f / 255.0f blue:195.0f / 255.0f alpha:0.8f]];
-    NSString *section_name = [[[self.fetchedResultsController sections] objectAtIndex:section] name];
+    NSString *section_name ;
+    if (self.textField.text.length == 0  ) {
+        section_name = [[[self.fetchedResultsController sections] objectAtIndex:section] name];
+    }else{
+        section_name = @"";
+    }
+
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 2, 306, 18)];
     label.text = section_name;
     label.font = [UIFont fontWithName:@"MV Boli" size:16.0f];
@@ -80,6 +90,17 @@
     return headerView;
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    //NSLog(@"total sections:%d", [[self.fetchedResultsController sections] count]);
+    [super numberOfSectionsInTableView:tableView];
+    if (self.textField.text.length == 0 ) {
+        return [super numberOfSectionsInTableView:tableView];
+    }else{
+        return 1;
+    }
+}
+
 #pragma mark -
 #pragma mark Animations
 
@@ -87,7 +108,12 @@
     [super loadExtraDataForOnScreenRowsHelp:indexPath];
     if(self.tableView.dragging || self.tableView.decelerating || _reloadingFlag)
         return;
-    User *usr = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    User *usr ;
+    if (self.textField.text.length == 0 ) {
+        usr = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    }else
+        usr = [_atScreenNames objectAtIndex:indexPath.row];
+
     if(!usr.latestStatus) {
         if([usr isMemberOfClass:[RenrenUser class]]) {
             RenrenUser *renreUser = (RenrenUser *)usr;
@@ -113,6 +139,7 @@
     }
     [request setPredicate:predicate];
     [request setSortDescriptors:descriptors]; 
+    
 }
 
 @end

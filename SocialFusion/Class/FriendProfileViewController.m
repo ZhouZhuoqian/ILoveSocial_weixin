@@ -89,6 +89,13 @@
             NSArray *array = client.responseJSONObject;
             for(NSDictionary *dict in array) {
                 RenrenUser *friend = [RenrenUser insertFriend:dict inManagedObjectContext:self.managedObjectContext];
+                if (_atScreenNames) {
+                    [_atScreenNames removeAllObjects];
+                }
+                else {
+                    _atScreenNames = [[NSMutableArray alloc] init];
+                }
+                [_atScreenNames addObject:friend];
                 [self.renrenUser addFriendsObject:friend];
             }
             if(array.count > 0)

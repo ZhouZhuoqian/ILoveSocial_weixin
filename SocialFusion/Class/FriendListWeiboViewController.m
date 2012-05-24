@@ -38,8 +38,12 @@
     [super configureCell:cell atIndexPath:indexPath];
     FriendListTableViewCell *relationshipCell = (FriendListTableViewCell *)cell;
     relationshipCell.headFrameIamgeView.image = [UIImage imageNamed:@"head_wb.png"];
-    
-    User *usr = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    User *usr ;
+    if (self.textField.text.length == 0) {
+        usr = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    }else{
+        usr = [_atScreenNames objectAtIndex:indexPath.row];
+    }
     relationshipCell.latestStatus.text = usr.latestStatus;
 }
 
