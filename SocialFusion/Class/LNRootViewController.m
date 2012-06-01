@@ -186,7 +186,7 @@
     [self.view insertSubview:self.contentViewController.view belowSubview:self.labelBarViewController.view];
     self.contentViewController.view.userInteractionEnabled = YES;
     
-    [self createPopupMenu:self.view];
+//    [self createPopupMenu:self.view];
     
     NSLog(@"load content");
     
