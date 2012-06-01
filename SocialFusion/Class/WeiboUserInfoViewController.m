@@ -26,6 +26,8 @@
     //    NSString * _bigURL[4] ;
     //    NSString * _thumbnailURL[4] ;
 }
+- (void)configureRelationshipUI;
+
 @end
 
 @implementation WeiboUserInfoViewController

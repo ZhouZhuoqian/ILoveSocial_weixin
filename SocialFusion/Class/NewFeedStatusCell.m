@@ -163,10 +163,6 @@
     
     _time.textColor = [UIColor colorWithRed:0.5647f green:0.55686f blue:0.47059 alpha:1];
     
-    
-    
-    
-    
     _photoView = [[UIImageView alloc] init];
     _photoView.frame = CGRectMake(8, 12, 37, 37);
     
@@ -263,7 +259,6 @@
     NSIndexPath* indexpath = [_listController.tableView indexPathForCell:self];
     //    [_listController.tableView selectRowAtIndexPath:indexpath animated:YES scrollPosition:UITableViewScrollPositionNone];
     
-    
     [_listController showImage:indexpath];
     
     
@@ -275,7 +270,6 @@
     
     NSIndexPath* indexpath = [_listController.tableView indexPathForCell:self];
     //    [_listController.tableView selectRowAtIndexPath:indexpath animated:YES scrollPosition:UITableViewScrollPositionNone];
-    
     
     [_listController exposeCell:indexpath];
 }

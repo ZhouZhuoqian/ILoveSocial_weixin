@@ -1,16 +1,21 @@
 //
-//  NewFeedListOfImageController.h
+//  NewFeedListController.h
 //  SocialFusion
 //
-//  Created by Ben Zhou on 12-6-1.
-//  Copyright (c) 2012年 Tongji Apple Club. All rights reserved.
+//  Created by He Ruoyun on 11-10-7.
+//  Copyright 2011年 Tongji Apple Club. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "NewFeedListController.h"
 
-@interface NewFeedListOfImageController : NewFeedListController {
-     
+
+@interface NewFeedListOfImageController : NewFeedListController
+{    
 }
+
++ (NewFeedListOfImageController*)getNewFeedListOfImageControllerwithStyle:(kUserFeed)style;
++ (NewFeedListOfImageController*)getNewFeedListOfImageControllerwithStyle:(kUserFeed)style andWXDelegate: ( id<sendMsgToWeChatViewDelegate> )var_delegate;
+
 
 @end

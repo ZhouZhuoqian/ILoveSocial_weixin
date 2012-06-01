@@ -9,6 +9,18 @@
 #import "SocialFusionAppDelegate.h"
 #import "LNRootViewController.h"
 
+
+
+@interface SocialFusionAppDelegate () {
+
+}
+-(void) onRequestAppMessage;
+-(void) onShowMediaMessage:(WXMediaMessage *) message;
+
+@end    
+
+
+
 @implementation SocialFusionAppDelegate
 
 @synthesize window = _window;

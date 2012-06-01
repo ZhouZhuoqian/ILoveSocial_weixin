@@ -15,7 +15,7 @@
 #import "NewFeedBlog+NewFeedBlog_Addition.h"
 #import "Image+Addition.h"
 #import "UIImageView+Addition.h"
-//#import "StatusDetailController.h"
+
 #import "StatusCommentData+StatusCommentData_Addition.h"
 #import "CommonFunction.h"
 #import "NSString+HTMLSet.h"
@@ -24,6 +24,19 @@
 #import "DetailImageViewController.h"
 #import "NSNotificationCenter+Addition.h"
 #import "UIApplication+Addition.h"
+
+
+
+@interface  StatusDetailController () {
+
+}
+-(void)addCommentButton;
+-(void)addWeixinButton;
+
+
+@end  
+
+
 
 @implementation StatusDetailController
 

@@ -15,6 +15,7 @@
 #import "NewFeedListController.h"
 #import "FriendListViewController.h"
 #import "UserInfoViewController.h"
+#import "NewFeedListOfImageController.h"
 
 @interface LNContentViewController()
 - (id)addContentViewWithIndentifier:(NSString *)identifier andUsers:(NSDictionary *)userDict;
@@ -146,15 +147,20 @@
     //****************************Self Feed*******************
     if([identifier isEqualToString:kChildAllSelfNewFeed]) {
         NSLog(@"all feed");
-        result = [NewFeedListController getNewFeedListControllerwithStyle:kAllSelfFeed andWXDelegate:self.delegateWX];
+//        result = [NewFeedListController getNewFeedListControllerwithStyle:kAllSelfFeed andWXDelegate:self.delegateWX];
+        result = [NewFeedListOfImageController getNewFeedListOfImageControllerwithStyle:kAllSelfFeed andWXDelegate:self.delegateWX];
+
 
     }
     else if([identifier isEqualToString:kChildRenrenSelfNewFeed]) {
-        result = [NewFeedListController getNewFeedListControllerwithStyle:kRenrenSelfFeed andWXDelegate:self.delegateWX];
-
+//        result = [NewFeedListController getNewFeedListControllerwithStyle:kRenrenSelfFeed andWXDelegate:self.delegateWX];
+        result = [NewFeedListOfImageController getNewFeedListOfImageControllerwithStyle:kRenrenSelfFeed andWXDelegate:self.delegateWX];
+        
     }
     else if([identifier isEqualToString:kChildWeiboSelfNewFeed]) {
-         result = [NewFeedListController getNewFeedListControllerwithStyle:kWeiboSelfFeed andWXDelegate:self.delegateWX];
+//         result = [NewFeedListController getNewFeedListControllerwithStyle:kWeiboSelfFeed andWXDelegate:self.delegateWX];
+        result = [NewFeedListOfImageController getNewFeedListOfImageControllerwithStyle:kWeiboSelfFeed andWXDelegate:self.delegateWX];
+
 
     }
     
