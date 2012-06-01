@@ -59,17 +59,17 @@
     [nc addObserver:self selector:@selector(keyboardWillHide:) name:
      UIKeyboardWillHideNotification object:nil];
     
-    self.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                            action:@selector(dismissKeyBoard)];
+    self.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyBoard)];
 }
 
 -(void) keyboardWillShow:(NSNotification *) note {
-    [self.view addGestureRecognizer:tapRecognizer];
+    [self.tableView addGestureRecognizer:tapRecognizer];
 }
 
 -(void) keyboardWillHide:(NSNotification *) note
 {
-    [self.view removeGestureRecognizer:tapRecognizer];
+     [self.tableView removeGestureRecognizer:tapRecognizer];
+
 }
 
 - (void)viewDidLoad {
