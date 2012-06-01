@@ -67,6 +67,7 @@ static NSInteger SoryArrayByTime(NewFeedRootData* data1, NewFeedRootData* data2,
 + (NewFeedListController*)getNewFeedListControllerwithStyle:(kUserFeed)style andWXDelegate: ( id<sendMsgToWeChatViewDelegate> )var_delegate{
     NSLog(@"getnewfeedlistcontrollderwithstyle");
     NewFeedListController * tmpcon = [self getNewFeedListControllerwithStyle:style];
+ 
     tmpcon.delegateWX = var_delegate;
     return tmpcon;
     
@@ -74,7 +75,7 @@ static NSInteger SoryArrayByTime(NewFeedRootData* data1, NewFeedRootData* data2,
 
 + (NewFeedListController*)getNewFeedListControllerwithStyle:(kUserFeed)style
 {
-    NewFeedListController* userList;
+     NewFeedListController* userList;
     if (style == kRenrenUserFeed)
     {
         userList = [[[NewFeedUserListController alloc] init] autorelease];

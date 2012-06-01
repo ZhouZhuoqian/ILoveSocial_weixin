@@ -13,7 +13,7 @@
 @protocol LNContentViewControllerDelegate;
 //@protocol sendMsgToWeChatViewDelegate;
 
-@interface LNContentViewController : UIViewController<UIScrollViewDelegate,sendMsgToWeChatViewDelegate> {
+@interface LNContentViewController : UIViewController<UIScrollViewDelegate> {
     NSMutableArray *_contentViewControllerHeap;
     NSUInteger _currentContentIndex;
     NSMutableArray *_contentViewIdentifierHeap;

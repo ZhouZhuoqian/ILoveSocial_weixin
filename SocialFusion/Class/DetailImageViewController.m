@@ -19,7 +19,6 @@
 #define IMAGE_MAX_HEIGHT    480
 
 @interface DetailImageViewController()
-- (void)setImage:(UIImage *)image;
 - (void)hideActivityView;
 - (void)showActivityView;
 @end
@@ -71,19 +70,20 @@
     return self;
 }
 
-- (void)setImage:(UIImage *)image {
+- (void)setImage:(UIImage *)image withFillScreen:(BOOL) isFillScreen{
     
     self.imageView.image = image;
     
     CGRect frame = self.imageView.frame;
     CGSize size = self.imageView.image.size;
     
-    if(size.width > IMAGE_MAX_WIDTH) {
+    if(isFillScreen || size.width > IMAGE_MAX_WIDTH) {
         size.height *= IMAGE_MAX_WIDTH / size.width;
         size.width = IMAGE_MAX_WIDTH;
     }
     
     frame.size = size;
+    
     self.imageView.frame = frame;
     
     if (size.height <= 480) 
@@ -99,7 +99,18 @@
     self.imageView.frame = frame;
     self.scrollView.contentSize = size;
     
-    [self.imageView fadeIn];
+    if (!self.imageView.image) {
+        [self.imageView fadeIn];
+    }
+   
+}
+
+- (void)setImageFillScreen:(UIImage *)image {
+    [self setImage:image withFillScreen:YES];
+}
+
+- (void)setImage:(UIImage *)image {
+    [self setImage:image withFillScreen:NO];
 }
 
 #pragma mark -
@@ -257,6 +268,16 @@
     DetailImageViewController *vc = [[DetailImageViewController alloc] init];
     [vc show];
     [vc setImage:image];
+    return vc;
+}
+
++ (DetailImageViewController *)showDetailImageWithImageFillScreen:(UIImage *)image {
+    if(!image)
+        return nil;
+    DetailImageViewController *vc = [[DetailImageViewController alloc] init];
+    [vc show];
+    [vc setImageFillScreen:image];
+
     return vc;
 }
 

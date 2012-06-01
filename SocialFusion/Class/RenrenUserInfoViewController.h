@@ -23,5 +23,6 @@
 - (IBAction)didClickPhotoFrameButton_2 ;
 - (IBAction)didClickPhotoFrameButton_3 ;
 - (IBAction)didClickPhotoFrameButton_4 ;
+//- (void )loadImage: (UIImageView*)imageview withImageUrl:(NSString * )url  ;
 
 @end

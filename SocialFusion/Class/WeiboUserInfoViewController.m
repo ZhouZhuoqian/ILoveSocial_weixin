@@ -12,15 +12,23 @@
 #import "UIApplication+Addition.h"
 #import "NSNotificationCenter+Addition.h"
 #import "LabelConverter.h"
+#import "Image+Addition.h"
+#import "UIImageView+Addition.h"
+#import "DetailImageViewController.h"
 
+
+#define PHOTO_FRAME_SIDE_LENGTH 65.0f
 #define WEIBO_USER_INFO_SCROLL_VIEW_HEIGHT 530.0f
+#define isFlip 1
 
-@interface WeiboUserInfoViewController()
-- (void)configureRelationshipUI;
+@interface WeiboUserInfoViewController(){
+    
+    //    NSString * _bigURL[4] ;
+    //    NSString * _thumbnailURL[4] ;
+}
 @end
 
 @implementation WeiboUserInfoViewController
-
 @synthesize blogLabel = _blogLabel;
 @synthesize descriptionTextView = _descriptionTextView;
 @synthesize locationLabel = _locationLabel;
@@ -31,25 +39,38 @@
 @synthesize friendCountButton = _friendCountButton;
 @synthesize followerCountButton = _followerCountButton;
 
-
 - (void)dealloc {
-    [_blogLabel release];
-    [_descriptionTextView release];
-    [_locationLabel release];
     
-    [_statusCountLabel release];
-    [_friendCountLabel release];
-    [_followerCountLabel release];
+    self.bigImagevc = nil;
+
     
-    [_statusCountButton release];
-    [_followerCountButton release];
-    [_friendCountButton release];
+    self._bigURL_4 = nil;
+    self._bigURL_3 = nil;
+    
+    self._bigURL_1 = nil;   
+    self._bigURL_2 = nil;
+    
+    self._thumbnailURL_1 = nil;
+    self._thumbnailURL_2 = nil;
+    self._thumbnailURL_3 = nil;
+    self._thumbnailURL_4 = nil;
+    
+    self.blogLabel = nil;
+    self.descriptionTextView = nil;
+    self.locationLabel = nil;
+    self.statusCountLabel = nil;
+    self.friendCountLabel = nil;
+    self.followerCountLabel = nil;
+    self.statusCountButton = nil;
+    self.friendCountButton = nil;
+    self.followerCountButton = nil;
     
     [super dealloc];
 }
 
 - (void)viewDidUnload
 {
+    
     [super viewDidUnload];
     self.blogLabel = nil;
     self.descriptionTextView = nil;
@@ -64,13 +85,41 @@
     self.followerCountButton = nil;
 }
 
+-(void)getLastestAlbum{
+    
+    WeiboClient *client = [WeiboClient client];
+    [client setCompletionBlock:^(WeiboClient *client) {
+        if (!client.hasError) {
+            NSArray *array = client.responseJSONObject;
+            [self processData:array];   
+
+        }
+    }];
+    
+    [client getUserTimeline:self.weiboUser.userID SinceID:nil maxID:nil startingAtPage:1 count:50 feature:0];
+    
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.descriptionTextView.scrollsToTop = NO;
-    
     [self configureUI];
+    
+    if ((self._thumbnailURL_1 && self._bigURL_1) || 
+        (self._thumbnailURL_2 && self._bigURL_2) || 
+        (self._thumbnailURL_3 && self._bigURL_3) || 
+        (self._thumbnailURL_4 && self._bigURL_4) ) {
+        
+        [self loadImage:self.photoImageView_1 withImageUrl:self._thumbnailURL_1];
+        [self loadImage:self.photoImageView_2 withImageUrl:self._thumbnailURL_2];
+        [self loadImage:self.photoImageView_3 withImageUrl:self._thumbnailURL_3];
+        [self loadImage:self.photoImageView_4 withImageUrl:self._thumbnailURL_4];
+        
+    }else{
+        [self getLastestAlbum];   
+    }
+    
 }
 
 - (void)configureUI {
@@ -123,7 +172,7 @@
             
             [self.followButton setSelected:followedByMe];
             [self adjustFollowButtonHeightImage:followedByMe];
-                                    
+            
             NSString *state = nil;
             if (followingMe) {
                 state = [NSString stringWithFormat:@"%@正关注你。", self.weiboUser.name];
@@ -178,12 +227,9 @@
     }
 }    
 - (IBAction)didClickHomePageButton:(id)sender {
-    NSString *identifier = nil;
-
-    identifier = kChildWeiboNewFeed;
-
+    static NSString *identifier  = kChildWeiboNewFeed;
     [NSNotificationCenter postSelectChildLabelNotificationWithIdentifier:identifier];
-
+    
 }
 
 - (IBAction)didClickBasicInfoButton:(id)sender {
@@ -218,5 +264,102 @@
 - (NSString *)processUserGender {
     return self.weiboUser.detailInfo.gender;
 }
+
+- (IBAction)didClickPhotoFrameButton_1 {
+    if (self._bigURL_1  && self._bigURL_1.length > 0) {
+        [self cacheImage:self._bigURL_1 withPreview:self._thumbnailURL_1];
+    }
+    
+}
+
+- (IBAction)didClickPhotoFrameButton_2 {
+    if (self._bigURL_2  && self._bigURL_2.length > 0) {
+        [self cacheImage:self._bigURL_2 withPreview:self._thumbnailURL_2];
+    }
+    
+}
+
+- (IBAction)didClickPhotoFrameButton_3 {
+    
+    if (self._bigURL_3 && self._bigURL_3.length > 0) {
+        [self cacheImage:self._bigURL_3 withPreview:self._thumbnailURL_3];
+    }
+    
+}
+
+- (IBAction)didClickPhotoFrameButton_4 {
+   if (self._bigURL_4  && self._bigURL_4.length > 0) {
+        [self cacheImage:self._bigURL_4 withPreview:self._thumbnailURL_4];
+    }
+    
+}
+//
+//-(void)cacheImage:(NSString *)urlString withPreview:(NSString *)previewUrlString{
+//    
+//    Image *image_ = [Image imageWithURL: urlString inManagedObjectContext:self.managedObjectContext];
+//    
+//    if (image_ == nil) {
+//
+//        Image *image = [Image imageWithURL: previewUrlString inManagedObjectContext:self.managedObjectContext];
+//        if (image ){
+//            if (self.bigImagevc) {
+//                self.bigImagevc = nil;
+//            }
+//            self.bigImagevc =  [DetailImageViewController showDetailImageWithImage: [UIImage imageWithData:image.imageData.data] ];            
+//        }
+//    }
+//
+//    [self cacheImage:urlString];
+//
+//}
+//
+//-(void)cacheImage:(NSString *)urlString{
+//    
+//    if (urlString && urlString.length > 0 ) {
+//        
+//        Image *image = [Image imageWithURL: urlString inManagedObjectContext:self.managedObjectContext];
+//        
+//        if (image == nil)
+//        {
+//            if(urlString && urlString.length > 0) {
+//                NSURL *url = [NSURL URLWithString:urlString];    
+//                dispatch_queue_t downloadQueue = dispatch_queue_create("downloadImageQueue", NULL);
+//                
+//                dispatch_async(downloadQueue, ^{ 
+//                    //NSLog(@"download image:%@", urlString);
+//                    NSData *imageData = [NSData dataWithContentsOfURL:url];
+//                    if(!imageData) {
+//                        // NSLog(@"download image failed:%@", urlString);
+//                        return;
+//                    }
+//                    UIImage *img = [UIImage imageWithData:imageData];
+//                    dispatch_async(dispatch_get_main_queue(), ^{
+//                        if([Image imageWithURL:urlString inManagedObjectContext:self.managedObjectContext] == nil) {
+//                                                        
+//                            [Image insertImage:imageData withURL:urlString inManagedObjectContext:self.managedObjectContext];
+//
+//                            if (self.bigImagevc) {
+//                                [self.bigImagevc setImage:img];
+//                            }else{
+//                                self.bigImagevc = nil;
+//                                self.bigImagevc = 
+//                                [DetailImageViewController showDetailImageWithImage:    img ];
+//
+//                            }
+//                        }
+//                    });
+//                });
+//                dispatch_release(downloadQueue);
+//            }
+//        }
+//        else
+//        {
+//            [DetailImageViewController showDetailImageWithImage: [UIImage imageWithData:image.imageData.data] ];
+//            
+//        }
+//    }
+//    
+//    
+//}
 
 @end

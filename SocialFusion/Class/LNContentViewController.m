@@ -139,7 +139,7 @@
 }
 
 - (id)addContentViewWithIndentifier:(NSString *)identifier andUsers:(NSDictionary *)userDict {
-//    NSLog(@"add content view with identifier");
+
     id result = nil;
     if([identifier isEqualToString:kChildAllSelfNewFeed]) {
 //        result = [NewFeedListController getNewFeedListControllerwithStyle:kAllSelfFeed];
@@ -162,7 +162,8 @@
         result = [FriendListViewController getNewFeedListControllerWithType:RelationshipViewTypeRenrenFriends];
     }
     else if([identifier isEqualToString:kChildWeiboFriend] || [identifier isEqualToString:kChildCurrentWeiboFriend]) {
-        result = result = [FriendListViewController getNewFeedListControllerWithType:RelationshipViewTypeWeiboFriends];
+        NSLog(@"weibo friend");
+        result = [FriendListViewController getNewFeedListControllerWithType:RelationshipViewTypeWeiboFriends];
     }
     else if([identifier isEqualToString:kChildWeiboFollower] || [identifier isEqualToString:kChildCurrentWeiboFollower]) {
         result = [FriendListViewController getNewFeedListControllerWithType:RelationshipViewTypeWeiboFollowers];
@@ -240,7 +241,9 @@
     if([currentIdentifier isEqualToString:identifier])
         return;
     CoreDataViewController *vc = [self.contentViewControllerHeap objectAtIndex:index];
+
     CoreDataViewController *vc2 = [self addContentViewWithIndentifier:identifier andUsers:vc.userDict];
+    NSLog(@"vc2______!!");
     
     if(vc2 == nil)
         return;
@@ -263,6 +266,8 @@
 
 - (void)addUserContentViewWithIndentifier:(NSString *)identifier andUsers:(NSDictionary *)userDict {
     NSString *childIdentifier = [LabelConverter getDefaultChildIdentifierWithParentIdentifier:identifier];
+    NSLog(@"add user content view with id");
+
     id vc = [self addContentViewWithIndentifier:childIdentifier andUsers:userDict];
     if(!vc)
         return;

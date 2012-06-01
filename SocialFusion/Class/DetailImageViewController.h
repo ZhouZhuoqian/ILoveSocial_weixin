@@ -24,6 +24,10 @@
 + (DetailImageViewController *)showDetailImageWithURL:(NSString*)bigURL context:(NSManagedObjectContext *)context;
 + (DetailImageViewController *)showDetailImageWithRenrenUserID:(NSString*)userID photoID:(NSString *)photoID context:(NSManagedObjectContext *)context;
 + (DetailImageViewController *)showDetailImageWithImage:(UIImage *)image;
+- (void)dismissView;
+- (void)setImage:(UIImage *)image;
+- (void)setImageFillScreen:(UIImage *)image ;
++ (DetailImageViewController *)showDetailImageWithImageFillScreen:(UIImage *)image ;
 
 @end
 

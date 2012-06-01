@@ -170,7 +170,7 @@ NSString *TWITTERFON_FORM_BOUNDARY = @"0194784892923";
 
 - (void)dealloc
 {
-   // NSLog(@"WeiboClient dealloc");
+    // NSLog(@"WeiboClient dealloc");
     [_responseJSONObject release];
     [_params release];
     [_request release];
@@ -196,8 +196,8 @@ NSString *TWITTERFON_FORM_BOUNDARY = @"0194784892923";
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
-   // NSLog(@"Request Finished");
-   // NSLog(@"Response raw string:\n%@", [request responseString]);
+    // NSLog(@"Request Finished");
+    // NSLog(@"Response raw string:\n%@", [request responseString]);
     
     switch (request.responseStatusCode) {
         case 401: // Not Authorized: either you need to provide authentication credentials, or the credentials provided aren't valid.
@@ -235,7 +235,7 @@ NSString *TWITTERFON_FORM_BOUNDARY = @"0194784892923";
             self.hasError = YES;
             self.responseStatusCode = [errorCodeString intValue];
             self.errorDesc = [dic objectForKey:@"error"];
-           NSLog(@"Server responsed error code: %d\n desc: %@\n url: %@\n", self.responseStatusCode, self.errorDesc, request.url);
+            NSLog(@"Server responsed error code: %d\n desc: %@\n url: %@\n", self.responseStatusCode, self.errorDesc, request.url);
         }
     }
     
@@ -360,15 +360,15 @@ report_completion:
     
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     
-
+    
     
     int expire_time=[ud integerForKey:kUserDefaultKeyExpireTime];
     NSDate* date=[ud objectForKey:kUserDefaultKeyGetKeyDate];
-   if ( [[date dateByAddingTimeInterval:expire_time] compare:[NSDate dateWithTimeIntervalSinceNow:0]]== NSOrderedDescending)
-   {
-    UserID=[ud stringForKey:@"weibo_ID"];
-    OAuthTokenKey=[ud stringForKey:kUserDefaultKeyTokenResponseString];
-   }
+    if ( [[date dateByAddingTimeInterval:expire_time] compare:[NSDate dateWithTimeIntervalSinceNow:0]]== NSOrderedDescending)
+    {
+        UserID=[ud stringForKey:@"weibo_ID"];
+        OAuthTokenKey=[ud stringForKey:kUserDefaultKeyTokenResponseString];
+    }
     return UserID != nil;
 }
 
@@ -377,13 +377,13 @@ report_completion:
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     [ud setObject:nil forKey:kUserDefaultKeyTokenResponseString];
     [ud setObject:nil forKey:kUserDefaultKeyExpireTime];
-        [ud setObject:nil forKey:kUserDefaultKeyGetKeyDate];
-        [ud setObject:nil forKey:@"weibo_ID"];
-
+    [ud setObject:nil forKey:kUserDefaultKeyGetKeyDate];
+    [ud setObject:nil forKey:@"weibo_ID"];
+    
     [ud synchronize];
     
     OAuthTokenKey = nil;
-
+    
     UserID = nil;
 }
 
@@ -406,7 +406,7 @@ report_completion:
     
     
     NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-
+    
     NSHTTPCookie *cookieB; 
     for (cookieB in [cookies cookies]) { 
         [cookies deleteCookie:cookieB]; 
@@ -451,7 +451,7 @@ report_completion:
             NSString *responseString = client.request.responseString;
             
             //   NSLog(@"111111:%@",responseString);
-        //    [WeiboClient setTokenWithHTTPResponseString:responseString];
+            //    [WeiboClient setTokenWithHTTPResponseString:responseString];
             if (UserID) {
                 if (autosave) {
                     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
@@ -541,7 +541,7 @@ report_completion:
     [self setPreCompletionBlock:^(WeiboClient *client1) {
         if (!client1.hasError) {            
             NSDictionary *statusesDict = client1.responseJSONObject;
-           
+            
             if (statusesDict) {
                 WeiboClient *client2 = [WeiboClient client];
                 [client2 setCompletionBlock:client1.completionBlock];
@@ -647,7 +647,7 @@ report_completion:
     [self sendRequest];
 }
 
-                  
+
 - (void)getUserWithName:(NSString *)name
 {
     self.path = @"users/show.json";
@@ -655,8 +655,8 @@ report_completion:
     [self sendRequest];
 }
 
-                  
-                  
+
+
 - (void)getFriendsOfUser:(NSString *)userID cursor:(int)cursor count:(int)count
 {
     self.path = @"friendships/friends.json";
@@ -713,7 +713,7 @@ report_completion:
 - (void)postStatus:(NSString *)status
 {
     self.httpMethod = HTTPMethodPost;
-      status=[status renren2weibo];
+    status=[status renren2weibo];
     self.path = @"statuses/update.json";
     [self.params setObject:status forKey:@"status"];
     [self sendRequest];
@@ -867,11 +867,11 @@ report_completion:
     self.httpMethod = HTTPMethodPost;
     if (cid==nil)
     {
-          self.path =@"comments/create.json";
+        self.path =@"comments/create.json";
     }
     else
     {
-    self.path = @"comments/reply.json";
+        self.path = @"comments/reply.json";
     }
     if (statusID) {
         [self.params setObject:statusID forKey:@"id"];

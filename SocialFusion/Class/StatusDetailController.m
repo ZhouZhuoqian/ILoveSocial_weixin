@@ -23,6 +23,7 @@
 #import "WeiboUser.h"
 #import "DetailImageViewController.h"
 #import "NSNotificationCenter+Addition.h"
+#import "UIApplication+Addition.h"
 
 @implementation StatusDetailController
 

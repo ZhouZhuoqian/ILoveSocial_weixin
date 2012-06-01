@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CoreDataViewController.h"
 #import "User.h"
+#import "DetailImageViewController.h"
 
 typedef enum {
     kRenrenUserInfo = 0,
@@ -16,7 +17,7 @@ typedef enum {
 } kUserInfoType;
 
 @interface UserInfoViewController : CoreDataViewController {
-    kUserInfoType _type;
+
 }
 
 @property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
@@ -37,13 +38,30 @@ typedef enum {
 @property (nonatomic, readonly) User *processUser;
 @property (nonatomic, readonly) NSString *headImageURL;
 @property (nonatomic, readonly) NSString *processUserGender;
+@property (retain,nonatomic)   DetailImageViewController *bigImagevc ;
+
+@property (retain , nonatomic) NSString * _bigURL_1;
+@property (retain , nonatomic) NSString * _bigURL_2;
+@property (retain , nonatomic) NSString * _bigURL_3;
+@property (retain , nonatomic) NSString * _bigURL_4;
+
+@property (retain,nonatomic) NSString * _thumbnailURL_1;
+@property (retain,nonatomic) NSString * _thumbnailURL_2;
+@property (retain,nonatomic) NSString * _thumbnailURL_3;
+@property (retain,nonatomic) NSString * _thumbnailURL_4;
+
 
 - (id)initWithType:(kUserInfoType)type;
 + (UserInfoViewController *)getUserInfoViewControllerWithType:(kUserInfoType)type;
 
 - (void)configureUI;
-
 - (IBAction)didClickAtButton;
 - (IBAction)didClickPhotoFrameButton;
+-(void)cacheImage:(NSString *)urlString;
+-(void)cacheImage:(NSString *)urlString withPreview:(NSString *)previewUrlString;
+
+-(void )loadImage: (UIImageView*)imageview withImageUrl:(NSString * )url  ;
+-(void)processData : (NSArray *)array;
+
 
 @end

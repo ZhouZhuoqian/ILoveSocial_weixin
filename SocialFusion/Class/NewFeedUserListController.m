@@ -84,6 +84,7 @@
 
 
 - (void)loadMoreWeiboData {
+
     self.loadingCount = self.loadingCount + 1;
     WeiboClient *client = [WeiboClient client];
     [client setCompletionBlock:^(WeiboClient *client) {
@@ -105,7 +106,6 @@
 
     _currentTime = [[NSDate alloc] initWithTimeIntervalSinceNow:0];
     
-    NSLog(@"load more data");
     
     if (_style == kRenrenUserFeed) {
         [self loadMoreRenrenData];
