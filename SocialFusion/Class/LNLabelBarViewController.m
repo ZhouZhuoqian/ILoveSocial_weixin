@@ -12,7 +12,9 @@
 #define SCROLL_BG_VIEW_HEIGHT   88.0f
 #define SCROLL_VIEW_ORIGIN_Y    44.0f
 
-@interface LNLabelBarViewController()
+@interface LNLabelBarViewController(){
+    BOOL isKeyBoardExits ;
+}
 - (void)pushLabelPages:(NSMutableArray *)labelPages;
 - (void)popLabelPages;
 - (void)pushLabelInfoArray:(NSMutableArray *)infoArray;
@@ -22,6 +24,7 @@
 - (void)popPageManually;
 - (void)closeOpenPage;
 - (BOOL)isLabelIndexInCurrentPage:(NSUInteger)index;
+@property (retain ,nonatomic) UITapGestureRecognizer * tapRecognizer;
 @end
 
 @implementation LNLabelBarViewController
@@ -32,8 +35,10 @@
 @synthesize delegate = _delegate;
 @synthesize selectUserLock = _selectUserLock;
 @synthesize loginButton = _loginButton;
-
+@synthesize tapRecognizer;
 - (void)dealloc {
+    
+    self.tapRecognizer = nil;
     [_scrollView release];
     [_labelPagesStack release];
     [_labelInfoArrayStack release];
@@ -91,6 +96,21 @@
     self.pageControl.currentPage = 0;
 }
 
+-(void) keyboardWillShow:(NSNotification *) note {
+//    [self addGestureRecognizer:self.tapRecognizer];
+    isKeyBoardExits = YES;
+}
+
+-(void) keyboardWillHide:(NSNotification *) note
+{
+//    [self removeGestureRecognizer:self.tapRecognizer];
+    isKeyBoardExits = NO;
+}
+
+-(void)didTapAnywhere: (UITapGestureRecognizer*) recognizer {    
+    [self.view resignFirstResponder];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -98,6 +118,11 @@
     [self loadLabelPages];
     
     self.scrollView.scrollsToTop = NO;
+
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+     
+    [nc addObserver:self selector:@selector(keyboardWillShow:) name:
+     UIKeyboardWillShowNotification object:nil];
 }
 
 - (id)init {
@@ -168,10 +193,26 @@
     [labelToSelect clickTitleButton:nil];
 }
 
+-(void)dismissKeyBoard{
+    UITextView * tf = [[UITextView alloc]initWithFrame:CGRectMake(2, 2, 0, 0)];
+    [self.view addSubview:tf];
+    [tf becomeFirstResponder];
+    [tf resignFirstResponder];
+    [tf removeFromSuperview];
+    [tf release];
+
+}
 #pragma mark -
 #pragma mark LNLabelPageViewController delegate
 
 - (void)labelPageView:(LNLabelPageViewController *)pageView didSelectLabel:(LNLabelViewController *)label {
+    
+    if (isKeyBoardExits) {        
+          
+        [self dismissKeyBoard];
+                
+    }
+    
     NSUInteger page = pageView.page;
     for (int i = 0; i < self.pageCount; i++) {
         LNLabelPageViewController *pv = (LNLabelPageViewController *)[self.labelPages objectAtIndex:i];

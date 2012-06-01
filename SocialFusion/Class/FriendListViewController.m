@@ -29,7 +29,7 @@
 - (NSArray *)getAllWeiboUserArrayWithHint:(NSString *)text ;
 -(void)dismissKeyBoard;
 -(void)showEGOHeaderView;
-
+@property (retain,nonatomic)  UITapGestureRecognizer*  tapRecognizer;
 @end 
 
 @implementation FriendListViewController
@@ -37,6 +37,7 @@
 #pragma mark -
 #pragma mark Memory management
 @synthesize textField;
+@synthesize tapRecognizer;
 
 - (void)dealloc {
     [_atScreenNames release];
@@ -49,9 +50,32 @@
     [super viewDidUnload];
 }
 
+-(void)resignKeyBoardDissmissListener{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    
+    [nc addObserver:self selector:@selector(keyboardWillShow:) name:
+     UIKeyboardWillShowNotification object:nil];
+    
+    [nc addObserver:self selector:@selector(keyboardWillHide:) name:
+     UIKeyboardWillHideNotification object:nil];
+    
+    self.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                            action:@selector(dismissKeyBoard)];
+}
+
+-(void) keyboardWillShow:(NSNotification *) note {
+    [self.view addGestureRecognizer:tapRecognizer];
+}
+
+-(void) keyboardWillHide:(NSNotification *) note
+{
+    [self.view removeGestureRecognizer:tapRecognizer];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.textField.text = @"";
+    [self resignKeyBoardDissmissListener];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -72,6 +96,7 @@
     [result autorelease];
     return result;
 }
+
 
 #pragma mark -
 #pragma mark NSFetchRequestController
