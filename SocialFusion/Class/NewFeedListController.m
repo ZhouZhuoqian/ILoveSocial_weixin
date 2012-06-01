@@ -19,7 +19,6 @@
 #import "Image+Addition.h"
 #import "UIImageView+Addition.h"
 #import "NewFeedBlog.h"
-//#import "StatusDetailController.h"
 #import "UIImage+Addition.h"
 #import "DetailImageViewController.h"
 #import "NewFeedUserListController.h"
@@ -29,7 +28,7 @@
 #import "NSString+HTMLSet.h"
 
 
-static NSInteger SoryArrayByTime(NewFeedRootData* data1, NewFeedRootData* data2, void *context)
+static NSInteger SortArrayByTime(NewFeedRootData* data1, NewFeedRootData* data2, void *context)
 {
     return ([data2.update_Time compare:data1.update_Time]);
 }
@@ -86,6 +85,7 @@ static NSInteger SoryArrayByTime(NewFeedRootData* data1, NewFeedRootData* data2,
         userList = [[[NewFeedUserListController alloc] init] autorelease];
         [userList setStyle:kWeiboUserFeed];        
     }
+    //***********************************************
     else if (style == kAllSelfFeed)
     {
         userList = [[[NewFeedListController alloc] init] autorelease]; 
@@ -377,7 +377,6 @@ static NSInteger SoryArrayByTime(NewFeedRootData* data1, NewFeedRootData* data2,
     return 1;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -593,10 +592,6 @@ static NSInteger SoryArrayByTime(NewFeedRootData* data1, NewFeedRootData* data2,
     if(self.tableView.dragging || self.tableView.decelerating || _reloadingFlag)
         return;
     
-    
-    
-    
-    
     NewFeedRootData *data = [self.fetchedResultsController objectAtIndexPath:indexPath];
     Image *image = [Image imageWithURL:data.owner_Head inManagedObjectContext:self.managedObjectContext];
     if (!image)
@@ -607,11 +602,6 @@ static NSInteger SoryArrayByTime(NewFeedRootData* data1, NewFeedRootData* data2,
         } cacheInContext:self.managedObjectContext];
         
     }
-    
-    
-    
-    
-    
     
     if ([data class]==[NewFeedUploadPhoto class])
     {

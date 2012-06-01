@@ -27,7 +27,8 @@
 - (NSArray *)getAllRenrenUserArrayWithHint:(NSString *)text ;
 - (void)setScreenNamesWithArray:(NSArray *)array ;
 - (NSArray *)getAllWeiboUserArrayWithHint:(NSString *)text ;
-
+-(void)dismissKeyBoard;
+-(void)showEGOHeaderView;
 
 @end 
 
@@ -53,6 +54,13 @@
     self.textField.text = @"";
 }
 
+-(void)viewWillDisappear:(BOOL)animated{
+    
+    [super viewWillDisappear:animated];
+    [self dismissKeyBoard];
+
+}
+  
 + (FriendListViewController *)getNewFeedListControllerWithType:(RelationshipViewType)type {
     FriendListViewController *result;
     if(type == RelationshipViewTypeRenrenFriends) {
@@ -134,8 +142,7 @@
     else if([usr isMemberOfClass:[WeiboUser class]]) 
         [userDict setObject:usr forKey:kWeiboUser];
     [NSNotificationCenter postSelectFriendNotificationWithUserDict:userDict];
-    [self.textField becomeFirstResponder];
-    [self.textField resignFirstResponder];
+    [self dismissKeyBoard];
     
 }
 
@@ -224,13 +231,18 @@
         [self.tableView reloadData];
     }
 }
+
+
+
+
+#pragma mark -
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{	
     if (self.textField.text.length == 0) {
         [super scrollViewDidScroll:scrollView];
     }
-    [self.textField becomeFirstResponder];
-    [self.textField resignFirstResponder];
     
+    [self dismissKeyBoard];
     
 }
 
@@ -338,6 +350,9 @@
     }
     
 }
-
+-(void)dismissKeyBoard{
+    [self.textField becomeFirstResponder];
+    [self.textField resignFirstResponder];
+}
 
 @end

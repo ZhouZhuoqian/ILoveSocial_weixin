@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		317CFA5215787E09007B66EB /* NewFeedListOfImageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 317CFA5115787E09007B66EB /* NewFeedListOfImageController.m */; };
 		7303293714D8DCE600AA9305 /* repostcelldetail.html in Resources */ = {isa = PBXBuildFile; fileRef = 7303293614D8DCE600AA9305 /* repostcelldetail.html */; };
 		7303293A14D8E75000AA9305 /* detail_repost_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7303293914D8E75000AA9305 /* detail_repost_shadow.png */; };
 		7305A696144DB38C00ED59AA /* StatusCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7305A694144DB38B00ED59AA /* StatusCommentCell.m */; };
@@ -388,6 +389,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		317CFA5015787E09007B66EB /* NewFeedListOfImageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFeedListOfImageController.h; sourceTree = "<group>"; };
+		317CFA5115787E09007B66EB /* NewFeedListOfImageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFeedListOfImageController.m; sourceTree = "<group>"; };
 		7303293614D8DCE600AA9305 /* repostcelldetail.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = repostcelldetail.html; sourceTree = "<group>"; };
 		7303293914D8E75000AA9305 /* detail_repost_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detail_repost_shadow.png; sourceTree = "<group>"; };
 		7305A693144DB38B00ED59AA /* StatusCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusCommentCell.h; sourceTree = "<group>"; };
@@ -1003,9 +1006,11 @@
 				7309DDBC1447E93300774011 /* NewFeedCell */,
 				73CA9B3614C308E500D85492 /* NewFeedCellHeight.h */,
 				73CA9B3714C308E500D85492 /* NewFeedCellHeight.m */,
-				E1532E6814FD4A3600A7B94E /* NewFeedListController.xib */,
 				73906659143F095C00835332 /* NewFeedListController.h */,
 				7390665A143F095C00835332 /* NewFeedListController.m */,
+				E1532E6814FD4A3600A7B94E /* NewFeedListController.xib */,
+				317CFA5015787E09007B66EB /* NewFeedListOfImageController.h */,
+				317CFA5115787E09007B66EB /* NewFeedListOfImageController.m */,
 				73C6C9F314CAF06A0031BDD0 /* NewFeedUserListController.h */,
 				73C6C9F414CAF06A0031BDD0 /* NewFeedUserListController.m */,
 				7319DCD3144D6FBB006FE917 /* StatusDetail */,
@@ -2539,6 +2544,7 @@
 				D0BE1E66156CA4BE006EF725 /* SDWebImagePrefetcher.m in Sources */,
 				D0BE1E67156CA4BE006EF725 /* UIButton+WebCache.m in Sources */,
 				D0BE1E68156CA4BE006EF725 /* UIImageView+WebCache.m in Sources */,
+				317CFA5215787E09007B66EB /* NewFeedListOfImageController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

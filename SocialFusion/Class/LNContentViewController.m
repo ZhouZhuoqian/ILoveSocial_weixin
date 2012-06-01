@@ -106,6 +106,7 @@
         for(NSString *identifier in identifiers) {
             [self addUserContentViewWithIndentifier:identifier andUsers:userDict];
         }
+        
     }
     return self;
 }
@@ -141,23 +142,23 @@
 - (id)addContentViewWithIndentifier:(NSString *)identifier andUsers:(NSDictionary *)userDict {
 
     id result = nil;
+    
+    //****************************Self Feed*******************
     if([identifier isEqualToString:kChildAllSelfNewFeed]) {
-//        result = [NewFeedListController getNewFeedListControllerwithStyle:kAllSelfFeed];
         NSLog(@"all feed");
         result = [NewFeedListController getNewFeedListControllerwithStyle:kAllSelfFeed andWXDelegate:self.delegateWX];
-//          result = [NewFeedListController getNewFeedListControllerwithStyle:kAllSelfFeed andWXDelegate:self];
 
     }
     else if([identifier isEqualToString:kChildRenrenSelfNewFeed]) {
-//        result = [NewFeedListController getNewFeedListControllerwithStyle:kRenrenSelfFeed];
         result = [NewFeedListController getNewFeedListControllerwithStyle:kRenrenSelfFeed andWXDelegate:self.delegateWX];
 
     }
     else if([identifier isEqualToString:kChildWeiboSelfNewFeed]) {
-//        result = [NewFeedListController getNewFeedListControllerwithStyle:kWeiboSelfFeed];
-        result = [NewFeedListController getNewFeedListControllerwithStyle:kWeiboSelfFeed andWXDelegate:self.delegateWX];
+         result = [NewFeedListController getNewFeedListControllerwithStyle:kWeiboSelfFeed andWXDelegate:self.delegateWX];
 
     }
+    
+    //*******************Friend List***************************************
     else if([identifier isEqualToString:kChildRenrenFriend]) {
         result = [FriendListViewController getNewFeedListControllerWithType:RelationshipViewTypeRenrenFriends];
     }
@@ -168,19 +169,21 @@
     else if([identifier isEqualToString:kChildWeiboFollower] || [identifier isEqualToString:kChildCurrentWeiboFollower]) {
         result = [FriendListViewController getNewFeedListControllerWithType:RelationshipViewTypeWeiboFollowers];
     }
+    
+    //**************************New Feed*********************************
     else if([identifier isEqualToString:kChildRenrenNewFeed]) {
-//        result = [NewFeedListController getNewFeedListControllerwithStyle:kRenrenUserFeed];
-        result = [NewFeedListController getNewFeedListControllerwithStyle:kRenrenUserFeed andWXDelegate:self.delegateWX];
-
+         result = [NewFeedListController getNewFeedListControllerwithStyle:kRenrenUserFeed andWXDelegate:self.delegateWX];
     }
     else if([identifier isEqualToString:kChildWeiboNewFeed]) {
-//        result = [NewFeedListController getNewFeedListControllerwithStyle:kWeiboUserFeed];
-        result = [NewFeedListController getNewFeedListControllerwithStyle:kWeiboUserFeed andWXDelegate:self.delegateWX];
+         result = [NewFeedListController getNewFeedListControllerwithStyle:kWeiboUserFeed andWXDelegate:self.delegateWX];
 
     }
     else if([identifier isEqualToString:kParentPublication]) {
         result = [[[PublicationViewController alloc] init] autorelease];
     }
+    
+    //***************************Info********************************
+
     else if([identifier isEqualToString:kChildWeiboInfo] || [identifier isEqualToString:kChildCurrentWeiboInfo]) {
         result = [UserInfoViewController getUserInfoViewControllerWithType:kWeiboUserInfo];
     }
@@ -188,11 +191,15 @@
         result = [UserInfoViewController getUserInfoViewControllerWithType:kRenrenUserInfo];
     }
     else {
-      //  NSLog(@"nil identifier:%@", identifier);
         abort();
     }
+  
     if([result isKindOfClass:[CoreDataViewController class]]) {
-        ((CoreDataViewController *)result).userDict = userDict;
+        if([identifier isEqualToString:kChildRenrenSelfNewFeed]) {
+            ((CoreDataViewController *)result).userDict = userDict;
+        }else{
+            ((CoreDataViewController *)result).userDict = userDict;
+        }
     }
     return result;
 }
