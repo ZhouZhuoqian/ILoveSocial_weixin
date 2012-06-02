@@ -26,13 +26,15 @@
 
 
 @implementation NewFeedPhotoCell
+
+@synthesize _commentTextView;
 @synthesize _userNameLabel;
 @synthesize captainLabel;
 @synthesize _headFrameImageView;
 @synthesize imageView;
 @synthesize _headImageView;
 @synthesize managedObjectContext;
-
+ 
 
 
 - (void)setList:(NewFeedListOfImageController*)list{
@@ -47,6 +49,7 @@
     self.captainLabel = nil;
 
     [_headFrameImageView release];
+     [_commentTextView release];
     [super dealloc];
 }
 
@@ -87,7 +90,7 @@
 
 - (void)configureCell:(NewFeedRootData*)feedData  first:(BOOL)bol
 {    
-    NSLog(@"___________configure cell");
+//    NSLog(@"___________configure cell");
     
 //    _photoData=nil;
     
@@ -109,55 +112,53 @@
     }
 
     self.imageView.image=[UIImage imageNamed:@"photo_default.png"] ;
-    
-    
-    
-    
-
+    self.captainLabel.text = [CommonFunction getTimeBefore:[feedData getDate]];
     
     NSString * imageUrl  =     [feedData    owner_Head];    
     self._headImageView.image= [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]]];
 
-    
     if ([feedData class] == [NewFeedShareAlbum class]){
-
         imageUrl =  [(NewFeedShareAlbum*)feedData photo_url];
-//        self.imageView.image= [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]]];
-        [self loadImage:self.imageView withImageUrl:imageUrl];
-        
+         [self loadImage:self.imageView withImageUrl:imageUrl];
+//        self._commentLabel.text =   [NSString stringWithFormat:@"共有%i条评论" ,[(NewFeedShareAlbum*)feedData comment_Count] ] ;
+        self._commentTextView.text =[(NewFeedShareAlbum*)feedData share_comment]  ;
+
     } else if ([feedData class] == [NewFeedSharePhoto class]){
         
         imageUrl =  [(NewFeedSharePhoto*)feedData photo_url];
-//        self.imageView.image= [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]]];
-        [self loadImage:self.imageView withImageUrl:imageUrl];
-
+         [self loadImage:self.imageView withImageUrl:imageUrl];
+        self._commentTextView.text =[(NewFeedShareAlbum*)feedData share_comment]  ;
 
     } else if ([feedData class] == [NewFeedUploadPhoto class])
     {
         
         imageUrl =  [(NewFeedUploadPhoto*)feedData photo_url];
         imageUrl =  [(NewFeedUploadPhoto*)feedData photo_big_url];
-//        self.imageView.image= [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]]];
-        [self loadImage:self.imageView withImageUrl:imageUrl];
+         [self loadImage:self.imageView withImageUrl:imageUrl];
+        self._commentTextView.text =[(NewFeedUploadPhoto*)feedData photo_comment]  ;
 
     } else if ([feedData class] == [NewFeedData class])
     {
-        
         imageUrl =         ((NewFeedData*)feedData).pic_URL;
-        
         if (imageUrl!=nil){
             
-//            self.imageView.image= [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]]];
-            [self loadImage:self.imageView withImageUrl:imageUrl];
+             [self loadImage:self.imageView withImageUrl:imageUrl];
 
         }
-        
+         self._commentTextView.text =[(NewFeedData*)feedData message]  ;
     }
+    return;
 
     
-    return;
-   
+    for(   StatusCommentData* commentsData in feedData.comments) {
+//        NSLog(@"%@",commentsData);
+        
+        NSString * currentText =  self._commentTextView.text ;
+        
+        self._commentTextView.text  = [NSString stringWithFormat:@"%@\n%@:%@" , currentText, [commentsData owner_Name] ,   [commentsData text]];
+    }
     
+   
     
     if ([feedData class] == [NewFeedShareAlbum class])
     {
@@ -170,8 +171,7 @@
          
         outString = [(NewFeedShareAlbum*)feedData getFromName];
          
-        NSString * commentCountString =         [NSString stringWithFormat:@"评论:%d",[feedData.comment_Count intValue]];
-
+ 
     }
     else if ([feedData class] == [NewFeedSharePhoto class])
     {

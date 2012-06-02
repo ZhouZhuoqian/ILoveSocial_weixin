@@ -13,8 +13,7 @@
 @interface NewFeedPhotoCell :  UITableViewCell{
     
 }
-- (id)initWithType:(kFeedType)type;
-- (void)setList:(NewFeedListOfImageController*)list;
+
 
 @property (retain, nonatomic) IBOutlet UIImageView *imageView;
 @property (retain, nonatomic) IBOutlet UIImageView *_headImageView;
@@ -22,8 +21,9 @@
 @property (retain, nonatomic) IBOutlet UILabel *captainLabel;
 @property (retain, nonatomic) IBOutlet UIImageView *_headFrameImageView;
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+ @property (retain, nonatomic) IBOutlet UITextView *_commentTextView;
 
-
+ - (void)setList:(NewFeedListOfImageController*)list;
 - (IBAction)selectUser:(id)sender;
 - (IBAction)repost:(id)sender;
 - (void)configureCell:(NewFeedRootData*)feedData  first:(BOOL)bol;

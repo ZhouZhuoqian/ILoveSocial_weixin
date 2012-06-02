@@ -27,9 +27,11 @@
 #import "User+Addition.h"
 #import "NSString+HTMLSet.h"
 #import "NewFeedPhotoCell.h"
+#import "NewFeedPhotoHeader.h"
 
 @interface NewFeedListOfImageController(){
     BOOL isDebuging ;
+    NSInteger cellnumber;
 }
 - (UITableViewCell *)getMyCell:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 
@@ -232,10 +234,13 @@
 }
 
 - (void)addNewWeiboData:(NewFeedRootData *)data {
+    cellnumber++;
     [self.processWeiboUser addNewFeedObject:data];
 }
 
 - (void)addNewRenrenData:(NewFeedRootData *)data {
+    cellnumber++;
+
     [self.processRenrenUser addNewFeedObject:data];
 }
 
@@ -353,6 +358,35 @@
 
 #pragma mark - tableview delegate
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section 
+{
+    
+     
+    NewFeedPhotoHeader *headerView = [[[NewFeedPhotoHeader alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 60)] autorelease];
+    
+//    NewFeedPhotoHeader *headerView = [[[NewFeedPhotoHeader alloc] init ] autorelease];
+
+    return headerView;
+
+    
+    
+    [headerView setBackgroundColor:[UIColor colorWithRed:225.0f / 255.0f green:217.0f / 255.0f blue:195.0f / 255.0f alpha:0.8f]];
+    NSString *section_name ;
+          section_name = @"section name";
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 2, 306, 18)];
+    label.text = section_name;
+    label.font = [UIFont fontWithName:@"MV Boli" size:16.0f];
+    label.textColor = [UIColor whiteColor];
+    label.shadowColor = [UIColor darkGrayColor];
+    label.shadowOffset = CGSizeMake(0, 1.0f);
+    label.backgroundColor = [UIColor clearColor];
+    [headerView addSubview:label];
+    [label release];
+    return headerView;
+    
+    
+}
+
 - (float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -373,7 +407,14 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    NSLog(@"%d" , cellnumber);
     return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    cellnumber = [super tableView:tableView numberOfRowsInSection:section];
+    return cellnumber;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
 {
@@ -386,12 +427,7 @@
         return [self getMyCell:tableView cellForRowAtIndexPath:indexPath];
     }
 
-    
     static NSString *NormalCell = @"NewFeedStatusNormalCell";
-
-    
-   
-    
     if (1) {
         NewFeedPhotoCell * cell  =  [tableView dequeueReusableCellWithIdentifier:NormalCell];
         if (cell == nil) {
