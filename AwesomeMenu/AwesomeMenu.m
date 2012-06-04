@@ -64,16 +64,16 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
         self.menusArray = aMenusArray;
         
         // add the "Add" Button.
-        if(1){
+        if(0){
             _addButton = [[AwesomeMenuItem alloc] initWithImage:[UIImage imageNamed:@"bg-addbutton.png"]
                                                highlightedImage:[UIImage imageNamed:@"bg-addbutton-highlighted.png"] 
                                                    ContentImage:[UIImage imageNamed:@"icon-plus.png"] 
                                         highlightedContentImage:[UIImage imageNamed:@"icon-plus-highlighted.png"]];
         }else{
-            _addButton = [[AwesomeMenuItem alloc] initWithImage: nil
-                                               highlightedImage:nil
-                                                   ContentImage:[UIImage imageNamed:@"icon-plus.png"] 
-                                        highlightedContentImage:[UIImage imageNamed:@"icon-plus-highlighted.png"]];
+            _addButton = [[AwesomeMenuItem alloc] initWithImage: [UIImage imageNamed:@"btn_repost.png"]
+                                               highlightedImage:[UIImage imageNamed:@"btn_repost.png"]
+                                                   ContentImage:nil
+                                        highlightedContentImage:nil];
         }
         
         _addButton.delegate = self;

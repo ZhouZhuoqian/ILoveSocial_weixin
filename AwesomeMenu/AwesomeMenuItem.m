@@ -74,6 +74,7 @@ highlightedContentImage:(UIImage *)hcimg;
 }
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    NSLog(@"touches ended");
     self.highlighted = NO;
     // if stop in the area of 2x rect, response to the touches event.
     CGPoint location = [[touches anyObject] locationInView:self];

@@ -86,6 +86,8 @@
      }
      return;
      }*/
+    
+
 	
     NSURL *url = [NSURL URLWithString:urlString];    
     dispatch_queue_t downloadQueue = dispatch_queue_create("downloadImageQueue", NULL);
@@ -100,12 +102,13 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if([Image imageWithURL:urlString inManagedObjectContext:context] == nil) {
                 [Image insertImage:imageData withURL:urlString inManagedObjectContext:context];
-                //NSLog(@"cache image url:%@", urlString);
+//                NSLog(@"cache image url:%@", urlString);
                 self.image = img;
                 if (completion) {
                     completion();
                 }			
             }
+            
         });
     });
     dispatch_release(downloadQueue);

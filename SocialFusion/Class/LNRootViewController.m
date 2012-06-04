@@ -31,6 +31,8 @@
 
 - (void)raiseLoginViewAnimated:(BOOL)animated;
 - (void)dropLoginViewAnimated:(BOOL)animated;
+-(void)createPopupMenu:(UIView * )withinThisView;
+
 @end
 
 @implementation LNRootViewController
@@ -136,7 +138,7 @@
     
     AwesomeMenu *menu = [[AwesomeMenu alloc] initWithFrame:withinThisView.bounds menus:menus];
     
-    menu.startPoint = CGPointMake(160.0, 420.0);
+    menu.startPoint = CGPointMake(160.0, 0.0);
     
     menu.rotateAngle = -M_PI/3 - 0.14;
     menu.menuWholeAngle = M_PI;

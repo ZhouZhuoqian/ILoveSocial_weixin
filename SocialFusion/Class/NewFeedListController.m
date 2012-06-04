@@ -585,6 +585,7 @@ static NSInteger SortArrayByTime(NewFeedRootData* data1, NewFeedRootData* data2,
 -(void)sendTextContent:(NSString *)nsText{
     
     //    NSLog(@"%@",nsText);
+    
 }
 
 

@@ -13,6 +13,9 @@
 #import "WBRequest.h"
 #import "OADataFetcher.h"
 #import "OAToken.h"
+
+#import "UIApplication+Addition.h"
+
 #define RequestURL @"http://api.t.sina.com.cn/oauth/request_token" 
 #define SINAAccessURL @"http://api.t.sina.com.cn/oauth/access_token" 
 
@@ -236,6 +239,8 @@ NSString *TWITTERFON_FORM_BOUNDARY = @"0194784892923";
             self.responseStatusCode = [errorCodeString intValue];
             self.errorDesc = [dic objectForKey:@"error"];
             NSLog(@"Server responsed error code: %d\n desc: %@\n url: %@\n", self.responseStatusCode, self.errorDesc, request.url);
+            [[UIApplication sharedApplication] presentErrorToast:@"您刷的太频繁了,过15分钟再试哦!" withVerticalPos:kToastBottomVerticalPosition ];
+
         }
     }
     

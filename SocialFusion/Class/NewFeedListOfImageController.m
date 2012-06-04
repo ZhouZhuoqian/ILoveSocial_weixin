@@ -42,7 +42,6 @@
 @synthesize headerView;
 
 
-
 - (void)dealloc {
     //    self.feedStatusCel =nil;
     //    self.newFeedDetailViewCel = nil;
@@ -118,6 +117,7 @@
 {
     [super viewDidLoad];
     isDebuging = YES;
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -274,23 +274,22 @@
         int scrollHeight = [_cellHeightHelper getHeight:dict style:0];
         NewFeedRootData *data;
         
-        
-        if ([[dict objectForKey:@"feed_type"] intValue] == 30 )
-        {
-            data = [NewFeedUploadPhoto insertNewFeed:0   getDate:_currentTime Dic:dict inManagedObjectContext:self.managedObjectContext];
-            [self addNewRenrenData:data];
-        } 
+//        if ([[dict objectForKey:@"feed_type"] intValue] == 30 )
+//        {
+//            data = [NewFeedUploadPhoto insertNewFeed:0   getDate:_currentTime Dic:dict inManagedObjectContext:self.managedObjectContext];
+//            [self addNewRenrenData:data];
+//        } 
 //        if ([[dict objectForKey:@"feed_type"] intValue] == 33 )
 //        {
 //            data = [NewFeedShareAlbum insertNewFeed:0  height:scrollHeight getDate:_currentTime Dic:dict inManagedObjectContext:self.managedObjectContext];
 //            [self addNewRenrenData:data];
 //            
 //        }
-//        if ([[dict objectForKey:@"feed_type"] intValue] == 32)
-//        {
-//            data = [NewFeedSharePhoto insertNewFeed:0 height:scrollHeight getDate:_currentTime Dic:dict inManagedObjectContext:self.managedObjectContext];
-//            [self addNewRenrenData:data];
-//        }
+        if ([[dict objectForKey:@"feed_type"] intValue] == 32)
+        {
+            data = [NewFeedSharePhoto insertNewFeed:0 height:scrollHeight getDate:_currentTime Dic:dict inManagedObjectContext:self.managedObjectContext];
+            [self addNewRenrenData:data];
+        }
         
     }
     [self showLoadMoreDataButton];
@@ -376,7 +375,9 @@
 {
     
     if (isDebuging) {
-        return 342;
+
+        return 342 ;
+
     }else{
         if (_indexPath == nil || [indexPath compare:_indexPath]) {
             return [NewFeedStatusCell heightForCell:[self.fetchedResultsController objectAtIndexPath:indexPath]];
@@ -401,6 +402,7 @@
     cellnumber = [super tableView:tableView numberOfRowsInSection:section];
     return cellnumber;
 }
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
 {
     
@@ -427,12 +429,13 @@
     NewFeedRootData *data = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.managedObjectContext = self.managedObjectContext;
     [cell configureCell:data first:YES];    
+    cell._listController = self;
     if(indexPath.row !=0){
         NSIndexPath *_indexpath = [NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section];
         data = [self.fetchedResultsController objectAtIndexPath:_indexpath];
     }
     [self.headerView configureCell:data];
-
+    
     return cell; 
     
 }
@@ -653,7 +656,6 @@
 - (void)loadExtraDataForOnScreenRowsHelp:(NSIndexPath *)indexPath {
     
     
-    return;
     
     if(self.tableView.dragging || self.tableView.decelerating || _reloadingFlag)
         return;
@@ -662,13 +664,21 @@
     Image *image = [Image imageWithURL:data.owner_Head inManagedObjectContext:self.managedObjectContext];
     if (!image)
     {
-        NewFeedStatusCell *statusCell = (NewFeedStatusCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-        [statusCell.photoView loadImageFromURL:data.owner_Head completion:^{
-            [statusCell.photoView fadeIn];
+        NewFeedPhotoCell *statusCell = (NewFeedPhotoCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        [statusCell._headImageView loadImageFromURL:data.owner_Head completion:^{
+            [statusCell._headImageView fadeIn];
         } cacheInContext:self.managedObjectContext];
-        
     }
     
+    
+    NewFeedPhotoCell *statusCell = (NewFeedPhotoCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    [statusCell configureCellImage:data first:YES];
+
+    return;
+    
+
+    
+
     if ([data class]==[NewFeedUploadPhoto class])
     {
         NewFeedUploadPhoto* data2=(NewFeedUploadPhoto*)data;
@@ -824,16 +834,21 @@
 
 - (void)selectUser:(NSIndexPath *)indexPath
 {
+    
     NewFeedRootData* feedData = [self.fetchedResultsController objectAtIndexPath:indexPath];
     User *usr = feedData.author;
-    if(usr == nil) 
+    if(usr == nil) {
+        NSLog(@"select user");
+
         return;
+    }
     NSMutableDictionary *userDict = [NSMutableDictionary dictionaryWithDictionary:self.currentUserDict];
     if([usr isMemberOfClass:[RenrenUser class]])
         [userDict setObject:usr forKey:kRenrenUser];
     else if([usr isMemberOfClass:[WeiboUser class]]) 
         [userDict setObject:usr forKey:kWeiboUser];
     [NSNotificationCenter postSelectFriendNotificationWithUserDict:userDict];
+    
 }
 
 - (IBAction)resetToNormalList
