@@ -48,6 +48,8 @@ typedef void (^RRCompletionBlock)(RenrenClient *client);
 - (void)getComments:(NSString*)userID status_ID:(NSString*)status pageNumber:(int)pageNumber;
 - (void)getStatus:(NSString*)userID status_ID:(NSString*)status;
 - (void)getNewFeed:(int)pageNumber  uid:(NSString*)id;
+- (void)getNewFeed:(int)pageNumber count:(NSInteger)count;
+
 - (void)getSinglePhoto:(NSString*)userID photoID:(NSString*)photoID;
 - (void)getBlog:(NSString*)userID status_ID:(NSString*)status;
 - (void)getBlogComments:(NSString*)userID status_ID:(NSString*)status pageNumber:(int)pageNumber;

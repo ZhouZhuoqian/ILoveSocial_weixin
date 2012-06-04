@@ -160,7 +160,6 @@
     _time.backgroundColor = [UIColor clearColor];
     _time.textAlignment=UITextAlignmentRight;
     _time.font = [UIFont fontWithName:@"Helvetica" size:9.0f];
-    
     _time.textColor = [UIColor colorWithRed:0.5647f green:0.55686f blue:0.47059 alpha:1];
     
     _photoView = [[UIImageView alloc] init];

@@ -111,6 +111,25 @@
     dispatch_release(downloadQueue);
 }
 
+- (void)centerizeWithSideLengthAndFillScreen:(CGFloat)length {
+    if(self.image == nil) 
+        return;
+    UIImage *image = self.image;
+    CGPoint center =  self.center;
+    
+
+    if(image.size.width < image.size.height || 0){
+        self.frame = CGRectMake(0, 0, length, length * image.size.height / image.size.width);
+    }
+    else{
+        CGFloat  width = length * image.size.width / image.size.height;
+        self.frame = CGRectMake(0, 0, width, length);
+//        self.frame = CGRectMake(0, 0, length , length);
+
+    }
+    self.center = center;
+}
+
 - (void)centerizeWithSideLength:(CGFloat)length {
     if(self.image == nil) 
         return;

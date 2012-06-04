@@ -27,5 +27,7 @@
           cacheInContext:(NSManagedObjectContext *)context;
 
 - (void)centerizeWithSideLength:(CGFloat)length;
+- (void)centerizeWithSideLengthAndFillScreen:(CGFloat)length ;
+
 
 @end

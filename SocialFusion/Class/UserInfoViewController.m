@@ -300,7 +300,7 @@
         
         
         if (url && middleUrl) {
-            NSLog(@"%d", i);
+//            NSLog(@"%d", i);
             //            _thumbnailURL[i]= url;
             //            _bigURL[i]=   [[NSString alloc] initWithString:middleUrl];
             

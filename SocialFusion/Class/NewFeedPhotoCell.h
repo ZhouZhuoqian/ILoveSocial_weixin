@@ -21,11 +21,12 @@
 @property (retain, nonatomic) IBOutlet UILabel *captainLabel;
 @property (retain, nonatomic) IBOutlet UIImageView *_headFrameImageView;
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
- @property (retain, nonatomic) IBOutlet UITextView *_commentTextView;
+@property (retain, nonatomic) IBOutlet UITextView *_commentTextView;
 
- - (void)setList:(NewFeedListOfImageController*)list;
+- (void)setList:(NewFeedListOfImageController*)list;
 - (IBAction)selectUser:(id)sender;
 - (IBAction)repost:(id)sender;
+- (IBAction)didClickImageView:(id)sender;
 - (void)configureCell:(NewFeedRootData*)feedData  first:(BOOL)bol;
 
 @end

@@ -34,17 +34,22 @@
     NSInteger cellnumber;
 }
 - (UITableViewCell *)getMyCell:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+@property (retain,nonatomic)     NewFeedPhotoHeader *headerView ;
 
 @end
 
 @implementation NewFeedListOfImageController
+@synthesize headerView;
+
+
 
 - (void)dealloc {
-//    self.feedStatusCel =nil;
-//    self.newFeedDetailViewCel = nil;
-//    self.newFeedDetailBlogViewCel= nil;
-//    self.newFeedAlbumCel= nil;
-//    self.cellHeightHelper = nil;
+    //    self.feedStatusCel =nil;
+    //    self.newFeedDetailViewCel = nil;
+    //    self.newFeedDetailBlogViewCel= nil;
+    //    self.newFeedAlbumCel= nil;
+    //    self.cellHeightHelper = nil;
+    self.headerView = nil;
     [super dealloc];
 }
 
@@ -118,7 +123,7 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-
+    
     [Image clearAllCacheInContext:self.managedObjectContext];
 }
 
@@ -240,7 +245,7 @@
 
 - (void)addNewRenrenData:(NewFeedRootData *)data {
     cellnumber++;
-
+    
     [self.processRenrenUser addNewFeedObject:data];
 }
 
@@ -253,7 +258,7 @@
         if ([data pic_big_URL]) {
             
             [self addNewWeiboData:data];
-
+            
         }
         
     }
@@ -270,25 +275,23 @@
         NewFeedRootData *data;
         
         
-        if ([[dict objectForKey:@"feed_type"] intValue] == 30)
+        if ([[dict objectForKey:@"feed_type"] intValue] == 30 )
         {
             data = [NewFeedUploadPhoto insertNewFeed:0   getDate:_currentTime Dic:dict inManagedObjectContext:self.managedObjectContext];
             [self addNewRenrenData:data];
-
-        }
-        else if ([[dict objectForKey:@"feed_type"] intValue] == 33)
-        {
-            data = [NewFeedShareAlbum insertNewFeed:0  height:scrollHeight getDate:_currentTime Dic:dict inManagedObjectContext:self.managedObjectContext];
-            [self addNewRenrenData:data];
-            
-        }
-        else if ([[dict objectForKey:@"feed_type"] intValue] == 32)
-        {
-            data = [NewFeedSharePhoto insertNewFeed:0 height:scrollHeight getDate:_currentTime Dic:dict inManagedObjectContext:self.managedObjectContext];
-            [self addNewRenrenData:data];
-
-        }
-
+        } 
+//        if ([[dict objectForKey:@"feed_type"] intValue] == 33 )
+//        {
+//            data = [NewFeedShareAlbum insertNewFeed:0  height:scrollHeight getDate:_currentTime Dic:dict inManagedObjectContext:self.managedObjectContext];
+//            [self addNewRenrenData:data];
+//            
+//        }
+//        if ([[dict objectForKey:@"feed_type"] intValue] == 32)
+//        {
+//            data = [NewFeedSharePhoto insertNewFeed:0 height:scrollHeight getDate:_currentTime Dic:dict inManagedObjectContext:self.managedObjectContext];
+//            [self addNewRenrenData:data];
+//        }
+        
     }
     [self showLoadMoreDataButton];
     [self doneLoadingTableViewData];
@@ -307,7 +310,7 @@
         _loadingCount = _loadingCount - 1;
     }];
     
-    [renren getNewFeed:_pageNumber];
+    [renren getNewFeed:_pageNumber count:5];
 }
 
 - (void)loadMoreWeiboData {
@@ -322,7 +325,7 @@
         _loadingCount = _loadingCount - 1;
     }];
     
-    [client getFriendsTimelineSinceID:nil maxID:nil startingAtPage:_pageNumber count:30 feature:0];
+    [client getFriendsTimelineSinceID:nil maxID:nil startingAtPage:_pageNumber count:5 feature:0];
 }
 
 - (void)loadMoreData {
@@ -357,35 +360,17 @@
 }
 
 #pragma mark - tableview delegate
-
+#if 0
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section 
 {
     
-     
-    NewFeedPhotoHeader *headerView = [[[NewFeedPhotoHeader alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 60)] autorelease];
-    
-//    NewFeedPhotoHeader *headerView = [[[NewFeedPhotoHeader alloc] init ] autorelease];
-
-    return headerView;
-
-    
-    
-    [headerView setBackgroundColor:[UIColor colorWithRed:225.0f / 255.0f green:217.0f / 255.0f blue:195.0f / 255.0f alpha:0.8f]];
-    NSString *section_name ;
-          section_name = @"section name";
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 2, 306, 18)];
-    label.text = section_name;
-    label.font = [UIFont fontWithName:@"MV Boli" size:16.0f];
-    label.textColor = [UIColor whiteColor];
-    label.shadowColor = [UIColor darkGrayColor];
-    label.shadowOffset = CGSizeMake(0, 1.0f);
-    label.backgroundColor = [UIColor clearColor];
-    [headerView addSubview:label];
-    [label release];
-    return headerView;
-    
+    if (!self.headerView) {
+        self.headerView = [[[NewFeedPhotoHeader alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 45)] autorelease];
+    }
+    return self.headerView;
     
 }
+#endif
 
 - (float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -402,12 +387,12 @@
             
         }
     }
-   
+    
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    NSLog(@"%d" , cellnumber);
+//    NSLog(@"%d" , cellnumber);
     return 1;
 }
 
@@ -421,29 +406,34 @@
     
 }
 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (!isDebuging) {
         return [self getMyCell:tableView cellForRowAtIndexPath:indexPath];
     }
-
+    
     static NSString *NormalCell = @"NewFeedStatusNormalCell";
-    if (1) {
-        NewFeedPhotoCell * cell  =  [tableView dequeueReusableCellWithIdentifier:NormalCell];
-        if (cell == nil) {
-            NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"NewFeedPhotoCell" owner:nil options:nil];
-            for (id currentObject in topLevelObjects) {
-                if ([currentObject isKindOfClass:[UITableViewCell class]]) {
-                    cell = (NewFeedPhotoCell *) currentObject;
-                    break;
-                }
-            }		
-        }
-        NewFeedRootData *data = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        [cell configureCell:data first:YES];    
-    	
-        return cell; 
+    NewFeedPhotoCell * cell  =  [tableView dequeueReusableCellWithIdentifier:NormalCell];
+    if (cell == nil) {
+        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"NewFeedPhotoCell" owner:nil options:nil];
+        for (id currentObject in topLevelObjects) {
+            if ([currentObject isKindOfClass:[UITableViewCell class]]) {
+                cell = (NewFeedPhotoCell *) currentObject;
+                break;
+            }
+        }		
     }
+    NewFeedRootData *data = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.managedObjectContext = self.managedObjectContext;
+    [cell configureCell:data first:YES];    
+    if(indexPath.row !=0){
+        NSIndexPath *_indexpath = [NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section];
+        data = [self.fetchedResultsController objectAtIndexPath:_indexpath];
+    }
+    [self.headerView configureCell:data];
+
+    return cell; 
     
 }
 - (UITableViewCell *)getMyCell:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -462,7 +452,7 @@
     if ([indexPath compare:_indexPath] || 1) {
         NewFeedStatusCell* cell;
         
-         NewFeedRootData *data = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        NewFeedRootData *data = [self.fetchedResultsController objectAtIndexPath:indexPath];
         
         if ([data class]==[NewFeedBlog class])
         {
@@ -805,7 +795,7 @@
 
 - (void)exposeCell:(NSIndexPath*)indexPath
 {
-   
+    
     return;
     
     [self.tableView cellForRowAtIndexPath:indexPath].selected=false;

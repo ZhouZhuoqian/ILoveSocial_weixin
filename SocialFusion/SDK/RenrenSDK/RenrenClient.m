@@ -473,12 +473,17 @@ hasError = _hasError;
 
 - (void)getNewFeed:(int)pageNumber
 {
+   [self getNewFeed:pageNumber count:30];
+}
+
+- (void)getNewFeed:(int)pageNumber count:(NSInteger)count
+{
     NSString* tempString = [[NSString alloc] initWithFormat:@"%d",pageNumber];
     NSMutableDictionary *params=[NSMutableDictionary dictionaryWithObjectsAndKeys:
                                  @"feed.get",@"method",
                                  @"10,20,21,30,32,33",@"type",
                                  tempString,@"page",
-                                 @"30",@"count",
+                                 [NSString stringWithFormat:@"%i" ,count],@"count",
                                  nil];
     [tempString release];
 	[self requestWithParams:params andDelegate:self];
