@@ -41,6 +41,7 @@ highlightedContentImage:(UIImage *)hcimg;
     [_contentImageView release];
     [super dealloc];
 }
+
 #pragma mark - UIView's methods
 - (void)layoutSubviews
 {
@@ -97,6 +98,36 @@ highlightedContentImage:(UIImage *)hcimg;
 {
     [super setHighlighted:highlighted];
     [_contentImageView setHighlighted:highlighted];
+}
+
+-(void)setVisibility:(BOOL)isVisible isSelect:(BOOL)isSelect{
+    if (isVisible) {
+        
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.5];
+        [self setAlpha:1.0];
+        [self.contentImageView setAlpha:1];
+        [UIView commitAnimations];
+        
+    }else{
+        CGFloat timeoff = 0.0f;
+        if (!isSelect) {
+            timeoff = 0.5f;
+        }else{
+            timeoff = 0.2f;
+        }
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:timeoff];
+        [self setAlpha:0];
+        [self.contentImageView setAlpha:0];
+        [UIView commitAnimations];
+        
+    }
+
+}
+
+-(void)setVisibility:(BOOL)isVisible{
+    [self setVisibility:isVisible isSelect:NO];
 }
 
 

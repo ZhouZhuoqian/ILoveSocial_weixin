@@ -147,10 +147,10 @@
     //****************************Self Feed*******************
     if([identifier isEqualToString:kChildAllSelfNewFeed]) {
         NSLog(@"all feed");
-//        result = [NewFeedListController getNewFeedListControllerwithStyle:kAllSelfFeed andWXDelegate:self.delegateWX];
+        result = [NewFeedListController getNewFeedListControllerwithStyle:kAllSelfFeed andWXDelegate:self.delegateWX];
+    }else if([identifier isEqualToString:kChildPhotoSelfNewFeed]) {
+        NSLog(@"photo feed");
         result = [NewFeedListOfImageController getNewFeedListOfImageControllerwithStyle:kAllSelfFeed andWXDelegate:self.delegateWX];
-
-
     }
     else if([identifier isEqualToString:kChildRenrenSelfNewFeed]) {
 //        result = [NewFeedListController getNewFeedListControllerwithStyle:kRenrenSelfFeed andWXDelegate:self.delegateWX];

@@ -225,6 +225,7 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
             [v removeFromSuperview];
         }
     }
+    
 }
 
 
@@ -277,6 +278,54 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
         _isAnimating = YES;
     }
 }
+
+#pragma mark - set item visibility
+
+-(void)setVisibilityOfItWithTag:(NSInteger ) _tag_ isShow:(BOOL ) isShow{
+    
+    NSNumber * number =[NSNumber numberWithInt:_tag_];
+    SEL selector ;
+    if (isShow) {
+        selector = @selector(showItem:);
+    }else{
+        selector = @selector(dismissItem:);
+    }
+    NSMethodSignature *signature = [AwesomeMenu instanceMethodSignatureForSelector:selector];
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+    [invocation setSelector:selector];
+    [invocation setTarget:self];
+    [invocation setArgument:&number atIndex:2];
+    CGFloat timeoff ;
+    if (isShow) {
+        timeoff = 0.0f;
+    }else{
+        timeoff = 0.5f;
+    }
+    NSTimer * timerTmp = [NSTimer scheduledTimerWithTimeInterval:timeoff invocation:invocation repeats:NO];
+    [[NSRunLoop currentRunLoop] addTimer:timerTmp forMode:NSRunLoopCommonModes];
+}
+
+-(void)showItWithTag:(NSInteger ) _tag_{
+    [self setVisibilityOfItWithTag:_tag_ isShow:YES];
+}
+
+-(void)dismissItWithTag:(NSInteger ) _tag_{
+    [self setVisibilityOfItWithTag:_tag_ isShow:NO];
+}
+
+-(void)setItemVisibility:(NSNumber * ) _userTag isShow:(BOOL)isShow{
+    AwesomeMenuItem *item = (AwesomeMenuItem *)[self viewWithTag:[_userTag intValue]];
+    [item setVisibility:isShow];
+}
+
+-(void)showItem:(NSNumber * ) _userTag{
+    [self setItemVisibility:_userTag isShow:YES];
+}
+
+-(void)dismissItem:(NSNumber * ) _userTag{
+    [self setItemVisibility:_userTag isShow:NO];    
+}
+
 #pragma mark - private methods
 - (void)_expand
 {
@@ -317,10 +366,15 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
     animationgroup.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
     [item.layer addAnimation:animationgroup forKey:@"Expand"];
     item.center = item.endPoint;
-    
+    [self showItem:[NSNumber numberWithInt:tag]];
     _flag ++;
     
 }
+
+
+
+
+
 
 - (void)_close
 {
@@ -360,6 +414,9 @@ static CGPoint RotateCGPointAroundCenter(CGPoint point, CGPoint center, float an
     animationgroup.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
     [item.layer addAnimation:animationgroup forKey:@"Close"];
     item.center = item.startPoint;
+    
+    [self dismissItWithTag:tag];
+
     _flag --;
 }
 

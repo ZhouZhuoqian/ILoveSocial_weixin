@@ -288,7 +288,6 @@
 
 - (void)configureCell:(NewFeedRootData*)feedData  first:(BOOL)bol
 {    
-//    NSLog(@"___________configure cell");
 
     _photoData=nil;
     
@@ -310,16 +309,14 @@
     
     if ([feedData class] == [NewFeedBlog class])
     {
+        // renren blog
         NSString* outString = [(NewFeedBlog*)feedData getName];
         
-        
         [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setWeibo('%@')",outString]];
-        
         
         outString = [(NewFeedBlog*)feedData getBlog];
         
         outString = [outString replaceHTMLSign:[feedData.style intValue]];
-        
         
         [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setRepost('%@')",outString]];
         
@@ -327,7 +324,7 @@
     }
     else if ([feedData class] == [NewFeedShareAlbum class])
     {
-        
+        // renren share album
         NSString* outString = [(NewFeedShareAlbum*)feedData getShareComment];
         
         outString = [outString replaceHTMLSign:[feedData.style intValue]];
@@ -356,7 +353,7 @@
     }
     else if ([feedData class] == [NewFeedSharePhoto class])
     {
-        
+        // renren share photo
         NSString* outString = [(NewFeedSharePhoto*)feedData getShareComment];
         outString = [outString replaceHTMLSign:[feedData.style intValue]];
         
@@ -383,8 +380,8 @@
     }
     else if ([feedData class] == [NewFeedUploadPhoto class])
     {
+        // 
         NSString* outString = [(NewFeedUploadPhoto*)feedData getName];
-        
         
         [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setWeibo('%@')",outString]];
         
@@ -414,12 +411,8 @@
             
             NSString* outString = [(NewFeedData*)feedData getName];
             
-            
             [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setWeibo('%@')",outString]];
-            
             [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setCommentCount('评论:%d')",[feedData.comment_Count intValue]]];
-            
-            
             
             if (((NewFeedData*)feedData).pic_URL!=nil)
             {
@@ -436,6 +429,7 @@
             
             [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setWeibo('%@')",outString]];
             
+
             outString = [(NewFeedData*)feedData getPostMessage];
             
             [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setRealRepost('%@')",outString]];

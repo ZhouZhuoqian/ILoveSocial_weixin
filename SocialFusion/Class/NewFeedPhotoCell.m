@@ -58,6 +58,10 @@
 -(void)awakeFromNib{
     NSLog(@"from nib");
 
+    
+
+    
+    
 }
 
 - (void)dealloc {
@@ -352,16 +356,22 @@
     if ([feedData class] == [NewFeedSharePhoto class]){
         imageUrl =  [(NewFeedSharePhoto*)feedData photo_url];
         self._commentTextView.text =[(NewFeedSharePhoto*)feedData getPhotoComment]  ;
+        
     } else if ([feedData class] == [NewFeedUploadPhoto class]) {
         imageUrl =  [(NewFeedUploadPhoto*)feedData photo_url];
         self._bigImageUrl =  [(NewFeedUploadPhoto*)feedData photo_big_url];
-        authorCommentString = [(NewFeedUploadPhoto*)feedData photo_comment];
+//        authorCommentString = [(NewFeedUploadPhoto*)feedData photo_comment];
+        authorCommentString = [(NewFeedUploadPhoto*)feedData getName];
+        
     } else 
     if ([feedData class] == [NewFeedData class])
     {
         imageUrl = ((NewFeedData*)feedData).pic_URL;
         self._bigImageUrl =  [(NewFeedData*)feedData pic_big_URL];
-        authorCommentString = [(NewFeedData*)feedData message]  ;
+//        authorCommentString = [(NewFeedData*)feedData message]  ;
+        authorCommentString = [(NewFeedData*)feedData getName]  ;
+        NSLog(@"%@" , authorCommentString);
+
     }
     
     //*********************************************
@@ -397,11 +407,17 @@
 -(void)createPopupMenu:(UIView * )withinThisView{
     
     UIImage *storyMenuItemImage = [UIImage imageNamed:@"bg-menuitem.png"];
-//    UIImage *storyMenuItemImage = nil;
+    
+//    UIImage *storyMenuItemImage = [UIImage imageNamed:@"bg-menuitem-yellow.png"];
+
+    
+
     UIImage *storyMenuItemImagePressed = [UIImage imageNamed:@"bg-menuitem-highlighted.png"];
 //    UIImage *storyMenuItemImagePressed = nil;
 
-    UIImage *starImage = [UIImage imageNamed:@"icon-star.png"];
+//    UIImage *starImage = [UIImage imageNamed:@"icon-star.png"];
+    UIImage *starImage = [UIImage imageNamed:@"btn_repost_white.png"];
+    
     
     AwesomeMenuItem *starMenuItem1 = [[AwesomeMenuItem alloc] initWithImage:storyMenuItemImage
                                                            highlightedImage:storyMenuItemImagePressed 
@@ -446,6 +462,11 @@
 
 - (void)AwesomeMenu:(AwesomeMenu *)menu didSelectIndex:(NSInteger)idx
 {
+    
+    for (AwesomeMenuItem *item in [menu menusArray]){
+        [item setVisibility:NO isSelect:YES];
+    }
+    
     NSLog(@"Select the index : %d",idx);
 }
 

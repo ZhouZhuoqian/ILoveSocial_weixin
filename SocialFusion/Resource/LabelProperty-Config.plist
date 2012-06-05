@@ -15,12 +15,22 @@
 			<string>kChildAllSelfNewFeed</string>
 			<string>kChildRenrenSelfNewFeed</string>
 			<string>kChildWeiboSelfNewFeed</string>
+            <string>kChildPhotoSelfNewFeed</string>
 		</array>
 	</dict>
 	<key>kChildAllSelfNewFeed</key>
 	<dict>
 		<key>kLabelName</key>
 		<string>全部</string>
+		<key>kLabelIsRetractable</key>
+		<false/>
+		<key>kLabelIsParent</key>
+		<false/>
+	</dict>
+    <key>kChildPhotoSelfNewFeed</key>
+	<dict>
+		<key>kLabelName</key>
+		<string>照片</string>
 		<key>kLabelIsRetractable</key>
 		<false/>
 		<key>kLabelIsParent</key>

@@ -34,6 +34,8 @@
    highlightedImage:(UIImage *)himg
        ContentImage:(UIImage *)cimg
 highlightedContentImage:(UIImage *)hcimg;
+-(void)setVisibility:(BOOL)isVisible;
+-(void)setVisibility:(BOOL)isVisible isSelect:(BOOL)isSelect;
 
 
 @end

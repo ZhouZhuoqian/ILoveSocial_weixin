@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		313C288F157DB9A300303BBF /* btn_repost_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 313C288D157DB9A300303BBF /* btn_repost_white.png */; };
+		313C2890157DB9A300303BBF /* btn_repost_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 313C288E157DB9A300303BBF /* btn_repost_white@2x.png */; };
+		313C2893157DBE8200303BBF /* bg-menuitem-yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 313C2891157DBE8100303BBF /* bg-menuitem-yellow.png */; };
+		313C2894157DBE8200303BBF /* bg-menuitem-yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 313C2892157DBE8100303BBF /* bg-menuitem-yellow@2x.png */; };
 		317CFA5215787E09007B66EB /* NewFeedListOfImageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 317CFA5115787E09007B66EB /* NewFeedListOfImageController.m */; };
 		317CFA5815789F9A007B66EB /* NewFeedPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 317CFA5715789F9A007B66EB /* NewFeedPhotoCell.m */; };
 		317CFA5A15789FAE007B66EB /* NewFeedPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 317CFA5915789FAE007B66EB /* NewFeedPhotoCell.xib */; };
@@ -393,6 +397,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		313C288D157DB9A300303BBF /* btn_repost_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_repost_white.png; sourceTree = "<group>"; };
+		313C288E157DB9A300303BBF /* btn_repost_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_repost_white@2x.png"; sourceTree = "<group>"; };
+		313C2891157DBE8100303BBF /* bg-menuitem-yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-menuitem-yellow.png"; sourceTree = "<group>"; };
+		313C2892157DBE8100303BBF /* bg-menuitem-yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-menuitem-yellow@2x.png"; sourceTree = "<group>"; };
 		317CFA5015787E09007B66EB /* NewFeedListOfImageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFeedListOfImageController.h; sourceTree = "<group>"; };
 		317CFA5115787E09007B66EB /* NewFeedListOfImageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFeedListOfImageController.m; sourceTree = "<group>"; };
 		317CFA5615789F9A007B66EB /* NewFeedPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFeedPhotoCell.h; sourceTree = "<group>"; };
@@ -1135,6 +1143,10 @@
 		D023EB46156923CB0043C8D2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				313C2891157DBE8100303BBF /* bg-menuitem-yellow.png */,
+				313C2892157DBE8100303BBF /* bg-menuitem-yellow@2x.png */,
+				313C288D157DB9A300303BBF /* btn_repost_white.png */,
+				313C288E157DB9A300303BBF /* btn_repost_white@2x.png */,
 				D023EB47156923CB0043C8D2 /* bg-addbutton-highlighted.png */,
 				D023EB48156923CB0043C8D2 /* bg-addbutton-highlighted@2x.png */,
 				D023EB49156923CB0043C8D2 /* bg-addbutton.png */,
@@ -2372,6 +2384,10 @@
 				D0BE1E61156CA4BE006EF725 /* README.md in Resources */,
 				317CFA5A15789FAE007B66EB /* NewFeedPhotoCell.xib in Resources */,
 				D052071915799D7700D7C245 /* NewFeedPhotoHeader.xib in Resources */,
+				313C288F157DB9A300303BBF /* btn_repost_white.png in Resources */,
+				313C2890157DB9A300303BBF /* btn_repost_white@2x.png in Resources */,
+				313C2893157DBE8200303BBF /* bg-menuitem-yellow.png in Resources */,
+				313C2894157DBE8200303BBF /* bg-menuitem-yellow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2655,7 +2671,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				INFOPLIST_FILE = "SocialFusion/SocialFusion-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/SocialFusion/SDK/SDKExport\"",
@@ -2682,7 +2698,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				INFOPLIST_FILE = "SocialFusion/SocialFusion-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/SocialFusion/SDK/SDKExport\"",

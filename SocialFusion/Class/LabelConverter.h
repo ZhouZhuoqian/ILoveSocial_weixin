@@ -11,6 +11,7 @@
 
 #define kParentNewFeed          @"kParentNewFeed"
 #define kChildAllSelfNewFeed    @"kChildAllSelfNewFeed"
+#define kChildPhotoSelfNewFeed    @"kChildPhotoSelfNewFeed"
 #define kChildRenrenSelfNewFeed @"kChildRenrenSelfNewFeed"
 #define kChildWeiboSelfNewFeed  @"kChildWeiboSelfNewFeed"
 

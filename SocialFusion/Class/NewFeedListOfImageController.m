@@ -33,7 +33,6 @@
     BOOL isDebuging ;
     NSInteger cellnumber;
 }
-- (UITableViewCell *)getMyCell:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 @property (retain,nonatomic)     NewFeedPhotoHeader *headerView ;
 
 @end
@@ -411,9 +410,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (!isDebuging) {
-        return [self getMyCell:tableView cellForRowAtIndexPath:indexPath];
-    }
+   
+    
     
     static NSString *NormalCell = @"NewFeedStatusNormalCell";
     NewFeedPhotoCell * cell  =  [tableView dequeueReusableCellWithIdentifier:NormalCell];
@@ -439,218 +437,8 @@
     return cell; 
     
 }
-- (UITableViewCell *)getMyCell:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    static NSString *NormalCell = @"NewFeedStatusNormalCell";
-    static NSString *RepostCell = @"NewFeedStatusRepostCell";
-    static NSString *NormalCellWithPhoto = @"NewFeedStatusNormalCellWithPhoto";
-    static NSString *RepostCellWithPhoto = @"NewFeedStatusRepostCellWithPhoto";
-    static NSString *ShareAlbumCell = @"NewFeedStatusShareAlbumCell";
-    static NSString *SharePhotoCell = @"NewFeedStatusSharePhotoCell";
-    static NSString *UploadPhotoCell = @"NewFeedStatusUploadPhotoCell";
-    static NSString *BlogCell = @"NewFeedStatusBlogCell";
-    
-    
-    if ([indexPath compare:_indexPath] || 1) {
-        NewFeedStatusCell* cell;
-        
-        NewFeedRootData *data = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        
-        if ([data class]==[NewFeedBlog class])
-        {
-            cell = (NewFeedStatusCell *)[tableView dequeueReusableCellWithIdentifier:BlogCell];
-            if (cell == nil) {
-                cell=[[NewFeedStatusCell alloc] initWithType:kBlog];
-            }
-            else if ([cell loaded]==NO)
-            {
-                cell=[[NewFeedStatusCell alloc] initWithType:kBlog];
-            }
-            
-        }
-        else if ([data class]==[NewFeedShareAlbum class])
-        {
-            cell = (NewFeedStatusCell *)[tableView dequeueReusableCellWithIdentifier:ShareAlbumCell];
-            if (cell == nil) {
-                cell=[[NewFeedStatusCell alloc] initWithType:kShareAlbum];
-            }
-            else if ([cell loaded]==NO)
-            {
-                cell=[[NewFeedStatusCell alloc] initWithType:kShareAlbum];
-            }
-            
-        }
-        else if ([data class]==[NewFeedSharePhoto class])
-        {
-            cell = (NewFeedStatusCell *)[tableView dequeueReusableCellWithIdentifier:SharePhotoCell];
-            
-            
-            if (cell == nil) {
-                cell=[[NewFeedStatusCell alloc] initWithType:kSharePhoto];
-            }
-        }
-        else if ([data class]==[NewFeedUploadPhoto class])
-        {
-            cell = (NewFeedStatusCell *)[tableView dequeueReusableCellWithIdentifier:UploadPhotoCell];
-            
-            
-            if (cell == nil) {
-                cell=[[NewFeedStatusCell alloc] initWithType:kUploadPhoto];
-            }
-            else if ([cell loaded]==NO)
-            {
-                cell=[[NewFeedStatusCell alloc] initWithType:kUploadPhoto];
-            }
-            
-        }
-        else 
-        {
-            if (((NewFeedData*)data).repost_ID==nil)
-            {
-                if (((NewFeedData*)data).pic_URL==nil)
-                {
-                    cell = (NewFeedStatusCell *)[tableView dequeueReusableCellWithIdentifier:NormalCell];
-                    
-                    
-                    if (cell == nil) {
-                        cell=[[NewFeedStatusCell alloc] initWithType:kNormal];
-                    }
-                    else if ([cell loaded]==NO)
-                    {
-                        cell=[[NewFeedStatusCell alloc] initWithType:kNormal];
-                    }
-                    
-                }
-                else
-                {
-                    cell = (NewFeedStatusCell *)[tableView dequeueReusableCellWithIdentifier:NormalCellWithPhoto];
-                    
-                    
-                    if (cell == nil) {
-                        cell=[[NewFeedStatusCell alloc] initWithType:kNormalWithPhoto];
-                    }
-                    else if ([cell loaded]==NO)
-                    {
-                        cell=[[NewFeedStatusCell alloc] initWithType:kNormalWithPhoto];
-                    }
-                    
-                }
-            }
-            else
-            {
-                if (((NewFeedData*)data).pic_URL==nil)
-                {
-                    cell = (NewFeedStatusCell *)[tableView dequeueReusableCellWithIdentifier:RepostCell];
-                    
-                    
-                    if (cell == nil) {
-                        cell=[[NewFeedStatusCell alloc] initWithType:kRepost];
-                    }
-                    else if ([cell loaded]==NO)
-                    {
-                        cell=[[NewFeedStatusCell alloc] initWithType:kRepost];
-                    }
-                    
-                }
-                else
-                {
-                    cell = (NewFeedStatusCell *)[tableView dequeueReusableCellWithIdentifier:RepostCellWithPhoto];
-                    
-                    if (cell == nil) {
-                        cell=[[NewFeedStatusCell alloc] initWithType:kRepostWithPhoto];
-                    }
-                    else if ([cell loaded]==NO)
-                    {
-                        cell=[[NewFeedStatusCell alloc] initWithType:kRepostWithPhoto];
-                    }
-                    
-                }
-            }
-        }
-        
-        [cell configureCell:data first:YES];        
-        cell.delegate=self;
-        [cell setList:self];
-        
-        
-        NSData *imageData = nil;
-        if([Image imageWithURL:data.owner_Head inManagedObjectContext:self.managedObjectContext]) {
-            imageData = [Image imageWithURL:data.owner_Head inManagedObjectContext:self.managedObjectContext].imageData.data;
-        }
-        if(imageData == nil) {
-            if(self.tableView.dragging == NO && self.tableView.decelerating == NO) {
-                if(indexPath.row < 5) {
-                    [cell.photoView loadImageFromURL:data.owner_Head completion:^{
-                        [cell.photoView fadeIn];
-                    } cacheInContext:self.managedObjectContext];
-                }
-            }
-        }
-        else {
-            cell.photoView.image = [UIImage imageWithData:imageData];
-        }
-        
-        return cell;
-    }
-    //展开时的cell
-    else {
-        
-        NewFeedRootData* a= [self.fetchedResultsController objectAtIndexPath:indexPath];
-        
-        
-        if ([a class]==[NewFeedBlog class])
-        {
-            NewFeedDetailBlogViewCell* cell;
-            [[NSBundle mainBundle] loadNibNamed:@"NewFeedDetailBlogViewCell" owner:self options:nil];
-            //            cell = self.newFeedDetailBlogViewCel;
-            
-            [cell initWithFeedData:a context:self.managedObjectContext renren:self.currentRenrenUser weibo:self.currentWeiboUser];
-            cell.detailController.delegate=self;
-            cell.detailController.delegateWX = self.delegateWX;
-            
-            return cell; 
-        }
-        
-        else if ([a class]==[NewFeedShareAlbum class] || [a class]==[NewFeedSharePhoto class]||[a class]==[NewFeedUploadPhoto class])
-        {
-            NewFeedAlbumCell* cell;
-            [[NSBundle mainBundle] loadNibNamed:@"NewFeedAlbumCell" owner:self options:nil];
-            //            cell = self.newFeedAlbumCel;
-            
-            [cell initWithFeedData:a context:self.managedObjectContext renren:self.currentRenrenUser weibo:self.currentWeiboUser];
-            
-            cell.detailController.delegate=self;
-            cell.detailController.delegateWX = self.delegateWX;
-            
-            return cell;
-        }
-        else
-        {
-            NSLog(@"detail cell");
-            NewFeedDetailViewCell* cell;
-            [[NSBundle mainBundle] loadNibNamed:@"NewFeedDetailViewCell" owner:self options:nil];
-            //            cell = self.newFeedDetailViewCel;
-            
-            [cell initWithFeedData:a context:self.managedObjectContext renren:self.currentRenrenUser weibo:self.currentWeiboUser];
-            
-            cell.detailController.delegate=self;
-            
-            cell.detailController.delegateWX = self.delegateWX;
-            
-            return cell;
-        }
-    }
-    
-}
 
 
-
-#pragma mark - weixin delegate
--(void)sendTextContent:(NSString *)nsText{
-    
-    //    NSLog(@"%@",nsText);
-}
 
 
 - (void)loadExtraDataForOnScreenRowsHelp:(NSIndexPath *)indexPath {
@@ -675,8 +463,6 @@
     [statusCell configureCellImage:data first:YES];
 
     return;
-    
-
     
 
     if ([data class]==[NewFeedUploadPhoto class])
